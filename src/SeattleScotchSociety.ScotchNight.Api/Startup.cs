@@ -39,5 +39,17 @@ namespace SeattleScotchSociety.ScotchNight.Api
 
             app.UseMvc();
         }
+
+        private void AddAzureKeyVaultAsConfigurationSource(IConfigurationBuilder builder)
+        {
+            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken));
+
+            builder.AddAzureKeyVault(
+                Configuration["KeyVault:Name"],
+                keyVaultClient,
+                new DefaultKeyVaultSecretManager());
+
+            Configuration = builder.Build();
+        }
     }
 }
