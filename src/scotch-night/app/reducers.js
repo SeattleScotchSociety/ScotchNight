@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { Reducer as BottlesReducer } from './bottles';
+import Bottles from './bottles';
 
 export const reducer = combineReducers({
-    bottles: BottlesReducer
+    bottles: Bottles.Reducer
 });

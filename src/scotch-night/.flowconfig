@@ -1,4 +1,6 @@
 [ignore]
+.*/node_modules/*
+
 ; We fork some components by platform
 .*/*[.]android.js
 
@@ -29,6 +31,8 @@
 
 ; Ignore react-native-fbads dependency of the expo sdk
 .*/node_modules/react-native-fbads/*
+
+./.flowconfig
 
 [include]
 
