@@ -1,0 +1,18 @@
+{
+    "extends": "payscale",
+    "rules": {
+        "react/jsx-indent": [
+            "error",
+            4
+        ],
+        "react/jsx-filename-extension": [
+            "error",
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ],
+    }
+}
