@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Controllers
 {
     [Route("api/[controller]")]
     public class BottlesController : Controller
     {
+        private IBottleStore _bottleStore;
         private List<Bottle> _bottles = new List<Bottle>
             {
-                new Bottle {
-                    Id = Guid.NewGuid(),
+                new Bottle
+                {
                     Distillery = "Westland",
                     Name = "Peated",
                     Age = 25,
@@ -19,22 +22,27 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
                 }
             };
 
-        [HttpGet]
-        public IEnumerable<Bottle> Get()
+        public BottlesController(IBottleStore bottleStore)
         {
-            return _bottles;
+            _bottleStore = bottleStore;
+        }
+
+        [HttpGet]
+        public Task<IEnumerable<Bottle>> GetAllAsync()
+        {
+            return _bottleStore.GetAllAsync();
         }
 
         [HttpGet("{id}")]
         public Bottle Get(Guid id)
         {
-            return _bottles[0];
+            return null;
         }
 
         [HttpPost]
-        public void Post([FromBody]Bottle bottle)
+        public async void PostAsync([FromBody]Bottle bottle)
         {
-            _bottles.Add(bottle);
+            await _bottleStore.AddAsync(bottle);
         }
 
         [HttpPut("{id}")]
