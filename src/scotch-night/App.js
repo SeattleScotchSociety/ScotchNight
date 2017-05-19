@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import Expo from 'expo';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import Store from './app/Store';
 
-import ScotchNight from './app/scotchNight';
+import ScotchNight from './app/ScotchNight';
 
 export default class App extends Component {
     constructor() {
@@ -26,6 +26,6 @@ export default class App extends Component {
     }
 
     render() {
-        return <Provider store={store}><ScotchNight /></Provider>;
+        return <Provider store={Store}><ScotchNight /></Provider>;
     }
 }

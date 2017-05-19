@@ -1,5 +1,6 @@
-import * as Actions from './bottlesActions';
-import * as ActionTypes from './bottlesActionTypes';
-import Reducer from './bottlesReducer';
+import * as Actions from './BottlesActions';
+import * as ActionTypes from './BottlesActionTypes';
+import Reducer from './BottlesReducer';
+import * as Screens from './screens';
 
-export default { Actions, ActionTypes, Reducer };
+export default { Actions, ActionTypes, Reducer, Screens };
