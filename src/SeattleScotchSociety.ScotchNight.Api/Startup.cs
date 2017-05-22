@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.WindowsAzure.Storage.Table;
+using SeattleScotchSociety.ScotchNight.Api.Configuration;
+using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Extensions;
 using System;
 using System.IO;
@@ -17,13 +20,20 @@ namespace SeattleScotchSociety.ScotchNight.Api
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment environment)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
+                .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true);
+
+            if (environment.IsDevelopment())
+            {
+                builder.AddUserSecrets();
+            }
+
+            builder.AddEnvironmentVariables();
+          
             Configuration = builder.Build();
 
             AddAzureKeyVaultAsConfigurationSource(builder);
@@ -34,6 +44,17 @@ namespace SeattleScotchSociety.ScotchNight.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAzureTableStorage(Configuration["Azure:TableStorageConnectionString"]);
+
+            services.AddSingleton<IBottleStore>(provider =>
+            {
+                var store = new AzureBottleStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
             // Add framework services.
             services.AddMvc();
         }

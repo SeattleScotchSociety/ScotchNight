@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingHorizontal": 20,
+        "paddingVertical": 30,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": undefined,
+        }
+      }
+      style={
+        Object {
+          "height": 100,
+          "width": 100,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "marginLeft": 20,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 24,
+            "fontWeight": "500",
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 18,
+            "marginBottom": 12,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 14,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingHorizontal": 20,
+        "paddingVertical": 30,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "http://www.westlanddistillery.com/assets/media/whiskeys/5e4a5c3c6cdbfabdcf67941c83f9e7d9.jpg",
+        }
+      }
+      style={
+        Object {
+          "borderRadius": 20,
+          "height": 40,
+          "marginRight": 10,
+          "width": 40,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "purple",
+            "fontSize": 18,
+            "fontWeight": "500",
+          }
+        }
+      >
+        Adam Phillabaum
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 13,
+          }
+        }
+      >
+        June 12, 2017
+      </Text>
+    </View>
+  </View>
+</View>
+`;

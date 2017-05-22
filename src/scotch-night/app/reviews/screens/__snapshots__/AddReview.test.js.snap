@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <ScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 95,
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "#F8F8F9",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={undefined}
+    >
+      <RCTPicker
+        items={Array []}
+        onChange={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+      />
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#fff",
+            "borderBottomWidth": 0.5,
+            "borderColor": "#ccc",
+          },
+          Object {
+            "borderColor": "#ccc",
+            "borderTopWidth": 0.5,
+          },
+        ]
+      }
+    >
+      <TextInput
+        onChangeText={[Function]}
+        style={
+          Object {
+            "flex": 1,
+            "height": 45,
+            "paddingHorizontal": 15,
+          }
+        }
+        value={undefined}
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "borderBottomWidth": 0.5,
+          "borderColor": "#ccc",
+        }
+      }
+    >
+      <TextInput
+        onChangeText={[Function]}
+        style={
+          Object {
+            "flex": 1,
+            "height": 45,
+            "paddingHorizontal": 15,
+          }
+        }
+        value={undefined}
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "borderBottomWidth": 0.5,
+          "borderColor": "#ccc",
+        }
+      }
+    >
+      <TextInput
+        onChangeText={[Function]}
+        style={
+          Object {
+            "flex": 1,
+            "height": 45,
+            "paddingHorizontal": 15,
+          }
+        }
+        value={undefined}
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "borderBottomWidth": 0.5,
+          "borderColor": "#ccc",
+        }
+      }
+    >
+      <TextInput
+        minHeight={80}
+        multiline={true}
+        onChange={[Function]}
+        onChangeText={[Function]}
+        onContentSizeChange={[Function]}
+        style={
+          Array [
+            Object {
+              "fontSize": 15,
+              "paddingHorizontal": 15,
+              "paddingVertical": 15,
+            },
+            Object {
+              "height": 80,
+            },
+          ]
+        }
+        underlineColorAndroid="rgba(0, 0, 0, 0)"
+        value={undefined}
+      />
+    </View>
+    <RCTSlider
+      disabled={false}
+      enabled={true}
+      maximumValue={5}
+      minimumValue={0}
+      onChange={undefined}
+      onResponderTerminationRequest={[Function]}
+      onSlidingComplete={undefined}
+      onStartShouldSetResponder={[Function]}
+      onValueChange={undefined}
+      step={1}
+      style={
+        Array [
+          Object {
+            "height": 40,
+          },
+          undefined,
+        ]
+      }
+      value={0}
+    />
+  </ScrollView>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#050B7A",
+        "height": 65,
+        "justifyContent": "center",
+        "left": 0,
+        "paddingTop": 20,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 18,
+          "fontWeight": "600",
+        }
+      }
+    >
+      Review
+    </Text>
+  </View>
+</View>
+`;

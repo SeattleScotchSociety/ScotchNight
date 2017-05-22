@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  keyboardVerticalOffset={0}
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+        "paddingHorizontal": 20,
+        "paddingTop": 20,
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <ScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 30,
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "#F8F8F9",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#fff",
+            "borderBottomWidth": 0.5,
+            "borderColor": "#ccc",
+          },
+          Object {
+            "borderColor": "#ccc",
+            "borderTopWidth": 0.5,
+          },
+        ]
+      }
+    >
+      <TextInput
+        autoCapitalize="words"
+        autoCorrect={false}
+        autoFocus={true}
+        blurOnSubmit={false}
+        onChangeText={[Function]}
+        onSubmitEditing={[Function]}
+        placeholder="Date"
+        returnKeyType="next"
+        style={
+          Object {
+            "flex": 1,
+            "height": 45,
+            "paddingHorizontal": 15,
+          }
+        }
+        value=""
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "borderBottomWidth": 0.5,
+          "borderColor": "#ccc",
+        }
+      }
+    >
+      <TextInput
+        autoCapitalize="words"
+        autoCorrect={false}
+        blurOnSubmit={false}
+        onChangeText={[Function]}
+        onSubmitEditing={[Function]}
+        placeholder="Location"
+        returnKeyType="next"
+        style={
+          Object {
+            "flex": 1,
+            "height": 45,
+            "paddingHorizontal": 15,
+          }
+        }
+        value=""
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#fff",
+          "borderBottomWidth": 0.5,
+          "borderColor": "#ccc",
+        }
+      }
+    >
+      <TextInput
+        autoCapitalize="sentences"
+        autoCorrect={false}
+        blurOnSubmit={false}
+        minHeight={80}
+        multiline={true}
+        onChange={[Function]}
+        onChangeText={[Function]}
+        onContentSizeChange={[Function]}
+        placeholder="Description"
+        style={
+          Array [
+            Object {
+              "fontSize": 15,
+              "paddingHorizontal": 15,
+              "paddingVertical": 15,
+            },
+            Object {
+              "height": 80,
+            },
+          ]
+        }
+        underlineColorAndroid="rgba(0, 0, 0, 0)"
+        value=""
+      />
+    </View>
+    <View
+      accessibilityComponentType="button"
+      accessibilityLabel={undefined}
+      accessibilityTraits={
+        Array [
+          "button",
+        ]
+      }
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "#0C42FD",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Save
+        </Text>
+      </View>
+    </View>
+  </ScrollView>
+</View>
+`;
