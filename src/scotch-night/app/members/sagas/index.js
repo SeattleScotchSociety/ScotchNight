@@ -1,1 +1,0 @@
-export { watchLoadMembers } from './LoadMembersSaga';
