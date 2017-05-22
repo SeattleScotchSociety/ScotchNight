@@ -253,3 +253,9 @@ paket-files/
 
 # Yarn
 yarn.lock
+
+# Flow Types
+flow-typed/
+
+# Expo
+*/.expo/
