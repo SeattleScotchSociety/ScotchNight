@@ -33,6 +33,7 @@ namespace SeattleScotchSociety.ScotchNight.Api
             }
 
             builder.AddEnvironmentVariables();
+          
             Configuration = builder.Build();
 
             AddAzureKeyVaultAsConfigurationSource(builder);
