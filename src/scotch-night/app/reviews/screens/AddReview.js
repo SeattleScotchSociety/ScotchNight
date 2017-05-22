@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
     ScrollView,
     View,
@@ -123,7 +123,7 @@ function mapStateToProps(state) {
     return state;
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch<*>) {
     return { actions: bindActionCreators(reviewActions, dispatch) };
 }
 
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#050B7A',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: Constants.statusBarHeight
+        paddingTop: 20
     },
     headerText: {
         fontSize: 18,

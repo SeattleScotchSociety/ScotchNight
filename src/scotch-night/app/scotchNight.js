@@ -12,7 +12,8 @@ import Splash from './screens/Splash';
 
 const defaultNavigationOptions = {
     headerStyle: {
-        backgroundColor: '#050B7A'
+        backgroundColor: '#050B7A',
+        paddingTop: 20
     },
     headerTintColor: '#fff'
 };

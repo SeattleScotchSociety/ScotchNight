@@ -1,21 +1,21 @@
-import { ADD_BOTTLE, BOTTLES_LOADED } from './BottlesActionTypes';
+import { ADD_EVENT, EVENTS_LOADED } from './EventActionTypes';
 
 const bottlesReducer = (state = [], action) => {
     switch (action.type) {
-        case ADD_BOTTLE: {
+        case ADD_EVENT: {
             let id = 1;
             if (state.length > 0) {
-                const ids = state.map(bottle => bottle.id);
+                const ids = state.map(event => event.id);
                 id = Math.max(ids) + 1;
             }
 
-            let newBottle = { ...action.payload, id };
-            let bottles = [newBottle, ...state];
+            let newEvent = { ...action.payload, id };
+            let events = [newEvent, ...state];
 
-            return bottles;
+            return events;
         }
 
-        case BOTTLES_LOADED: {
+        case EVENTS_LOADED: {
             return action.payload;
         }
 

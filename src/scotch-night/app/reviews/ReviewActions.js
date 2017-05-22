@@ -6,7 +6,7 @@ export const loadReviews = () => {
     };
 };
 
-export const bottlesLoaded = reviews => {
+export const reviewsLoaded = reviews => {
     return {
         type: REVIEWS_LOADED,
         payload: reviews

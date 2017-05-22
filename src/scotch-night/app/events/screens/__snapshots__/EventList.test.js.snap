@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <Image
+    source={1}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": 250,
+        "justifyContent": "center",
+        "width": null,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "color": "white",
+          "fontSize": 24,
+        }
+      }
+    >
+      Seattle
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "color": "white",
+          "fontSize": 24,
+        }
+      }
+    >
+      Scotch
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "color": "white",
+          "fontSize": 24,
+        }
+      }
+    >
+      Society
+    </Text>
+  </Image>
+  <ScrollView
+    ListFooterComponent={undefined}
+    ListHeaderComponent={undefined}
+    data={
+      Array [
+        Object {
+          "date": "5/30/2017",
+          "description": "The first!",
+          "id": 1,
+          "location": "Phillabaums",
+        },
+        Object {
+          "date": "7/2/2017",
+          "description": "The second!",
+          "id": 2,
+          "location": "Fixs",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onViewableItemsChanged={undefined}
+    removeClippedSubviews={true}
+    renderItem={[Function]}
+    renderScrollComponent={[Function]}
+    scrollEventThrottle={50}
+    shouldItemUpdate={[Function]}
+    updateCellsBatchingPeriod={50}
+    windowSize={21}
+  >
+    <View
+      onLayout={[Function]}
+    >
+      <View
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          5/30/2017
+        </Text>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+    >
+      <View
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          7/2/2017
+        </Text>
+      </View>
+    </View>
+  </ScrollView>
+</View>
+`;

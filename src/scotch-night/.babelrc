@@ -8,6 +8,12 @@
         "transform-react-jsx-source",
         "transform-decorators-legacy"
       ]
+    },
+    "test": {
+      "plugins": [
+        "transform-react-jsx-source",
+        "transform-decorators-legacy"
+      ]
     }
   }
 }

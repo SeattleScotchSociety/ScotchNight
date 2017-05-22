@@ -6,10 +6,15 @@ export const loadBottles = () => {
     };
 };
 
-export const bottlesLoaded = bottle => {
+export const bottlesLoaded = (error, bottles) => {
+    const isError = !!error;
+
+    const payload = isError ? error : bottles;
+
     return {
         type: BOTTLES_LOADED,
-        payload: bottle
+        payload,
+        error: isError
     };
 };
 
