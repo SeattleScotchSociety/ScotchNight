@@ -6,6 +6,8 @@ import { reducer } from './Reducers';
 import rootSaga from './Sagas';
 import Bottles from './bottles';
 let { loadBottles } = Bottles.Actions;
+import Members from './members';
+let { loadMembers } = Members.Actions;
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,6 +21,7 @@ sagaMiddleware.run(rootSaga);
 
 persistStore(store, { storage: AsyncStorage }, () => {
     store.dispatch(loadBottles());
+    store.dispatch(loadMembers());
 }).purge();
 
 export default store;

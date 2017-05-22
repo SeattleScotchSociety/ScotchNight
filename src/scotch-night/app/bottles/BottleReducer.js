@@ -1,6 +1,6 @@
-import { ADD_BOTTLE, BOTTLES_LOADED } from './BottlesActionTypes';
+import { ADD_BOTTLE, BOTTLES_LOADED } from './BottleActionTypes';
 
-const bottlesReducer = (state = [], action) => {
+const BottleReducer = (state = [], action) => {
     switch (action.type) {
         case ADD_BOTTLE: {
             let id = 1;
@@ -25,4 +25,4 @@ const bottlesReducer = (state = [], action) => {
     }
 };
 
-export default bottlesReducer;
+export default BottleReducer;

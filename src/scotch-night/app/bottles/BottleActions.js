@@ -1,4 +1,4 @@
-import { LOAD_BOTTLES, BOTTLES_LOADED, ADD_BOTTLE } from './BottlesActionTypes';
+import { LOAD_BOTTLES, BOTTLES_LOADED, ADD_BOTTLE } from './BottleActionTypes';
 
 export const loadBottles = () => {
     return {

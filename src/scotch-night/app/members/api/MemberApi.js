@@ -1,4 +1,4 @@
-import Members from '../Members';
+import Members from './Members';
 
 export const getAllMembers = () => {
     return Members;

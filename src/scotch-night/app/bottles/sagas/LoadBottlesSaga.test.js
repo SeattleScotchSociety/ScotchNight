@@ -1,7 +1,7 @@
 import { call, put, take } from 'redux-saga/effects';
 import { expectSaga } from 'redux-saga-test-plan';
 import { loadBottles } from './LoadBottlesSaga';
-import { bottlesLoaded } from '../BottlesActions';
+import { bottlesLoaded } from '../BottleActions';
 import Bottles from '../api/Bottles';
 
 it('loads all the bottles', () => {

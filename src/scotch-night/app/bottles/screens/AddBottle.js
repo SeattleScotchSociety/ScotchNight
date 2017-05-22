@@ -5,13 +5,14 @@ import {
     ScrollView,
     View,
     KeyboardAvoidingView,
+    Picker,
     TextInput,
     StyleSheet,
     StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as bottleActions from '../BottlesActions';
+import * as bottleActions from '../BottleActions';
 import GrowingTextInput from '../../components/GrowingTextInput';
 
 class AddBottle extends Component {
@@ -54,8 +55,20 @@ class AddBottle extends Component {
         navigate('BottleList', {});
     };
 
+    _renderMemberItem(member) {
+        console.log(`Adding item ${JSON.stringify(member)}`);
+        return (
+            <Picker.Item
+                key={member.username}
+                label={`${member.firstName} ${member.lastName}`}
+                value={member.username}
+            />
+        );
+    }
+
     render() {
         let { bottle } = this.state;
+        let { members } = this.props;
 
         return (
             <KeyboardAvoidingView
@@ -104,24 +117,17 @@ class AddBottle extends Component {
                             }}
                         />
                     </View>
-                    <View style={styles.row}>
-                        <TextInput
-                            ref={view => {
-                                this._memberInput = view;
-                            }}
-                            value={bottle.member}
-                            placeholder="Member Username"
-                            onChangeText={this._handleTextChange.bind(this, 'member')}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            blurOnSubmit={false}
-                            returnKeyType="next"
-                            onSubmitEditing={async () => {
-                                this._descriptionInput.focus();
-                            }}
-                        />
-                    </View>
+                    <Picker
+                        ref={view => {
+                            this._memberInput = view;
+                        }}
+                        selectedValue={bottle.member}
+                        onValueChange={id => this._handleTextChange('member', id)}
+                        onSubmitEditing={async () => {
+                            this._descriptionInput.focus();
+                        }}>
+                        {members.map(member => this._renderMemberItem(member))}
+                    </Picker>
                     <View style={styles.row}>
                         <GrowingTextInput
                             ref={view => {
@@ -207,6 +213,8 @@ class AddBottle extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log('state me');
+    console.log(JSON.stringify(state));
     return state;
 }
 

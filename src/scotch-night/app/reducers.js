@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import Bottles from './bottles';
-import User from './user';
+import Members from './members';
 
 export const reducer = combineReducers({
     bottles: Bottles.Reducer,
-    user: User.Reducer
+    members: Members.Reducer
 });

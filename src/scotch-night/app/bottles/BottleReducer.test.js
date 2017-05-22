@@ -1,5 +1,5 @@
-import bottlesReducer from './BottlesReducer';
-import { BOTTLES_LOADED, ADD_BOTTLE } from './BottlesActionTypes';
+import BottleReducer from './BottleReducer';
+import { BOTTLES_LOADED, ADD_BOTTLE } from './BottleActionTypes';
 
 test('ADD_BOTTLE should add new bottle', () => {
     test('should return correct action', () => {
@@ -12,7 +12,7 @@ test('ADD_BOTTLE should add new bottle', () => {
             bottle: {}
         };
 
-        let newState = bottlesReducer(state, action);
+        let newState = BottleReducer(state, action);
 
         expect(newState.bottles.length).toBe(1);
     });

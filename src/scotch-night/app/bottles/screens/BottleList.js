@@ -4,7 +4,7 @@ import { StyleSheet, Button, View, FlatList, ActivityIndicator } from 'react-nat
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getAllBottles } from '../api/BottlesApi';
-import { loadBottles } from '../BottlesActions';
+import { loadBottles } from '../BottleActions';
 import BottleListItem from '../components/BottleListItem';
 
 class BottleList extends React.Component {

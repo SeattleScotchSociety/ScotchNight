@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { getAllBottles } from '../api/BottlesApi';
-import { bottlesLoaded } from '../BottlesActions';
-import { LOAD_BOTTLES } from '../BottlesActionTypes';
+import { bottlesLoaded } from '../BottleActions';
+import { LOAD_BOTTLES } from '../BottleActionTypes';
 
 export function* loadBottles() {
     try {
@@ -10,10 +10,10 @@ export function* loadBottles() {
 
         yield put(bottlesLoaded(null, bottles));
     } catch (error) {
-        yield put({ type: 'FETCH_FAILED', error });
+        yield put(bottlesLoaded(error));
     }
 }
 
 export function* watchLoadBottles() {
-    yield takeLatest('LOAD_BOTTLES', loadBottles);
+    yield takeLatest(LOAD_BOTTLES, loadBottles);
 }
