@@ -1,4 +1,4 @@
-// flow-typed signature: 0214c12ad553a1ede11e19af6d90e687
+// flow-typed signature: 6b032383ed87ddfe2161360ab87f5e25
 // flow-typed version: <<STUB>>/@expo/vector-icons_v^4.0.0/flow_v0.40.0
 
 /**
@@ -74,6 +74,102 @@ declare module '@expo/vector-icons/SimpleLineIcons' {
   declare module.exports: any;
 }
 
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Entypo' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/EvilIcons' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/FontAwesome' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Foundation' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/generate-icon' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/generate-material-icons' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/index' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Ionicons' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set-from-fontello' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set-from-icomoon' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/generate-icon-set-from-css' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/icon-button' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/react-native' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/react-native.osx' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/tab-bar-item-ios' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/toolbar-android' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/MaterialCommunityIcons' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/MaterialIcons' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Octicons' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/RNIMigration' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/SimpleLineIcons' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Zocial' {
+  declare module.exports: any;
+}
+
+declare module '@expo/vector-icons/website/err-if-inside-universe' {
+  declare module.exports: any;
+}
+
 declare module '@expo/vector-icons/website/src/App' {
   declare module.exports: any;
 }
@@ -131,6 +227,78 @@ declare module '@expo/vector-icons/Octicons.js' {
 }
 declare module '@expo/vector-icons/SimpleLineIcons.js' {
   declare module.exports: $Exports<'@expo/vector-icons/SimpleLineIcons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Entypo.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/Entypo'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/EvilIcons.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/EvilIcons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/FontAwesome.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/FontAwesome'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Foundation.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/Foundation'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/generate-icon.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/generate-icon'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/generate-material-icons.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/generate-material-icons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/index.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/index'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Ionicons.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/Ionicons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set-from-fontello.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set-from-fontello'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set-from-icomoon.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set-from-icomoon'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/create-icon-set'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/generate-icon-set-from-css.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/generate-icon-set-from-css'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/icon-button.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/icon-button'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/react-native.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/react-native'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/react-native.osx.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/react-native.osx'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/tab-bar-item-ios.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/tab-bar-item-ios'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/lib/toolbar-android.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/lib/toolbar-android'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/MaterialCommunityIcons.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/MaterialCommunityIcons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/MaterialIcons.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/MaterialIcons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Octicons.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/Octicons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/RNIMigration.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/RNIMigration'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/SimpleLineIcons.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/SimpleLineIcons'>;
+}
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/Zocial.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/Zocial'>;
+}
+declare module '@expo/vector-icons/website/err-if-inside-universe.js' {
+  declare module.exports: $Exports<'@expo/vector-icons/website/err-if-inside-universe'>;
 }
 declare module '@expo/vector-icons/website/src/App.js' {
   declare module.exports: $Exports<'@expo/vector-icons/website/src/App'>;
