@@ -45,14 +45,16 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             await _bottleStore.AddAsync(bottle);
         }
 
-        [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody]Bottle value)
+        [HttpPut]
+        public async void PutAsync([FromBody]Bottle bottle)
         {
+            await _bottleStore.UpdateAsync(bottle);
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        [HttpDelete]
+        public async void Delete([FromBody]Bottle bottle)
         {
+            await _bottleStore.DeleteAsync(bottle);
         }
     }
 }

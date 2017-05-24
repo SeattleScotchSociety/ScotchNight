@@ -8,6 +8,10 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
     {
         Task AddAsync(Bottle bottle);
 
+        Task UpdateAsync(Bottle bottle);
+
+        Task DeleteAsync(Bottle bottle);
+
         Task<IEnumerable<Bottle>> GetAllAsync();
 
         Task InitializeAsync();

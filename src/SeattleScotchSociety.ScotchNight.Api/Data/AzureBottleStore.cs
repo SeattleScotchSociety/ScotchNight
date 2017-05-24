@@ -25,9 +25,31 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
         {
             var entity = bottle.Adapt<BottleEntity>();
 
-            TableOperation insertOperation = TableOperation.Insert(entity);
+            TableOperation operation = TableOperation.Insert(entity);
 
-            return _table.ExecuteAsync(insertOperation);
+            return _table.ExecuteAsync(operation);
+        }
+
+        public Task UpdateAsync(Bottle bottle)
+        {
+            var entity = bottle.Adapt<BottleEntity>();
+
+            TableOperation operation = TableOperation.InsertOrMerge(entity);
+
+            return _table.ExecuteAsync(operation);
+        }
+
+        public Task DeleteAsync(Bottle bottle)
+        {
+            var entity = bottle.Adapt<BottleEntity>();
+
+            // <tmerkel> - This is fine given our expected usage.  If we were worried about
+            // losing other people's updates since query...this would be bad.
+            entity.ETag = "*";
+
+            TableOperation operation = TableOperation.Delete(entity);
+
+            return _table.ExecuteAsync(operation);
         }
 
         public async Task<IEnumerable<Bottle>> GetAllAsync()

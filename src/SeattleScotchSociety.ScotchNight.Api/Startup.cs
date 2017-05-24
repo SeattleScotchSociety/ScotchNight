@@ -13,6 +13,7 @@ using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Extensions;
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -26,11 +27,6 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true);
-
-            if (environment.IsDevelopment())
-            {
-                builder.AddUserSecrets();
-            }
 
             builder.AddEnvironmentVariables();
 
@@ -67,14 +63,22 @@ namespace SeattleScotchSociety.ScotchNight.Api
 
         private void AddAzureKeyVaultAsConfigurationSource(IConfigurationBuilder builder)
         {
-            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken));
+            try
+            {
+                var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken));
 
-            builder.AddAzureKeyVault(
-                Configuration["KeyVault:Name"],
-                keyVaultClient,
-                new DefaultKeyVaultSecretManager());
+                builder.AddAzureKeyVault(
+                    Configuration["KeyVault:Name"],
+                    keyVaultClient,
+                    new DefaultKeyVaultSecretManager());
 
-            Configuration = builder.Build();
+                Configuration = builder.Build();
+            }
+            catch (HttpRequestException)
+            {
+                Console.WriteLine("There was an Http error adding KeyVault as a configuration source.  This usually means you don't have an internet connection.");
+                throw;
+            }
         }
 
         private ClientAssertionCertificate GetCert()
