@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/SeattleScotchSociety.Api/bin/Debug/netstandard1.6/SeattleScotchSociety.Api.dll",
+            "program": "${workspaceRoot}/src/SeattleScotchSociety.ScotchNight.Api/bin/Debug/netcoreapp1.1/SeattleScotchSociety.ScotchNight.Api.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/src/SeattleScotchSociety.Api",
+            "cwd": "${workspaceRoot}/src/SeattleScotchSociety.ScotchNight.Api",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
@@ -17,9 +17,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/SeattleScotchSociety.Api/bin/Debug/netstandard1.6/SeattleScotchSociety.Api.dll",
+            "program": "${workspaceRoot}/src/SeattleScotchSociety.ScotchNight.Api/bin/Debug/netcoreapp1.1/SeattleScotchSociety.ScotchNight.Api.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/src/SeattleScotchSociety.Api",
+            "cwd": "${workspaceRoot}/src/SeattleScotchSociety.ScotchNight.Api",
             "stopAtEntry": false,
             "launchBrowser": {
                 "enabled": true,
