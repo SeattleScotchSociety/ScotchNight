@@ -2,7 +2,7 @@
 
 ## Prerequisites
 1. [Node](https://nodejs.org/en/)
-2. [Yarn] (https://yarnpkg.com/lang/en/docs/install/)
+2. [Yarn](https://yarnpkg.com/lang/en/docs/install/)
 2. [.Net Core (currently 1.1.1)](https://www.microsoft.com/net/download/core)
 3. An editor of your choice
 4. Currently we use Expo, so the easiest way to get started dev'ing is installing the [Expo XDE](https://github.com/expo/xde)
