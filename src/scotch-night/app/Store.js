@@ -22,6 +22,6 @@ sagaMiddleware.run(rootSaga);
 persistStore(store, { storage: AsyncStorage }, () => {
     store.dispatch(loadBottles());
     store.dispatch(loadMembers());
-}).purge();
+});
 
 export default store;

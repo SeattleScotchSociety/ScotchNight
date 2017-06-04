@@ -7,18 +7,28 @@ import User from '../user';
 let { userLoggedIn } = User.Actions;
 
 export default class LogInModal extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this._logIn = this._logIn.bind(this);
+    }
+
     async _logIn() {
+        const { loggedInCallback } = this.props;
+
         const {
             type,
             token
         } = await Exponent.Facebook.logInWithReadPermissionsAsync('284544882006268', {
-            permissions: ['public_profile'],
-            behavior: 'web'
-        });
+                permissions: ['public_profile'],
+                behavior: 'web'
+            });
         if (type === 'success') {
             // Get the user's name using Facebook's Graph API
             const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
             Alert.alert('Logged in!', `Hi ${JSON.stringify(await response.json())}!`);
+
+            loggedInCallback(token);
         }
     }
 

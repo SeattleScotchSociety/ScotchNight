@@ -213,8 +213,6 @@ class AddBottle extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('state me');
-    console.log(JSON.stringify(state));
     return state;
 }
 
