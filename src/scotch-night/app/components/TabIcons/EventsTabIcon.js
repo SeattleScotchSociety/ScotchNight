@@ -1,12 +1,12 @@
 //@flow
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 // create a component
 class EventsTabIcon extends React.Component {
     render() {
-        return <Ionicons name="ios-calendar-outline" size={30} color={this.props.tintColor} />;
+        return <MaterialIcons name="event" size={20} color={this.props.tintColor} />;
     }
 }
 

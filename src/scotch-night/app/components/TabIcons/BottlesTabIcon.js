@@ -1,12 +1,12 @@
 //@flow
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 // create a component
 class BottlesTabIcon extends React.Component {
     render() {
-        return <Ionicons name="ios-beer-outline" size={30} color={this.props.tintColor} />;
+        return <MaterialIcons name="local-drink" size={18} color={this.props.tintColor} />;
     }
 }
 

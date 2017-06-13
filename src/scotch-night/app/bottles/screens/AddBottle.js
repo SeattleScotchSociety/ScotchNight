@@ -80,7 +80,7 @@ class AddBottle extends Component {
                     paddingTop: 20
                 }}>
                 <ScrollView
-                    style={{ flex: 1, backgroundColor: '#F8F8F9' }}
+                    style={{ flex: 1, backgroundColor: '#fff' }}
                     contentContainerStyle={{ paddingTop: 30 }}>
 
                     <View style={[styles.row, styles.firstRow]}>

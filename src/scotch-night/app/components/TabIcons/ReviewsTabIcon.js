@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 class ReviewsTabIcon extends React.Component {
     render() {
-        return <Ionicons name="ios-contacts-outline" size={30} color={this.props.tintColor} />;
+        return <Ionicons name="ios-contacts-outline" size={20} color={this.props.tintColor} />;
     }
 }
 

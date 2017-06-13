@@ -18,14 +18,6 @@ class BottleList extends React.Component {
         loadBottles();
     }
 
-    renderHeader = () => {
-        return (
-            <View style={{ flex: 1 }}>
-                <Button title="Add Bottle" onPress={this._onAddPress.bind(this)} />
-            </View>
-        );
-    };
-
     renderFooter = () => {
         if (!this.props.loading) return null;
 
@@ -50,18 +42,21 @@ class BottleList extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <FlatList
-                data={this.props.bottles || []}
-                renderItem={({ item }) => (
-                    <BottleListItem
-                        bottle={{ ...item }}
-                        onPress={() => navigate('BottleDetail', { bottle: { ...item } })}
-                    />
-                )}
-                keyExtractor={item => item.id}
-                ListHeaderComponent={this.renderHeader}
-                ListFooterComponent={this.renderFooter}
-            />
+            <View>
+              <FlatList
+                  data={this.props.bottles || []}
+                  renderItem={({ item }) => (
+                      <BottleListItem
+                          bottle={{ ...item }}
+                          onPress={() => navigate('BottleDetail', { bottle: { ...item } })}
+                      />
+                  )}
+                  keyExtractor={item => item.id}
+                  ListHeaderComponent={this.renderHeader}
+                  ListFooterComponent={this.renderFooter}
+              />
+              <Button title="Add Bottle" onPress={this._onAddPress.bind(this)} />
+            </View>
         );
     }
 }

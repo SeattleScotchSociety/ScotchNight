@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import FadeInView from '../components/FadeInView';
+import TypeWriter from 'react-native-typewriter';
 
 export default class Splash extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class Splash extends Component {
     }
 
     componentDidMount() {
-        setTimeout(this._startApp, 4000);
+        setTimeout(this._startApp, 1000);
     }
 
     _startApp = () => {
@@ -29,15 +30,10 @@ export default class Splash extends Component {
                 style={{
                     flex: 1,
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    backgroundColor: '#fff'
                 }}>
-                <Image style={styles.image} source={require('../../assets/main.jpg')}>
-                    <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Text style={styles.headerText}>Seattle Scotch Society</Text>
-                        <Text style={styles.headerText}>Presents</Text>
-                        <Text style={styles.headerText}>Scotch Night</Text>
-                    </View>
-                </Image>
+                <Image style={styles.image} source={require('../../assets/logo-500.png')}></Image>
             </FadeInView>
         );
     }
@@ -49,24 +45,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: 20,
-        backgroundColor: '#ecf0f1'
-    },
-    paragraph: {
-        margin: 24,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: '#34495e'
+        backgroundColor: '#fff'
     },
     image: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+      width: 250,
+      height: 230
     },
-    headerText: {
-        backgroundColor: 'transparent',
-        color: 'white',
-        fontSize: 36,
-        fontWeight: '600'
+    titleText: {
+      marginTop: 10,
+      fontSize: 50
     }
 });

@@ -1,11 +1,15 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { getAllEvents } from '../api/EventsApi';
 import EventListItem from '../components/EventListItem';
 
 class EventList extends React.Component {
+    static navigationOptions = {
+        title: 'Events'
+    };
+
     constructor(props) {
         super(props);
         const events = getAllEvents();
@@ -22,6 +26,10 @@ class EventList extends React.Component {
         });
     }
 
+    _handleOnPress() {
+
+    }
+
     _renderItem = ({ item }) => {
         return (
             <EventListItem
@@ -30,14 +38,10 @@ class EventList extends React.Component {
             />
         );
     };
+
     render() {
         return (
             <View style={styles.container}>
-                <Image style={styles.image} source={require('../../../assets/scotch-hero.jpg')}>
-                    <Text style={styles.headerText}>Seattle</Text>
-                    <Text style={styles.headerText}>Scotch</Text>
-                    <Text style={styles.headerText}>Society</Text>
-                </Image>
                 <FlatList
                     data={this.state.events}
                     renderItem={this._renderItem}
@@ -45,6 +49,7 @@ class EventList extends React.Component {
                     ListHeaderComponent={this.renderHeader}
                     ListFooterComponent={this.renderFooter}
                 />
+                <Button title="Add New Event" color="#607D8B" onPress={this._handleOnPress} />
             </View>
         );
     }
@@ -60,12 +65,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
-    },
-    image: {
-        height: 250,
-        width: null,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     headerText: {
         backgroundColor: 'transparent',

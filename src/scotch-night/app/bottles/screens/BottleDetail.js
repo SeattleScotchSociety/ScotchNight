@@ -1,39 +1,97 @@
 // @flow
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-const BottleDetail = (props: any) => {
-    let { bottle } = props.navigation.state.params;
+const BottleRatingText = (props: any) => {
+    let {rating} = props;
 
+    if(rating === 0) {
+        return (
+            <View>
+                <Text style={{textAlign: 'center', fontSize: 10, fontStyle: 'italic', color: '#333'}}>how was it?</Text>
+            </View>
+        );
+    }
     return (
-        <View style={styles.container}>
-            <View style={styles.bottleContainer}>
-                <Image
-                    style={{ width: 100, height: 100 }}
-                    source={{
-                        uri: bottle.bottleImageUrl
-                    }}
-                />
-                <View style={styles.bottleDetailContainer}>
-                    <Text style={styles.distillery}>{bottle.distillery}</Text>
-                    <Text style={styles.bottleName}>{bottle.name}</Text>
-                    <Text style={styles.description}>{bottle.description}</Text>
-                </View>
-            </View>
-            <View style={styles.providerContainer}>
-                <Image
-                    style={styles.providerImage}
-                    source={{
-                        uri: 'http://www.westlanddistillery.com/assets/media/whiskeys/5e4a5c3c6cdbfabdcf67941c83f9e7d9.jpg'
-                    }}
-                />
-                <View style={styles.providerDetailsContainer}>
-                    <Text style={styles.providerName}>Adam Phillabaum</Text>
-                    <Text style={styles.meetingDate}>June 12, 2017</Text>
-                </View>
-            </View>
+        <View>
+            <Text style={{textAlign: 'center', fontSize: 10, fontStyle: 'italic', color: '#333'}}>you rated this a {rating} out of 5</Text>
         </View>
     );
+};
+
+const BottleRating = (props: any) => {
+    let { onPress, rating } = props;
+    let hearts = [];
+
+    for(let i = 0; i < rating; i++) {
+      hearts.push(
+          <TouchableWithoutFeedback key={i} onPress={onPress.bind(null, i+1)}>
+              <Ionicons name="ios-star" size={40} color='#000' style={{width: 50, height: 40, textAlign: 'center'}} />
+          </TouchableWithoutFeedback>
+      );
+    }
+
+    for(let i = rating; i < 5; i++) {
+      hearts.push(
+          <TouchableWithoutFeedback key={i} onPress={onPress.bind(null, i+1)}>
+              <Ionicons name="ios-star-outline" size={40} color='#000' style={{width: 50, height: 40, textAlign: 'center'}} />
+          </TouchableWithoutFeedback>
+      );
+    }
+
+    return (
+        <View style={{flexDirection: 'column'}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
+                {hearts}
+            </View>
+            <BottleRatingText rating={rating} />
+        </View>
+    );
+}
+
+class BottleDetail extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this._handleOnPressRating = this._handleOnPressRating.bind(this);
+
+        this.state = {
+            rating: 0
+        };
+    }
+
+    _handleOnPressRating(rating) {
+        this.setState({ rating: rating });
+    }
+
+    render() {
+        let { bottle } = this.props.navigation.state.params;
+
+        return (
+            <View style={styles.container}>
+                <View style={styles.bottleContainer}>
+                    <Image
+                        style={{ width: '100%', height: 150 }}
+                        source={{
+                            uri: bottle.bottleImageUrl
+                        }}
+                    />
+                </View>
+                <View style={styles.bottleDetailContainer}>
+                    <View>
+                        <Text style={styles.distillery}>{bottle.distillery}</Text>
+                        <Text style={styles.bottleName}>{bottle.name}</Text>
+                    </View>
+                    <View>
+                        <Text style={{fontSize: 10, textAlign: 'center'}}>Rating</Text>
+                        <Text style={{fontSize: 24, textAlign: 'center'}}>4.5/5.0</Text>
+                    </View>
+                </View>
+                <BottleRating rating={this.state.rating} onPress={this._handleOnPressRating} />
+            </View>
+        );
+    }
 };
 
 const PROVIDER_IMAGE_SIZE = 40;
@@ -44,27 +102,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     bottleContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
         flexDirection: 'row'
     },
     bottleDetailContainer: {
-        marginLeft: 20
+        justifyContent: 'space-between',
+        alignItems: 'stretch',
+        flexDirection: 'row',
+        padding: 15
     },
     distillery: {
         fontSize: 24,
-        fontWeight: '500'
+        textAlign: 'center'
     },
     bottleName: {
         fontSize: 18,
-        marginBottom: 12
+        textAlign: 'center'
     },
     description: {
         fontSize: 14
     },
     providerContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
         flexDirection: 'row'
     },
     providerImage: {
@@ -74,12 +131,8 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     providerDetailsContainer: {
-        justifyContent: 'center'
-    },
-    providerName: {
-        color: 'purple',
-        fontSize: 18,
-        fontWeight: '500'
+        justifyContent: 'center',
+        flexDirection: 'column'
     },
     meetingDate: {
         fontSize: 13
