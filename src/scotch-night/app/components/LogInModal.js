@@ -3,9 +3,6 @@ import { Text, StyleSheet, Button, Animated, Alert } from 'react-native';
 import Modal from 'react-native-root-modal';
 import Exponent from 'expo';
 
-import User from '../user';
-let { userLoggedIn } = User.Actions;
-
 export default class LogInModal extends React.Component {
     constructor(props) {
         super(props);
@@ -20,15 +17,18 @@ export default class LogInModal extends React.Component {
             type,
             token
         } = await Exponent.Facebook.logInWithReadPermissionsAsync('284544882006268', {
-                permissions: ['public_profile'],
+                permissions: ['public_profile', 'email'],
                 behavior: 'web'
             });
         if (type === 'success') {
-            // Get the user's name using Facebook's Graph API
-            const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-            Alert.alert('Logged in!', `Hi ${JSON.stringify(await response.json())}!`);
+            const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,first_name,last_name`);
 
-            loggedInCallback(token);
+            let { email, first_name: firstName, last_name: lastName } = response.json();
+
+            Alert.alert('Logged in!', `Hi ${firstName} ${lastName}!`);
+            Alert.alert('Logged in!', `Hi ${JSON.stringify(response.json())}!`);
+
+            loggedInCallback(token, email, firstName, lastName);
         }
     }
 

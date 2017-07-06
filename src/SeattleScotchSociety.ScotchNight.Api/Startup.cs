@@ -28,6 +28,11 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true);
 
+            if (environment.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
             builder.AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -65,12 +70,10 @@ namespace SeattleScotchSociety.ScotchNight.Api
         {
             try
             {
-                var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken));
-
                 builder.AddAzureKeyVault(
                     Configuration["KeyVault:Name"],
-                    keyVaultClient,
-                    new DefaultKeyVaultSecretManager());
+                    Configuration["AzureAd:ClientId"],
+                    Configuration["AzureAd:ClientSecret"]);
 
                 Configuration = builder.Build();
             }
@@ -79,28 +82,6 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 Console.WriteLine("There was an Http error adding KeyVault as a configuration source.  This usually means you don't have an internet connection.");
                 throw;
             }
-        }
-
-        private ClientAssertionCertificate GetCert()
-        {
-            X509Certificate2 cert;
-
-            using (X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
-            {
-                var thumbprint = Configuration["AzureAd:CertThumbprint"];
-                Console.WriteLine($"thumbprint: ${thumbprint}");
-                store.Open(OpenFlags.ReadOnly);
-                cert = store.FindCertificateByThumbprint(thumbprint);
-            }
-
-            return new ClientAssertionCertificate(Configuration["AzureAd:ClientId"], cert);
-        }
-
-        private async Task<string> GetAccessToken(string authority, string resource, string scope)
-        {
-            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
-            var result = await context.AcquireTokenAsync(resource, GetCert());
-            return result.AccessToken;
         }
     }
 }

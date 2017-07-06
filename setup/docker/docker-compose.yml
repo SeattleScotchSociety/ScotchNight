@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  payscale.consumersurvey.web:
+    image: payscale.consumersurvey.web
+    build:
+      context: ./src/Payscale.ConsumerSurvey.Web
+      dockerfile: Dockerfile

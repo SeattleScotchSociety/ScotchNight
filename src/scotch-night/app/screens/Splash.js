@@ -32,7 +32,6 @@ class Splash extends Component {
     _validateUserToken = () => {
         const { isLoggedIn } = this.props;
 
-        alert(`is? ${isLoggedIn}`);
         if (isLoggedIn) {
             this._startApp();
 
@@ -49,10 +48,10 @@ class Splash extends Component {
         this.setState({ modalVisible: true });
     }
 
-    _loginUser = (token) => {
+    _loginUser = (token, email, firstName, lastName) => {
         let { userLoggedIn } = this.props.actions;
 
-        userLoggedIn(token);
+        userLoggedIn(token, email, firstName, lastName);
         this._startApp();
     };
 

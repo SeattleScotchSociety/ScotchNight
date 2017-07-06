@@ -4,10 +4,12 @@ using SeattleScotchSociety.ScotchNight.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SeattleScotchSociety.ScotchNight.Api.Filters;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ValidateModel]
     public class BottlesController : Controller
     {
         private IBottleStore _bottleStore;
@@ -40,9 +42,11 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         }
 
         [HttpPost]
-        public async void PostAsync([FromBody]Bottle bottle)
+        public async Task<IActionResult> PostAsync([FromBody]Bottle bottle)
         {
             await _bottleStore.AddAsync(bottle);
+
+            return Ok();
         }
 
         [HttpPut]

@@ -1,12 +1,13 @@
 import { USER_LOGGED_IN, USER_LOGGED_OUT } from './UserActionTypes';
 
-export const userLoggedIn = (token, username, name) => {
+export const userLoggedIn = (token, email, firstName, lastName) => {
     return {
         type: USER_LOGGED_IN,
         payload: {
             token,
-            username,
-            name
+            email,
+            firstName,
+            lastName
         }
     };
 };

@@ -10,7 +10,10 @@
             "args": [],
             "cwd": "${workspaceRoot}/src/SeattleScotchSociety.ScotchNight.Api",
             "stopAtEntry": false,
-            "console": "internalConsole"
+            "console": "internalConsole",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
         },
         {
             "name": ".NET Core Launch (web)",
