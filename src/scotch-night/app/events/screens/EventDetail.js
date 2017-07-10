@@ -1,25 +1,25 @@
 // @flow
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 const EventDetail = (props: any) => {
-    let { event } = props.navigation.state.params;
+    let { title, location, description, date, menu } = props.navigation.state.params;
 
     return (
         <View style={styles.container}>
             <View style={styles.eventContainer}>
-                <Image
-                    style={{ width: 100, height: 100 }}
-                    source={{
-                        uri: event.eventImageUrl
-                    }}
-                />
                 <View style={styles.eventDetailContainer}>
-                    <Text style={styles.distillery}>{event.date}</Text>
-                    <Text style={styles.eventName}>{event.location}</Text>
-                    <Text style={styles.description}>{event.description}</Text>
+                    <Text style={styles.distillery}>{date}</Text>
+                    <Text style={styles.eventName}>{location}</Text>
+                    <Text style={styles.description}>{description}</Text>
+                    <Text style={styles.description}>{title}</Text>
                 </View>
             </View>
+            <Text>Tasting Menu</Text>
+            <FlatList
+                data={menu}
+                renderItem={({item}) => <ListItem title={`${item.distillery} ${item.name}`} />} />
         </View>
     );
 };

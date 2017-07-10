@@ -7,16 +7,20 @@ import {
     KeyboardAvoidingView,
     TextInput,
     StyleSheet,
-    StatusBar
+    StatusBar,
+    Switch,
+    Text
 } from 'react-native';
+import DatePicker from 'react-native-datepicker'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as eventActions from '../EventActions';
 import GrowingTextInput from '../../components/GrowingTextInput';
+import { MaterialIcons } from '@expo/vector-icons';
 
 class AddEvent extends Component {
     static navigationOptions = {
-        title: 'Add Event'
+        title: 'New Event'
     };
 
     constructor(props) {
@@ -25,21 +29,22 @@ class AddEvent extends Component {
         this.state = {
             event: {
                 id: '',
-                date: '',
+                date: new Date(),
                 location: '',
                 description: ''
             }
         };
 
         this._handleOnAddPress = this._handleOnAddPress.bind(this);
+        this._handleOnChange = this._handleOnChange.bind(this);
     }
 
-    _handleTextChange = (property, value) => {
+    _handleOnChange = (property, value) => {
         let { event } = this.state;
+        let newEvent = {...event};
 
-        event[property] = value;
-
-        this.setState({ event });
+        newEvent[property] = value;
+        this.setState({ event: newEvent });
     };
 
     _handleOnAddPress = () => {
@@ -53,35 +58,29 @@ class AddEvent extends Component {
 
     render() {
         let { event } = this.state;
+        let now = new Date();
+        let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        let yearFromToday = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
 
         return (
-            <KeyboardAvoidingView
-                behavior="padding"
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    paddingHorizontal: 20,
-                    paddingTop: 20
-                }}>
-                <ScrollView
-                    style={{ flex: 1, backgroundColor: '#F8F8F9' }}
-                    contentContainerStyle={{ paddingTop: 30 }}>
-
+            <View>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
                     <View style={[styles.row, styles.firstRow]}>
                         <TextInput
-                            value={event.date}
-                            placeholder="Date"
-                            onChangeText={this._handleTextChange.bind(this, 'date')}
+                            ref={view => {
+                                this._titleInput = view;
+                            }}
+                            value={event.title}
+                            placeholder="Title"
+                            onChangeText={this._handleOnChange.bind(this, 'title')}
                             style={styles.textInput}
                             autoCapitalize="words"
                             autoCorrect={false}
-                            autoFocus={true}
                             blurOnSubmit={false}
                             returnKeyType="next"
                             onSubmitEditing={async () => {
                                 this._locationInput.focus();
-                            }}
-                        />
+                            }} />
                     </View>
                     <View style={styles.row}>
                         <TextInput
@@ -90,43 +89,65 @@ class AddEvent extends Component {
                             }}
                             value={event.location}
                             placeholder="Location"
-                            onChangeText={this._handleTextChange.bind(this, 'location')}
+                            onChangeText={this._handleOnChange.bind(this, 'location')}
                             style={styles.textInput}
                             autoCapitalize="words"
                             autoCorrect={false}
                             blurOnSubmit={false}
-                            returnKeyType="next"
-                            onSubmitEditing={async () => {
-                                this._descriptionInput.focus();
+                            returnKeyType="next" />
+                    </View>
+                </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
+                    <View style={[styles.row, styles.firstRow]}>
+                        <Text style={styles.label}>Date</Text>
+                        <DatePicker
+                            style={{width: 180}}
+                            date={event.date}
+                            mode="datetime"
+                            format="MMMM Do YYYY  h:mm a"
+                            minDate={today}
+                            maxDate={yearFromToday}
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            customStyles={{
+                                dateInput: {
+                                    borderWidth: 0
+                                }
                             }}
-                        />
+                            showIcon={false}
+                            onDateChange={this._handleOnChange.bind(this, 'date')} />
+                    </View>
+                </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Public Event</Text>
+                        <Switch onChange={this._handleOnChange.bind(this, 'public')} />
                     </View>
                     <View style={styles.row}>
+                        <Text style={styles.label}>Invitees</Text>
+                        <MaterialIcons name="chevron-right" size={30} />
+                    </View>
+                </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
+                    <View style={styles.row}>
                         <GrowingTextInput
-                            ref={view => {
-                                this._descriptionInput = view;
-                            }}
-                            minHeight={80}
+                            placeholder='Description'
+                            ref={view => { this._descriptionInput = view; }}
+                            minHeight={60}
                             value={event.description}
-                            placeholder="Description"
-                            onChangeText={this._handleTextChange.bind(this, 'description')}
-                            style={styles.growingTextInput}
+                            onChangeText={this._handleOnChange.bind(this, 'description')}
                             autoCapitalize="sentences"
                             autoCorrect={false}
                             blurOnSubmit={false}
-                        />
+                            returnKeyType="next"
+                            style={styles.textInput} />
                     </View>
-                    <Button
-                        title="Save"
-                        onPress={this._handleOnAddPress}
-                        style={{
-                            backgroundColor: 'maroon'
-                        }}
-                    />
-                </ScrollView>
-
+                </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
+                    <Button title="Create New Event" onPress={this._handleOnAddPress} color="#009688" />
+                </KeyboardAvoidingView>
                 <StatusBar barStyle="light-content" />
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }
@@ -150,7 +171,16 @@ const styles = StyleSheet.create({
     row: {
         backgroundColor: '#fff',
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderColor: '#ccc'
+        borderColor: '#ccc',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 5,
+        alignItems: 'center'
+    },
+    label: {
+        marginLeft: 15,
+        fontSize: 16
     },
     firstRow: {
         borderTopWidth: StyleSheet.hairlineWidth,
@@ -159,11 +189,12 @@ const styles = StyleSheet.create({
     textInput: {
         flex: 1,
         height: 45,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        fontSize: 16
     },
     growingTextInput: {
         paddingHorizontal: 15,
         paddingVertical: 15,
-        fontSize: 15
+        fontSize: 16
     }
 });

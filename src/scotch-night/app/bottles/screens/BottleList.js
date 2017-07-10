@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Button, View, FlatList, ActivityIndicator } from 'react-native';
+import { Image, Text, StyleSheet, Button, View, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getAllBottles } from '../api/BottlesApi';
@@ -43,6 +43,10 @@ class BottleList extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <View>
+                <View>
+                    <Image style={{width:'100%', height: 100}} source={{uri: 'https://littletipple.files.wordpress.com/2012/03/aberlour-004.jpg'}} />
+                    <Text style={{marginTop: -40, marginRight: 20, backgroundColor: 'transparent', textAlign: 'right', fontSize: 25, color: '#fff', fontFamily: 'Roboto'}}>Discover Scotch</Text>
+                </View>
               <FlatList
                   data={this.props.bottles || []}
                   renderItem={({ item }) => (

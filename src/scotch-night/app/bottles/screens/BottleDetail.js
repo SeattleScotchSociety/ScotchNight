@@ -70,14 +70,6 @@ class BottleDetail extends React.Component {
 
         return (
             <View style={styles.container}>
-                <View style={styles.bottleContainer}>
-                    <Image
-                        style={{ width: '100%', height: 150 }}
-                        source={{
-                            uri: bottle.bottleImageUrl
-                        }}
-                    />
-                </View>
                 <View style={styles.bottleDetailContainer}>
                     <View>
                         <Text style={styles.distillery}>{bottle.distillery}</Text>
