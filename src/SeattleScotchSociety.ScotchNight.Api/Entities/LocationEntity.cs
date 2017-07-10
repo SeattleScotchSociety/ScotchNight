@@ -49,6 +49,6 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
 
         public string State { get; set; }
 
-        public string Zip { get; set; }
+        public string ZipCode { get; set; }
     }
 }

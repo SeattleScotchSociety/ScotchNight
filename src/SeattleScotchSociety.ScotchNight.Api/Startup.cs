@@ -68,6 +68,33 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 return store;
             });
 
+            services.AddSingleton<IEventStore>(provider =>
+            {
+                var store = new AzureEventStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
+            services.AddSingleton<INoteStore>(provider =>
+            {
+                var store = new AzureNoteStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
+            services.AddSingleton<ILocationStore>(provider =>
+            {
+                var store = new AzureLocationStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
             services.AddMvc();
         }
 

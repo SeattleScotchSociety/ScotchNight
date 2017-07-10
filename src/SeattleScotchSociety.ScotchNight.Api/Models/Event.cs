@@ -1,17 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Models
 {
     public class Event
     {
-        [Required]
-        public string Distillery { get; set; }
+        public string Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        public string LocationId { get; set; }
 
-        public int Age { get; set; }
+        public string Title { get; set; }
 
-        public string Notes { get; set; }
+        public string Description { get; set; }
+
+        public IEnumerable<string> Attendees { get; set; }
     }
 }
