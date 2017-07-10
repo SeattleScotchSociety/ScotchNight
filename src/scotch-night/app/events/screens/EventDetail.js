@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 function TastingMenu(props) {
     let { menu, onPress } = props;
@@ -44,12 +45,18 @@ class EventDetail extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.eventContainer}>
-                    <View style={styles.eventDetailContainer}>
-                        <Text style={styles.distillery}>{date}</Text>
-                        <Text style={styles.eventName}>{location}</Text>
-                        <Text style={styles.description}>{description}</Text>
-                        <Text style={styles.description}>{title}</Text>
+                    <Text style={styles.eventTitle}>{title}</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 5 }}>
+                        <View style={{ flexDirection: 'row', marginRight: 10 }}>
+                            <SimpleLineIcons name='location-pin' color='#80807f' size={16} />
+                            <Text style={styles.eventDetail}>{location}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <SimpleLineIcons name='calendar' color='#80807f' size={16} />
+                            <Text style={styles.eventDetail}>{date}</Text>
+                        </View>
                     </View>
+                    <Text style={styles.description}>{description}</Text>
                 </View>
                 <Text style={styles.menuHeader}>Tasting Menu</Text>
                 <TastingMenu menu={menu} onPress={this._handleOnPress} />
@@ -67,22 +74,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     eventContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
-    eventDetailContainer: {
-        marginLeft: 20
-    },
-    eventName: {
-        fontSize: 18,
-        marginBottom: 12
+    eventTitle: {
+        marginTop: 20,
+        marginLeft: 15,
+        marginBottom: 5,
+        color: '#00817d',
+        fontWeight: 'bold',
+        fontSize: 18
     },
     description: {
-        fontSize: 14
+        marginBottom: 20,
+        marginLeft: 15
     },
-    meetingDate: {
-        fontSize: 13
+    eventDetail: {
+        color: '#80807f',
+        marginLeft: 5
     },
     menuHeader: {
         color: '#00817d',

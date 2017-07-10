@@ -6,6 +6,10 @@ import { bindActionCreators } from 'redux';
 import * as memberActions from '../MemberActions';
 
 class SetMember extends Component {
+    static navigationOptions = {
+        title: 'Scotch Night'
+    };
+
     constructor(props) {
         super(props);
 
@@ -35,7 +39,7 @@ class SetMember extends Component {
         })
 
         return (
-            <View>
+            <View style={{ flex: 1, backgroundColor: '#fff' }}>
                 <Text style={styles.welcome}>Welcome to Scotch Night</Text>
                 <Text style={styles.iam}>And you are...</Text>
                 <Picker
@@ -50,8 +54,6 @@ class SetMember extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('state me');
-    console.log(JSON.stringify(state));
     return state;
 }
 
@@ -62,13 +64,6 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(SetMember);
 
 const styles = StyleSheet.create({
-    viewContainer: {
-        flex: 1,
-        backgroundColor: '#fff',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-    },
     welcome: {
         textAlign: 'center',
         marginTop: 100,
