@@ -1,11 +1,48 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Text, View, Image, SectionList, Button, ListItem } from 'react-native';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getAllEvents } from '../api/EventsApi';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import EventListItem from '../components/EventListItem';
 
+function EventSubList(props) {
+    if(props.list.length === 0) {
+        return (
+            <Text style={styles.noEvents}>No Events</Text>
+        );
+    }
+
+    return (
+        <List>
+            {
+                props.list.map((l, i) => (
+                    <ListItem
+                        key={i}
+                        title={
+                            <View style={{ flexDirection: 'row', margin: 5 }}>
+                                <View><Text style={{ fontSize: 13 }}>{l.date}</Text></View>
+                                <View style={{ flexDirection: 'column', marginLeft: 10 }}>
+                                    <View><Text style={{ fontSize: 15 }}>{l.title}</Text></View>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <SimpleLineIcons name='location-pin' size={16} color='#80807f' />
+                                        <Text style={{ color: '#80807f' }}> {l.location}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        } />
+                ))
+            }
+        </List>
+    );
+}
+
 class EventList extends React.Component {
+    static navigationOptions = {
+        title: 'Events'
+    };
+
     constructor(props) {
         super(props);
         const events = getAllEvents();
@@ -50,14 +87,12 @@ class EventList extends React.Component {
 
         return (
             <View style={styles.container}>
-                <SectionList
-                    renderItem={({item}) => <EventListItem {...item} onPress={() => navigate('EventDetail', item)} />}
-                    renderSectionHeader={({section}) => <Text style={styles.header}>{section.title}</Text>}
-                    sections={[
-                        { data: today, key: 'today', title: 'Today' },
-                        { data: upcoming, key: 'upcoming', title: 'Upcoming' },
-                        { data: past, key: 'past', title: 'Past' }
-                    ]} />
+                <Text style={styles.headerText}>Today</Text>
+                <EventSubList list={today} />
+                <Text style={styles.headerText}>Upcoming</Text>
+                <EventSubList list={upcoming} />
+                <Text style={styles.headerText}>Past</Text>
+                <EventSubList list={past} />
             </View>
         );
     }
@@ -74,19 +109,22 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
-    headerText: {
-        backgroundColor: 'transparent',
-        color: 'white',
-        fontSize: 24
+    location: {
+        flexDirection: 'row',
+        margin: 5
     },
-    header: {
-        width: '100%',
-        fontSize: 20,
-        textAlign: 'center',
-        backgroundColor: '#00817d',
-        color: '#fff',
-        padding: 5,
-        borderBottomWidth: 1,
-        borderColor: '#ccc'
+    headerText: {
+        color: '#00817d',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: -10,
+        marginLeft: 15
+    },
+    noEvents: {
+        marginTop: 20,
+        marginLeft: 15,
+        marginBottom: 20,
+        color: '#80807f'
     }
 });

@@ -1,8 +1,8 @@
 {
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 9697,
+  "packagerPort": 19002,
+  "packagerPid": 10129,
   "expoServerNgrokUrl": "https://ru-k7p.ncua.scotch-night.exp.direct",
   "packagerNgrokUrl": "https://packager.ru-k7p.ncua.scotch-night.exp.direct",
-  "ngrokPid": 9708
+  "ngrokPid": 10142
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Picker, Button } from 'react-native';
+import { View, Text, StyleSheet, Picker } from 'react-native';
+import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as memberActions from '../MemberActions';
@@ -23,8 +24,6 @@ class SetMember extends Component {
 
     render() {
         let { members } = this.props;
-        console.log('render members');
-        console.log(members)
 
         let memberItems = members.members.map((member) => {
             return (
@@ -44,7 +43,7 @@ class SetMember extends Component {
                     onValueChange={member => this._handleTextChange(member)}>
                     {memberItems}
                 </Picker>
-                <Button title='Start Tasting' onPress={this._handleOnPress} />
+                <Button backgroundColor='#00817d' title='Start Tasting' onPress={this._handleOnPress} />
             </View>
         );
     }
