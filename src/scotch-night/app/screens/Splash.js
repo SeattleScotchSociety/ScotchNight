@@ -26,7 +26,7 @@ class Splash extends Component {
     };
 
     componentDidMount() {
-        setTimeout(this._validateUserToken, 4000);
+        setTimeout(this._startApp, 4000);
     }
 
     _validateUserToken = () => {

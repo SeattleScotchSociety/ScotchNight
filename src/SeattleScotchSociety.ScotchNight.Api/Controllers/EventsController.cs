@@ -10,19 +10,19 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
 {
     [Route("api/[controller]")]
     [ValidateModel]
-    public class BottlesController : Controller
+    public class EventsController : Controller
     {
-        private IBottleStore _bottleStore;
+        private IEventStore _eventStore;
 
-        public BottlesController(IBottleStore bottleStore)
+        public EventsController(IEventStore eventStore)
         {
-            _bottleStore = bottleStore;
+            _eventStore = eventStore;
         }
 
         [HttpGet]
-        public Task<IEnumerable<Bottle>> GetAllAsync()
+        public Task<IEnumerable<Event>> GetAllAsync()
         {
-            return _bottleStore.GetAllAsync();
+            return _eventStore.GetAllAsync();
         }
 
         [HttpGet("{id}")]
@@ -32,25 +32,25 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody]Bottle bottle)
+        public async Task<IActionResult> PostAsync([FromBody]Event @event)
         {
-            await _bottleStore.AddAsync(bottle);
+            await _eventStore.AddAsync(@event);
 
             return Accepted();
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutAsync([FromBody]Bottle bottle)
+        public async Task<IActionResult> PutAsync([FromBody]Event @event)
         {
-            await _bottleStore.UpdateAsync(bottle);
+            await _eventStore.UpdateAsync(@event);
 
             return Accepted();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody]Bottle bottle)
+        public async Task<IActionResult> Delete([FromBody]Event @event)
         {
-            await _bottleStore.DeleteAsync(bottle);
+            await _eventStore.DeleteAsync(@event);
 
             return Accepted();
         }

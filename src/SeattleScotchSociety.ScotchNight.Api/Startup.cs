@@ -23,6 +23,8 @@ namespace SeattleScotchSociety.ScotchNight.Api
     {
         public Startup(IHostingEnvironment environment)
         {
+            Environment = environment;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -42,6 +44,8 @@ namespace SeattleScotchSociety.ScotchNight.Api
 
         public IConfigurationRoot Configuration { get; private set; }
 
+        public IHostingEnvironment Environment { get; private set; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAzureTableStorage(Configuration["TableStorageConnectionString"]);
@@ -55,13 +59,21 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 return store;
             });
 
+            services.AddSingleton<IUserStore>(provider =>
+            {
+                var store = new AzureUserStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.ConfigureLogging("Scotch Night", GetApplicationInsightsKey(), Configuration, Environment);
 
             app.UseMvc();
         }
@@ -82,6 +94,12 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 Console.WriteLine("There was an Http error adding KeyVault as a configuration source.  This usually means you don't have an internet connection.");
                 throw;
             }
+        }
+
+        private string GetApplicationInsightsKey()
+        {
+            var instrumentationKey = Configuration["ApplicationInsights:InstrumentationKey"];
+            return instrumentationKey;
         }
     }
 }
