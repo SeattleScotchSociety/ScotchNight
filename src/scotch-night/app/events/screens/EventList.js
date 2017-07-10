@@ -1,14 +1,16 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getAllEvents } from '../api/EventsApi';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import EventListItem from '../components/EventListItem';
 
 function EventSubList(props) {
-    if(props.list.length === 0) {
+    let { list, onPress } = props;
+
+    if(list.length === 0) {
         return (
             <Text style={styles.noEvents}>No Events</Text>
         );
@@ -17,7 +19,7 @@ function EventSubList(props) {
     return (
         <List>
             {
-                props.list.map((l, i) => (
+                list.map((l, i) => (
                     <ListItem
                         key={i}
                         title={
@@ -31,7 +33,8 @@ function EventSubList(props) {
                                     </View>
                                 </View>
                             </View>
-                        } />
+                        }
+                        onPress={onPress.bind(null, l)} />
                 ))
             }
         </List>
@@ -65,6 +68,8 @@ class EventList extends React.Component {
             }
         });
 
+        this._handleOnPress = this._handleOnPress.bind(this);
+
         this.state = {
             events,
             past,
@@ -81,18 +86,27 @@ class EventList extends React.Component {
         });
     }
 
+    _handleOnPress(e) {
+        let { navigate } = this.props.navigation;
+        navigate('EventDetail', e);
+    }
+
+    _handleOnAddEvent() {
+
+    }
+
     render() {
         let { past, upcoming, today, events } = this.state;
-        const { navigate } = this.props.navigation;
 
         return (
             <View style={styles.container}>
                 <Text style={styles.headerText}>Today</Text>
-                <EventSubList list={today} />
+                <EventSubList list={today} onPress={this._handleOnPress} />
                 <Text style={styles.headerText}>Upcoming</Text>
-                <EventSubList list={upcoming} />
+                <EventSubList list={upcoming} onPress={this._handleOnPress} />
                 <Text style={styles.headerText}>Past</Text>
-                <EventSubList list={past} />
+                <EventSubList list={past} onPress={this._handleOnPress} />
+                <Button style={{ marginTop: 20 }} title="Add New Event" backgroundColor='#00817d' onPress={this._handleOnAddEvent} />
             </View>
         );
     }
