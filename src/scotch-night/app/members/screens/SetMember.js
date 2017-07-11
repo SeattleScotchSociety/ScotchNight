@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Picker } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, Text, StyleSheet, Picker, Image } from 'react-native';
+import { Button, Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as memberActions from '../MemberActions';
@@ -39,9 +39,12 @@ class SetMember extends Component {
         })
 
         return (
-            <View style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Text style={styles.welcome}>Welcome to Scotch Night</Text>
-                <Text style={styles.iam}>And you are...</Text>
+            <View style={{ flex: 1 }}>
+                <Tile
+                    imageSrc={require('../../../assets/whiskey-image.jpg')}
+                    title="Welcome to Scotch Night"
+                    featured
+                    caption="" />
                 <Picker
                     selectedValue={members.current}
                     onValueChange={member => this._handleTextChange(member)}>
@@ -65,13 +68,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(SetMember);
 
 const styles = StyleSheet.create({
     welcome: {
-        textAlign: 'center',
-        marginTop: 100,
-        fontSize: 30
-    },
-    iam: {
-        textAlign: 'center',
-        marginTop: 20,
-        fontSize: 25
+        fontSize: 30,
+        color: '#fff',
+        backgroundColor: 'transparent'
     }
 });
