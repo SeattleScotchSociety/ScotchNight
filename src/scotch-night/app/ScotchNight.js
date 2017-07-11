@@ -28,6 +28,7 @@ const MainApp = StackNavigator(
     },
     {
         navigationOptions: {
+            ...defaultNavigationOptions
         }
     }
 );

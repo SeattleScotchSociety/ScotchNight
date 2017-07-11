@@ -28,7 +28,7 @@ function NoteEditor(props) {
     return (
         <View style={{flexDirection: 'column'}}>
             <Text style={styles.subheader}>{note}</Text>
-            <Slider thumbStyle={{ backgroundColor: '#00817d', marginTop: 3 }} trackStyle={{ height: 10, backgroundColor: '#fff', borderColor: '#a6a6a5', borderWidth: 1 }} key={`${note}${resetCount}`} maximumValue={100} value={rating} onSlidingComplete={onChange} />
+            <Slider thumbStyle={{ backgroundColor: '#00817d', marginTop: 3, marginLeft: -1 }} trackStyle={{ height: 10, backgroundColor: '#fff', borderColor: '#a6a6a5', borderWidth: 1, width: '98%' }} key={`${note}${resetCount}`} maximumValue={100} value={rating} onSlidingComplete={onChange} />
         </View>
     );
 }
@@ -59,7 +59,7 @@ function Overview(props) {
 }
 
 function MyNotes(props) {
-    let { onFinishRating, view, notes, save, reset, resetCount, onChangeThoughts } = props;
+    let { onFinishRating, view, notes, save, reset, resetCount, onChange } = props;
 
     if(view !== 1) {
         return null;
@@ -72,19 +72,19 @@ function MyNotes(props) {
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 15 }}>
                 <Rating key={resetCount} imageSize={40} startingValue={notes.rating ? notes.rating : 0} onFinishRating={onFinishRating} />
             </View>
-            <NoteEditor resetCount={resetCount} note='Finish' rating={notes.finish} />
-            <NoteEditor resetCount={resetCount} note='Fruity' rating={notes.fruity} />
-            <NoteEditor resetCount={resetCount} note='Vanilla' rating={notes.vanilla} />
-            <NoteEditor resetCount={resetCount} note='Smoky' rating={notes.smoky} />
-            <NoteEditor resetCount={resetCount} note='Citrus' rating={notes.citrus} />
-            <NoteEditor resetCount={resetCount} note='Oily' rating={notes.oily} />
-            <NoteEditor resetCount={resetCount} note='Peppery' rating={notes.peppery} />
+            <NoteEditor resetCount={resetCount} note='Finish' rating={notes.finish} onChange={onChange.bind(null, 'finish')} />
+            <NoteEditor resetCount={resetCount} note='Fruity' rating={notes.fruity} onChange={onChange.bind(null, 'fruity')} />
+            <NoteEditor resetCount={resetCount} note='Vanilla' rating={notes.vanilla} onChange={onChange.bind(null, 'vanilla')} />
+            <NoteEditor resetCount={resetCount} note='Smoky' rating={notes.smoky} onChange={onChange.bind(null, 'smoky')} />
+            <NoteEditor resetCount={resetCount} note='Citrus' rating={notes.citrus} onChange={onChange.bind(null, 'citrus')} />
+            <NoteEditor resetCount={resetCount} note='Oily' rating={notes.oily} onChange={onChange.bind(null, 'oily')} />
+            <NoteEditor resetCount={resetCount} note='Peppery' rating={notes.peppery} onChange={onChange.bind(null, 'peppery')} />
             <View style={{flexDirection: 'column'}}>
                 <Text style={styles.subheader}>My Thoughts</Text>
                 <GrowingTextInput
                     minHeight={60}
                     value={notes.thoughts}
-                    onChangeText={onChangeThoughts}
+                    onChangeText={onChange.bind(null, 'thoughts')}
                     autoCapitalize="sentences"
                     autoCorrect={false}
                     blurOnSubmit={false}
@@ -98,6 +98,10 @@ function MyNotes(props) {
 }
 
 class BottleDetail extends React.Component {
+    static navigationOptions = {
+        title: 'Tasting Menu'
+    };
+
     constructor(props) {
         super(props);
 
@@ -105,7 +109,7 @@ class BottleDetail extends React.Component {
         this._handleSelectView = this._handleSelectView.bind(this);
         this._handleOnResetNotes = this._handleOnResetNotes.bind(this);
         this._handleOnSaveNotes = this._handleOnSaveNotes.bind(this);
-        this._handleOnChangeThoughts = this._handleOnChangeThoughts.bind(this);
+        this._handleOnChange = this._handleOnChange.bind(this);
 
         let notes = this.props.notes ? {...this.props.notes} : {};
 
@@ -124,9 +128,9 @@ class BottleDetail extends React.Component {
         this.setState({ notes: { rating: rating }});
     }
 
-    _handleOnChangeThoughts(value) {
+    _handleOnChange(note, value) {
         let update = {...this.state.notes};
-        update.thoughts = value;
+        update[note] = value;
         this.setState({ notes: update });
     }
 
@@ -154,8 +158,8 @@ class BottleDetail extends React.Component {
                         containerStyle={{height: 30, marginTop: 20}}
                         selectedIndex={view}
                         onPress={this._handleSelectView} />
-                    <Overview view={view} notes={bottle.notes} thoughts={bottle.memberNotes.thoughts} />
-                    <MyNotes resetCount={resetCount} notes={bottle.memberNotes} view={view} onFinishRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChangeThoughts={this._handleOnChangeThoughts} />
+                    <Overview view={view} notes={bottle.notes} thoughts={this.state.notes.thoughts} />
+                    <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onFinishRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
                 </View>
             </ScrollView>
         );
