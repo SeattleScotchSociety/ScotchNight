@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import Bottles from './bottles';
 let { AddBottle, BottleList, BottleDetail } = Bottles.Screens;
 
@@ -22,7 +22,9 @@ const MainApp = StackNavigator(
         Member: { screen: SetMember },
         Events: { screen: EventList },
         EventDetail: { screen: EventDetail },
-        Bottle: { screen: BottleDetail }
+        AddEvent: { screen: AddEvent },
+        Bottle: { screen: BottleDetail },
+        AddBottle: { screen: AddBottle }
     },
     {
         navigationOptions: {

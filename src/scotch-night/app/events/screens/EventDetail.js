@@ -36,7 +36,8 @@ class EventDetail extends Component {
     }
 
     _handleOnAddBottle() {
-
+        let { navigate } = this.props.navigation;
+        navigate('AddBottle', {eventId: this.props.navigation.state.params.id});
     }
 
     render() {

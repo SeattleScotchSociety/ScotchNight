@@ -11,7 +11,21 @@ const bottles = [
         memberRatings: [
             { member: 'Shannon Andrews', rating: '4', notes: 'Reminds me of my trip to Islay' },
             { member: 'Travis Merkel', rating: '5', notes: 'I own 27 bottles of this!' }
-        ]
+        ],
+        notes: {
+            rating: 3.4,
+            finish: 80,
+            fruity: 30,
+            vanilla: 20,
+            smoky: 10,
+            citrus: 99,
+            oily: 10,
+            peppery: 50
+        },
+        memberNotes: {
+            finish: 80,
+            thoughts: 'Here are some notes'
+        }
     },
     { id: 2, distillery: 'Laphroaig', name: '18 Year', member: 'tmerkel' }
 ];

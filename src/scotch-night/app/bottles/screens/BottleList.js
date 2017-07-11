@@ -35,7 +35,6 @@ class BottleList extends React.Component {
 
     _onAddPress() {
         const { navigate } = this.props.navigation;
-
         navigate('AddBottle', {});
     }
 

@@ -19,13 +19,39 @@ const events = [
                 id: 1,
                 distillery: 'Aberlour',
                 name: `A'bunadh`,
-                who: 'Louis'
+                who: 'Louis',
+                notes: {
+                    rating: 3.4,
+                    finish: 80,
+                    fruity: 30,
+                    vanilla: 20,
+                    smoky: 10,
+                    citrus: 99,
+                    oily: 10,
+                    peppery: 50
+                },
+                memberNotes: {
+                    finish: 80
+                }
             },
             {
                 id: 2,
                 distillery: 'Grangestone',
                 name: '21yr Single Malt',
-                who: 'Travis'
+                who: 'Travis',
+                notes: {
+                    rating: 3.4,
+                    finish: 80,
+                    fruity: 30,
+                    vanilla: 20,
+                    smoky: 10,
+                    citrus: 99,
+                    oily: 10,
+                    peppery: 50
+                },
+                memberNotes: {
+                    thoughts: 'This stuff is amazing!'
+                }
             }
         ]
     }

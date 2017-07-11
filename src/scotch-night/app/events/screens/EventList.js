@@ -5,7 +5,6 @@ import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getAllEvents } from '../api/EventsApi';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import EventListItem from '../components/EventListItem';
 
 function EventSubList(props) {
     let { list, onPress } = props;
@@ -69,6 +68,7 @@ class EventList extends React.Component {
         });
 
         this._handleOnPress = this._handleOnPress.bind(this);
+        this._handleOnAddEvent = this._handleOnAddEvent.bind(this);
 
         this.state = {
             events,
@@ -92,7 +92,8 @@ class EventList extends React.Component {
     }
 
     _handleOnAddEvent() {
-
+        let { navigate } = this.props.navigation;
+        navigate('AddEvent', {});
     }
 
     render() {

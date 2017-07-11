@@ -120,16 +120,6 @@ class AddEvent extends Component {
                 </KeyboardAvoidingView>
                 <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
                     <View style={styles.row}>
-                        <Text style={styles.label}>Public Event</Text>
-                        <Switch onChange={this._handleOnChange.bind(this, 'public')} />
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Invitees</Text>
-                        <MaterialIcons name="chevron-right" size={30} />
-                    </View>
-                </KeyboardAvoidingView>
-                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
-                    <View style={styles.row}>
                         <GrowingTextInput
                             placeholder='Description'
                             ref={view => { this._descriptionInput = view; }}
