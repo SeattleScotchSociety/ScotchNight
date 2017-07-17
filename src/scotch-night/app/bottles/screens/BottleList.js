@@ -3,7 +3,6 @@ import React from 'react';
 import { StyleSheet, Button, View, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getAllBottles } from '../api/BottlesApi';
 import { loadBottles } from '../BottleActions';
 import BottleListItem from '../components/BottleListItem';
 
@@ -49,19 +48,22 @@ class BottleList extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation;
+
         return (
-            <FlatList
-                data={this.props.bottles || []}
-                renderItem={({ item }) => (
-                    <BottleListItem
-                        bottle={{ ...item }}
-                        onPress={() => navigate('BottleDetail', { bottle: { ...item } })}
-                    />
-                )}
-                keyExtractor={item => item.id}
-                ListHeaderComponent={this.renderHeader}
-                ListFooterComponent={this.renderFooter}
-            />
+            <View style={{ flex: 1 }}>
+                <FlatList
+                    data={this.props.bottles || []}
+                    renderItem={({ item }) => (
+                        <BottleListItem
+                            bottle={{ ...item }}
+                            onPress={() => navigate('BottleDetail', { bottle: { ...item } })}
+                        />
+                    )}
+                    keyExtractor={item => item.id}
+                    ListHeaderComponent={this.renderHeader}
+                    ListFooterComponent={this.renderFooter}
+                />
+            </View>
         );
     }
 }

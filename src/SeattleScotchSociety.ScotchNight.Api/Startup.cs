@@ -23,10 +23,17 @@ namespace SeattleScotchSociety.ScotchNight.Api
     {
         public Startup(IHostingEnvironment environment)
         {
+            Environment = environment;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true);
+
+            if (environment.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
 
             builder.AddEnvironmentVariables();
 
@@ -36,6 +43,8 @@ namespace SeattleScotchSociety.ScotchNight.Api
         }
 
         public IConfigurationRoot Configuration { get; private set; }
+
+        public IHostingEnvironment Environment { get; private set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -50,13 +59,48 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 return store;
             });
 
+            services.AddSingleton<IUserStore>(provider =>
+            {
+                var store = new AzureUserStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
+            services.AddSingleton<IEventStore>(provider =>
+            {
+                var store = new AzureEventStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
+            services.AddSingleton<INoteStore>(provider =>
+            {
+                var store = new AzureNoteStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
+            services.AddSingleton<ILocationStore>(provider =>
+            {
+                var store = new AzureLocationStore(provider.GetService<CloudTableClient>());
+
+                store.InitializeAsync().Wait();
+
+                return store;
+            });
+
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.ConfigureLogging("Scotch Night", GetApplicationInsightsKey(), Configuration, Environment);
 
             app.UseMvc();
         }
@@ -65,12 +109,10 @@ namespace SeattleScotchSociety.ScotchNight.Api
         {
             try
             {
-                var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetAccessToken));
-
                 builder.AddAzureKeyVault(
                     Configuration["KeyVault:Name"],
-                    keyVaultClient,
-                    new DefaultKeyVaultSecretManager());
+                    Configuration["AzureAd:ClientId"],
+                    Configuration["AzureAd:ClientSecret"]);
 
                 Configuration = builder.Build();
             }
@@ -81,26 +123,10 @@ namespace SeattleScotchSociety.ScotchNight.Api
             }
         }
 
-        private ClientAssertionCertificate GetCert()
+        private string GetApplicationInsightsKey()
         {
-            X509Certificate2 cert;
-
-            using (X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
-            {
-                var thumbprint = Configuration["AzureAd:CertThumbprint"];
-                Console.WriteLine($"thumbprint: ${thumbprint}");
-                store.Open(OpenFlags.ReadOnly);
-                cert = store.FindCertificateByThumbprint(thumbprint);
-            }
-
-            return new ClientAssertionCertificate(Configuration["AzureAd:ClientId"], cert);
-        }
-
-        private async Task<string> GetAccessToken(string authority, string resource, string scope)
-        {
-            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
-            var result = await context.AcquireTokenAsync(resource, GetCert());
-            return result.AccessToken;
+            var instrumentationKey = Configuration["ApplicationInsights:InstrumentationKey"];
+            return instrumentationKey;
         }
     }
 }

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Data
 {
-    public class AzureBottleStore : IBottleStore
+    public class AzureEventStore : IEventStore
     {
         private CloudTable _table;
 
-        public AzureBottleStore(CloudTableClient tableClient)
+        public AzureEventStore(CloudTableClient tableClient)
         {
-            _table = tableClient.GetTableReference("bottles");
+            _table = tableClient.GetTableReference("events");
         }
 
         public async Task InitializeAsync()
@@ -21,27 +21,27 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             await _table.CreateIfNotExistsAsync();
         }
 
-        public Task AddAsync(Bottle bottle)
+        public Task AddAsync(Event @event)
         {
-            var entity = bottle.Adapt<BottleEntity>();
+            var entity = @event.Adapt<EventEntity>();
 
             TableOperation operation = TableOperation.Insert(entity);
 
             return _table.ExecuteAsync(operation);
         }
 
-        public Task UpdateAsync(Bottle bottle)
+        public Task UpdateAsync(Event @event)
         {
-            var entity = bottle.Adapt<BottleEntity>();
+            var entity = @event.Adapt<EventEntity>();
 
             TableOperation operation = TableOperation.InsertOrMerge(entity);
 
             return _table.ExecuteAsync(operation);
         }
 
-        public Task DeleteAsync(Bottle bottle)
+        public Task DeleteAsync(Event @event)
         {
-            var entity = bottle.Adapt<BottleEntity>();
+            var entity = @event.Adapt<EventEntity>();
 
             // <tmerkel> - This is fine given our expected usage.  If we were worried about
             // losing other people's updates since query...this would be bad.
@@ -52,23 +52,11 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             return _table.ExecuteAsync(operation);
         }
 
-        public async Task<IEnumerable<Bottle>> GetAllAsync()
+        public async Task<IEnumerable<Event>> GetAllAsync()
         {
-            var bottles = await _table.ExecuteQuerySegmentedAsync(new TableQuery<BottleEntity>(), null);
+            var bob = await _table.ExecuteQuerySegmentedAsync(new TableQuery<EventEntity>(), null);
 
-            return bottles.Results.Adapt<IEnumerable<Bottle>>();
-        }
-
-        public async Task<Bottle> GetAsync(string id)
-        {
-            var filter = TableQuery.GenerateFilterCondition(
-                "RowKey",
-                QueryComparisons.GreaterThanOrEqual,
-                id);
-
-            var bottles = await _table.ExecuteQuerySegmentedAsync(new TableQuery<BottleEntity>().Where(filter), null);
-
-            return bottles.Results.Adapt<IList<Bottle>>()[0];
+            return bob.Results.Adapt<IEnumerable<Event>>();
         }
     }
 }

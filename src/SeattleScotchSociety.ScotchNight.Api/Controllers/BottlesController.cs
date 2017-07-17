@@ -4,23 +4,15 @@ using SeattleScotchSociety.ScotchNight.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SeattleScotchSociety.ScotchNight.Api.Filters;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ValidateModel]
     public class BottlesController : Controller
     {
         private IBottleStore _bottleStore;
-        private List<Bottle> _bottles = new List<Bottle>
-            {
-                new Bottle
-                {
-                    Distillery = "Westland",
-                    Name = "Peated",
-                    Age = 25,
-                    Notes = "Aged in whiskey barrels"
-                }
-            };
 
         public BottlesController(IBottleStore bottleStore)
         {
@@ -34,27 +26,35 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public Bottle Get(Guid id)
+        public Task<Bottle> Get(string id)
         {
-            return null;
+            return _bottleStore.GetAsync(id);
         }
 
         [HttpPost]
-        public async void PostAsync([FromBody]Bottle bottle)
+        public async Task<IActionResult> PostAsync([FromBody]Bottle bottle)
         {
+            bottle.Id = Guid.NewGuid().ToString();
+
             await _bottleStore.AddAsync(bottle);
+
+            return Accepted();
         }
 
         [HttpPut]
-        public async void PutAsync([FromBody]Bottle bottle)
+        public async Task<IActionResult> PutAsync([FromBody]Bottle bottle)
         {
             await _bottleStore.UpdateAsync(bottle);
+
+            return Accepted();
         }
 
         [HttpDelete]
-        public async void Delete([FromBody]Bottle bottle)
+        public async Task<IActionResult> Delete([FromBody]Bottle bottle)
         {
             await _bottleStore.DeleteAsync(bottle);
+
+            return Accepted();
         }
     }
 }
