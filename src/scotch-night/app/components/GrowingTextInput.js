@@ -38,6 +38,7 @@ export default class GrowingTextInput extends React.Component {
     render() {
         return (
             <TextInput
+                style={{ borderColor: '#ccc', borderWidth: 1 }}
                 ref={c => {
                     this._ref = c;
                 }}
@@ -53,6 +54,7 @@ export default class GrowingTextInput extends React.Component {
                     this.props.style,
                     { height: Math.max(this.props.minHeight, this.state.height) }
                 ]}
+                value={this.props.value}
             />
         );
     }

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Button, View, FlatList, ActivityIndicator } from 'react-native';
+import { Image, Text, StyleSheet, Button, View, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadBottles } from '../BottleActions';
@@ -16,14 +16,6 @@ class BottleList extends React.Component {
 
         loadBottles();
     }
-
-    renderHeader = () => {
-        return (
-            <View style={{ flex: 1 }}>
-                <Button title="Add Bottle" onPress={this._onAddPress.bind(this)} />
-            </View>
-        );
-    };
 
     renderFooter = () => {
         if (!this.props.loading) return null;
@@ -42,7 +34,6 @@ class BottleList extends React.Component {
 
     _onAddPress() {
         const { navigate } = this.props.navigation;
-
         navigate('AddBottle', {});
     }
 
@@ -50,19 +41,24 @@ class BottleList extends React.Component {
         const { navigate } = this.props.navigation;
 
         return (
-            <View style={{ flex: 1 }}>
-                <FlatList
-                    data={this.props.bottles || []}
-                    renderItem={({ item }) => (
-                        <BottleListItem
-                            bottle={{ ...item }}
-                            onPress={() => navigate('BottleDetail', { bottle: { ...item } })}
-                        />
-                    )}
-                    keyExtractor={item => item.id}
-                    ListHeaderComponent={this.renderHeader}
-                    ListFooterComponent={this.renderFooter}
-                />
+            <View>
+                <View>
+                    <Image style={{width:'100%', height: 100}} source={{uri: 'https://littletipple.files.wordpress.com/2012/03/aberlour-004.jpg'}} />
+                    <Text style={{marginTop: -40, marginRight: 20, backgroundColor: 'transparent', textAlign: 'right', fontSize: 25, color: '#fff', fontFamily: 'Roboto'}}>Discover Scotch</Text>
+                </View>
+              <FlatList
+                  data={this.props.bottles || []}
+                  renderItem={({ item }) => (
+                      <BottleListItem
+                          bottle={{ ...item }}
+                          onPress={() => navigate('BottleDetail', { bottle: { ...item } })}
+                      />
+                  )}
+                  keyExtractor={item => item.id}
+                  ListHeaderComponent={this.renderHeader}
+                  ListFooterComponent={this.renderFooter}
+              />
+              <Button title="Add Bottle" onPress={this._onAddPress.bind(this)} />
             </View>
         );
     }

@@ -1,39 +1,169 @@
 // @flow
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { Rating, ButtonGroup, Button, Slider } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
+import GrowingTextInput from '../../components/GrowingTextInput';
 
-const BottleDetail = (props: any) => {
-    let { bottle } = props.navigation.state.params;
+function NoteDisplay(props) {
+    let { note, rating } = props;
+
+    if(!rating) { rating = 0 }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.bottleContainer}>
-                <Image
-                    style={{ width: 100, height: 100 }}
-                    source={{
-                        uri: bottle.bottleImageUrl
-                    }}
-                />
-                <View style={styles.bottleDetailContainer}>
-                    <Text style={styles.distillery}>{bottle.distillery}</Text>
-                    <Text style={styles.bottleName}>{bottle.name}</Text>
-                    <Text style={styles.description}>{bottle.description}</Text>
-                </View>
-            </View>
-            <View style={styles.providerContainer}>
-                <Image
-                    style={styles.providerImage}
-                    source={{
-                        uri: 'http://www.westlanddistillery.com/assets/media/whiskeys/5e4a5c3c6cdbfabdcf67941c83f9e7d9.jpg'
-                    }}
-                />
-                <View style={styles.providerDetailsContainer}>
-                    <Text style={styles.providerName}>Adam Phillabaum</Text>
-                    <Text style={styles.meetingDate}>June 12, 2017</Text>
-                </View>
+        <View style={{flexDirection: 'column'}}>
+            <Text style={styles.subheader}>{note}</Text>
+            <View style={styles.notes}>
+                <View style={{ backgroundColor: '#a6a6a5', width: `${rating}%` }} />
             </View>
         </View>
     );
+}
+
+function NoteEditor(props) {
+    let { note, rating, onChange, resetCount } = props;
+
+    if(!rating) { rating = 0 }
+
+    return (
+        <View style={{flexDirection: 'column'}}>
+            <Text style={styles.subheader}>{note}</Text>
+            <Slider thumbStyle={{ backgroundColor: '#00817d', marginTop: 3, marginLeft: -1 }} trackStyle={{ height: 10, backgroundColor: '#fff', borderColor: '#a6a6a5', borderWidth: 1, width: '98%' }} key={`${note}${resetCount}`} maximumValue={100} value={rating} onSlidingComplete={onChange} />
+        </View>
+    );
+}
+
+function Overview(props) {
+    let { view, notes, thoughts } = props;
+
+    if(view !== 0) {
+        return null;
+    }
+
+    return (
+        <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 15 }}>
+                <Rating imageSize={40} readonly startingValue={4.5} />
+            </View>
+            <NoteDisplay note='Finish' rating={notes.finish} />
+            <NoteDisplay note='Fruity' rating={notes.fruity} />
+            <NoteDisplay note='Vanilla' rating={notes.vanilla} />
+            <NoteDisplay note='Smoky' rating={notes.smoky} />
+            <NoteDisplay note='Citrus' rating={notes.citrus} />
+            <NoteDisplay note='Oily' rating={notes.oily} />
+            <NoteDisplay note='Peppery' rating={notes.peppery} />
+            <Text style={styles.subheader}>My Thoughts</Text>
+            <Text style={{ marginTop: 10 }}>{thoughts ? thoughts : 'No additional notes'}</Text>
+        </View>
+    );
+}
+
+function MyNotes(props) {
+    let { onFinishRating, view, notes, save, reset, resetCount, onChange } = props;
+
+    if(view !== 1) {
+        return null;
+    }
+
+    console.log('my thoughts: ' + notes.thoughts);
+
+    return (
+        <View>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 15 }}>
+                <Rating key={resetCount} imageSize={40} startingValue={notes.rating ? notes.rating : 0} onFinishRating={onFinishRating} />
+            </View>
+            <NoteEditor resetCount={resetCount} note='Finish' rating={notes.finish} onChange={onChange.bind(null, 'finish')} />
+            <NoteEditor resetCount={resetCount} note='Fruity' rating={notes.fruity} onChange={onChange.bind(null, 'fruity')} />
+            <NoteEditor resetCount={resetCount} note='Vanilla' rating={notes.vanilla} onChange={onChange.bind(null, 'vanilla')} />
+            <NoteEditor resetCount={resetCount} note='Smoky' rating={notes.smoky} onChange={onChange.bind(null, 'smoky')} />
+            <NoteEditor resetCount={resetCount} note='Citrus' rating={notes.citrus} onChange={onChange.bind(null, 'citrus')} />
+            <NoteEditor resetCount={resetCount} note='Oily' rating={notes.oily} onChange={onChange.bind(null, 'oily')} />
+            <NoteEditor resetCount={resetCount} note='Peppery' rating={notes.peppery} onChange={onChange.bind(null, 'peppery')} />
+            <View style={{flexDirection: 'column'}}>
+                <Text style={styles.subheader}>My Thoughts</Text>
+                <GrowingTextInput
+                    minHeight={60}
+                    value={notes.thoughts}
+                    onChangeText={onChange.bind(null, 'thoughts')}
+                    autoCapitalize="sentences"
+                    autoCorrect={false}
+                    blurOnSubmit={false}
+                    returnKeyType="next"
+                    style={{flex: 1, height: 45, marginTop: 5, marginHorizontal: -15, paddingHorizontal: 20, paddingVertical: 5, fontSize: 16, borderColor: '#ccc', borderWidth: 1}} />
+            </View>
+            <Button title='Save' backgroundColor='#00817d' style={{marginVertical: 15}} onPress={save} />
+            <Button title='Reset' onPress={reset} />
+        </View>
+    );
+}
+
+class BottleDetail extends React.Component {
+    static navigationOptions = {
+        title: 'Tasting Menu'
+    };
+
+    constructor(props) {
+        super(props);
+
+        this._handleOnPressRating = this._handleOnPressRating.bind(this);
+        this._handleSelectView = this._handleSelectView.bind(this);
+        this._handleOnResetNotes = this._handleOnResetNotes.bind(this);
+        this._handleOnSaveNotes = this._handleOnSaveNotes.bind(this);
+        this._handleOnChange = this._handleOnChange.bind(this);
+
+        let notes = this.props.notes ? {...this.props.notes} : {};
+
+        this.state = {
+            resetCount: 0,
+            notes: notes,
+            view: 0
+        };
+    }
+
+    _handleSelectView(index) {
+        this.setState({ view: index });
+    }
+
+    _handleOnPressRating(rating) {
+        this.setState({ notes: { rating: rating }});
+    }
+
+    _handleOnChange(note, value) {
+        let update = {...this.state.notes};
+        update[note] = value;
+        this.setState({ notes: update });
+    }
+
+    _handleOnSaveNotes() {
+        // todo - make api call to update notes
+        this.setState({ view: 0 });
+        this.view.scrollTo({x: 0, y: 0, animated: true});
+    }
+
+    _handleOnResetNotes() {
+        let update = Object.assign({}, this.props.navigation.state.params.bottle.memberNotes);
+        this.setState({ resetCount: this.state.resetCount + 1, notes: update});
+    }
+
+    render() {
+        let { view, notes, resetCount } = this.state;
+        let { bottle } = this.props.navigation.state.params;
+
+        return (
+            <ScrollView style={styles.container} ref={(view => { this.view = view; })}>
+                <View style={{marginBottom: 100}}>
+                    <Text style={styles.header}>{`${bottle.distillery} ${bottle.name}`}</Text>
+                    <ButtonGroup
+                        buttons={['Overview', 'My Notes']}
+                        containerStyle={{height: 30, marginTop: 20}}
+                        selectedIndex={view}
+                        onPress={this._handleSelectView} />
+                    <Overview view={view} notes={bottle.notes} thoughts={this.state.notes.thoughts} />
+                    <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onFinishRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
+                </View>
+            </ScrollView>
+        );
+    }
 };
 
 const PROVIDER_IMAGE_SIZE = 40;
@@ -41,48 +171,27 @@ const PROVIDER_IMAGE_SIZE = 40;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        padding: 15,
+        flexDirection: 'column'
     },
-    bottleContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
-        flexDirection: 'row'
-    },
-    bottleDetailContainer: {
-        marginLeft: 20
-    },
-    distillery: {
-        fontSize: 24,
-        fontWeight: '500'
-    },
-    bottleName: {
+    header: {
+        color: '#00817d',
         fontSize: 18,
-        marginBottom: 12
+        fontWeight: 'bold'
     },
-    description: {
-        fontSize: 14
+    subheader: {
+        color: '#00817d',
+        fontWeight: 'bold'
     },
-    providerContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
-        flexDirection: 'row'
-    },
-    providerImage: {
-        width: PROVIDER_IMAGE_SIZE,
-        height: PROVIDER_IMAGE_SIZE,
-        borderRadius: PROVIDER_IMAGE_SIZE / 2,
-        marginRight: 10
-    },
-    providerDetailsContainer: {
-        justifyContent: 'center'
-    },
-    providerName: {
-        color: 'purple',
-        fontSize: 18,
-        fontWeight: '500'
-    },
-    meetingDate: {
-        fontSize: 13
+    notes: {
+        marginVertical: 10,
+        height: 10,
+        borderColor: '#a6a6a5',
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        width: '100%'
     }
 });
 export default BottleDetail;

@@ -22,6 +22,12 @@ const members = [
         firstName: 'Adam',
         lastName: 'Phillabaum',
         email: 'adam@phillabaum.us'
+    },
+    {
+        username: 'lhan',
+        firstName: 'Louis',
+        lastName: 'Han',
+        email: 'louishan83@gmail.com'
     }
 ];
 export default members;

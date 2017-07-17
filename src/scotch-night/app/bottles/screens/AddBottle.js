@@ -27,20 +27,16 @@ class AddBottle extends Component {
             bottle: {
                 distillery: '',
                 name: '',
-                description: '',
-                bottleUrl: '',
-                distilleryUrl: '',
-                bottleImageUrl: '',
-                member: ''
+                description: ''
             }
         };
 
         this._handleOnAddPress = this._handleOnAddPress.bind(this);
+        this._handleOnChange = this._handleOnChange.bind(this);
     }
 
-    _handleTextChange = (property, value) => {
+    _handleOnChange = (property, value) => {
         let { bottle } = this.state;
-
         bottle[property] = value;
 
         this.setState({ bottle });
@@ -52,162 +48,68 @@ class AddBottle extends Component {
         let { bottle } = this.state;
 
         addBottle(bottle);
-        navigate('BottleList', {});
+        navigate('EventList', {});
     };
-
-    _renderMemberItem(member) {
-        console.log(`Adding item ${JSON.stringify(member)}`);
-        return (
-            <Picker.Item
-                key={member.username}
-                label={`${member.firstName} ${member.lastName}`}
-                value={member.username}
-            />
-        );
-    }
 
     render() {
         let { bottle } = this.state;
         let { members } = this.props;
 
         return (
-            <KeyboardAvoidingView
-                behavior="padding"
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    paddingHorizontal: 20,
-                    paddingTop: 20
-                }}>
-                <ScrollView
-                    style={{ flex: 1, backgroundColor: '#F8F8F9' }}
-                    contentContainerStyle={{ paddingTop: 30 }}>
-
+            <View>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
                     <View style={[styles.row, styles.firstRow]}>
                         <TextInput
+                            ref={view => {
+                                this.distillery = view;
+                            }}
                             value={bottle.distillery}
                             placeholder="Distillery"
-                            onChangeText={this._handleTextChange.bind(this, 'distillery')}
+                            onChangeText={this._handleOnChange.bind(this, 'distillery')}
                             style={styles.textInput}
                             autoCapitalize="words"
                             autoCorrect={false}
-                            autoFocus={true}
                             blurOnSubmit={false}
                             returnKeyType="next"
                             onSubmitEditing={async () => {
-                                this._nameInput.focus();
-                            }}
-                        />
+                                this._locationInput.focus();
+                            }} />
                     </View>
                     <View style={styles.row}>
                         <TextInput
                             ref={view => {
-                                this._nameInput = view;
+                                this.name = view;
                             }}
                             value={bottle.name}
                             placeholder="Name"
-                            onChangeText={this._handleTextChange.bind(this, 'name')}
+                            onChangeText={this._handleOnChange.bind(this, 'name')}
                             style={styles.textInput}
                             autoCapitalize="words"
                             autoCorrect={false}
                             blurOnSubmit={false}
-                            returnKeyType="next"
-                            onSubmitEditing={async () => {
-                                this._memberInput.focus();
-                            }}
-                        />
+                            returnKeyType="next" />
                     </View>
-                    <Picker
-                        ref={view => {
-                            this._memberInput = view;
-                        }}
-                        selectedValue={bottle.member}
-                        onValueChange={id => this._handleTextChange('member', id)}
-                        onSubmitEditing={async () => {
-                            this._descriptionInput.focus();
-                        }}>
-                        {members.map(member => this._renderMemberItem(member))}
-                    </Picker>
+                </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
                     <View style={styles.row}>
                         <GrowingTextInput
-                            ref={view => {
-                                this._descriptionInput = view;
-                            }}
-                            minHeight={80}
+                            placeholder='Description'
+                            ref={view => { this._descriptionInput = view; }}
+                            minHeight={60}
                             value={bottle.description}
-                            placeholder="Description"
-                            onChangeText={this._handleTextChange.bind(this, 'description')}
-                            style={styles.growingTextInput}
+                            onChangeText={this._handleOnChange.bind(this, 'description')}
                             autoCapitalize="sentences"
                             autoCorrect={false}
                             blurOnSubmit={false}
                             returnKeyType="next"
-                            onSubmitEditing={async () => {
-                                this._bottleUrlInput.focus();
-                            }}
-                        />
+                            style={styles.textInput} />
                     </View>
-                    <View style={styles.row}>
-                        <TextInput
-                            ref={view => {
-                                this._bottleUrlInput = view;
-                            }}
-                            value={bottle.bottleUrl}
-                            placeholder="Bottle Url"
-                            onChangeText={this._handleTextChange.bind(this, 'bottleUrl')}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            blurOnSubmit={false}
-                            returnKeyType="next"
-                            onSubmitEditing={async () => {
-                                this._distilleryUrlInput.focus();
-                            }}
-                        />
-                    </View>
-                    <View style={styles.row}>
-                        <TextInput
-                            ref={view => {
-                                this._distilleryUrlInput = view;
-                            }}
-                            value={bottle.distilleryUrl}
-                            placeholder="Distillery Url"
-                            onChangeText={this._handleTextChange.bind(this, 'distilleryUrl')}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            blurOnSubmit={false}
-                            returnKeyType="next"
-                            onSubmitEditing={async () => {
-                                this._bottleImageUrlInput.focus();
-                            }}
-                        />
-                    </View>
-                    <View style={styles.row}>
-                        <TextInput
-                            ref={view => {
-                                this._bottleImageUrlInput = view;
-                            }}
-                            value={bottle.bottleImageUrl}
-                            placeholder="Bottle Image Url"
-                            onChangeText={this._handleTextChange.bind(this, 'bottleImageUrl')}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            blurOnSubmit={false}
-                        />
-                    </View>
-                    <Button
-                        title="Save"
-                        onPress={this._handleOnAddPress}
-                        style={{
-                            backgroundColor: 'maroon'
-                        }}
-                    />
-                </ScrollView>
-
+                </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior="padding" style={{ paddingVertical: 20 }}>
+                    <Button title="Add Bottle" onPress={this._handleOnAddPress} color="#009688" />
+                </KeyboardAvoidingView>
                 <StatusBar barStyle="light-content" />
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }
@@ -231,7 +133,16 @@ const styles = StyleSheet.create({
     row: {
         backgroundColor: '#fff',
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderColor: '#ccc'
+        borderColor: '#ccc',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 5,
+        alignItems: 'center'
+    },
+    label: {
+        marginLeft: 15,
+        fontSize: 16
     },
     firstRow: {
         borderTopWidth: StyleSheet.hairlineWidth,
@@ -240,11 +151,12 @@ const styles = StyleSheet.create({
     textInput: {
         flex: 1,
         height: 45,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        fontSize: 16
     },
     growingTextInput: {
         paddingHorizontal: 15,
         paddingVertical: 15,
-        fontSize: 15
+        fontSize: 16
     }
 });
