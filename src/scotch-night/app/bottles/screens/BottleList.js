@@ -3,7 +3,6 @@ import React from 'react';
 import { Image, Text, StyleSheet, Button, View, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getAllBottles } from '../api/BottlesApi';
 import { loadBottles } from '../BottleActions';
 import BottleListItem from '../components/BottleListItem';
 
@@ -40,6 +39,7 @@ class BottleList extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation;
+
         return (
             <View>
                 <View>

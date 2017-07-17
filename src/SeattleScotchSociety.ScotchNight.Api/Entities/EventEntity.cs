@@ -1,28 +1,29 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using SeattleScotchSociety.ScotchNight.Api.Models;
+using System.Collections.Generic;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Entities
 {
-    public class BottleEntity : TableEntity
+    public class EventEntity : TableEntity
     {
-        private string _distillery;
         private string _id;
+        private string _locationId;
 
-        public BottleEntity()
+        public EventEntity()
         {
         }
 
-        public string Distillery
+        public string LocationId
         {
             get
             {
-                return _distillery;
+                return _locationId;
             }
 
             set
             {
-                _distillery = value;
+                _locationId = value;
                 PartitionKey = value;
             }
         }
@@ -41,10 +42,10 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
             }
         }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
 
-        public int Age { get; set; }
+        public string Description { get; set; }
 
-        public string Notes { get; set; }
+        public IEnumerable<string> Attendees { get; set; }
     }
 }
