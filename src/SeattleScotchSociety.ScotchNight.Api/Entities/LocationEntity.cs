@@ -6,8 +6,8 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
 {
     public class LocationEntity : TableEntity
     {
+        private string _city;
         private string _id;
-        private string _name;
 
         public LocationEntity()
         {
@@ -23,29 +23,29 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
             set
             {
                 _id = value;
-                PartitionKey = value;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-
-            set
-            {
-                _name = value;
                 RowKey = value;
             }
         }
+
+        public string Name { get; set; }
 
         public string Address1 { get; set; }
 
         public string Address2 { get; set; }
 
-        public string City { get; set; }
+        public string City
+        {
+            get
+            {
+                return _city;
+            }
+
+            set
+            {
+                _city = value;
+                PartitionKey = value;
+            }
+        }
 
         public string State { get; set; }
 

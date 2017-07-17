@@ -48,6 +48,22 @@ namespace SeattleScotchSociety.ScotchNight.Api.Tests
 
                 result.Should().Be(expected);
             }
+
+            [Fact]
+            public async void ReturnsNoBottlesIfNoneExist()
+            {
+                List<Bottle> expected = null;
+
+                _mockBottleStore.GetAllAsync().Returns(expected);
+
+                var controller = CreateControllerWithMocks();
+
+                var result = await controller.GetAllAsync() as ObjectResult;
+
+                result.Should().NotBeNull();
+
+                result.Should().Be(expected);
+            }
         }
 
         public class PostAsync : BottlesControllerTests
@@ -87,6 +103,23 @@ namespace SeattleScotchSociety.ScotchNight.Api.Tests
                 result.Should().NotBeNull();
 
                 result.StatusCode.Should().Be((int)HttpStatusCode.Accepted);
+            }
+
+            [Fact]
+            public async void Returns404ForInvalidBottle()
+            {
+                var bottle = new Bottle()
+                {
+                    Name = "TacoSauce"
+                };
+
+                var controller = CreateControllerWithMocks();
+
+                var result = await controller.PutAsync(bottle) as StatusCodeResult;
+
+                result.Should().NotBeNull();
+
+                result.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
             }
         }
     }

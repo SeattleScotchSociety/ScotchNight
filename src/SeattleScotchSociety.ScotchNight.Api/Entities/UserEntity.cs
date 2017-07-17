@@ -6,26 +6,14 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
 {
     public class UserEntity : TableEntity
     {
-        private string _id;
+        private string _lastName;
         private string _email;
 
         public UserEntity()
         {
         }
 
-        public string Id
-        {
-            get
-            {
-                return _id;
-            }
-
-            set
-            {
-                _id = value;
-                PartitionKey = value;
-            }
-        }
+        public string Id { get; set; }
 
         public string Email
         {
@@ -43,7 +31,19 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
 
         public string FirstName { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName
+        {
+            get
+            {
+                return _lastName;
+            }
+
+            set
+            {
+                _lastName = value;
+                PartitionKey = value;
+            }
+        }
 
         public bool IsActive { get; set; }
     }

@@ -13,7 +13,6 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
     public class UsersController : Controller
     {
         private IUserStore _userStore;
-        private List<User> _users = new List<User>();
 
         public UsersController(IUserStore userStore)
         {
@@ -21,13 +20,13 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return _userStore.GetAllAsync();
+            return await _userStore.GetAllAsync();
         }
 
         [HttpGet("{id}")]
-        public Bottle Get(Guid id)
+        public User Get(Guid id)
         {
             return null;
         }
@@ -35,6 +34,8 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]User user)
         {
+            user.Id = Guid.NewGuid().ToString();
+
             await _userStore.AddAsync(user);
 
             return Ok();

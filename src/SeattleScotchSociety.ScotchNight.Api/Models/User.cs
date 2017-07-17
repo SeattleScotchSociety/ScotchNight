@@ -5,13 +5,13 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
 {
     public class User
     {
-        public Guid UserId { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Email { get; set; }
 
         [Required]
-        public int FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
         public string LastName { get; set; }

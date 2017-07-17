@@ -7,45 +7,57 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
 {
     public class NoteEntity : TableEntity
     {
-        private string _id;
-        private string _locationId;
+        private string _bottleId;
+        private string _userId;
 
         public NoteEntity()
         {
         }
 
-        public string Id
+        public string BottleId
         {
             get
             {
-                return _id;
+                return _bottleId;
             }
 
             set
             {
-                _id = value;
+                _bottleId = value;
                 PartitionKey = value;
             }
         }
 
-        public string LocationId
+        public string UserId
         {
             get
             {
-                return _locationId;
+                return _userId;
             }
 
             set
             {
-                _locationId = value;
+                _userId = value;
                 RowKey = value;
             }
         }
 
-        public string Title { get; set; }
+        public int Rating { get; set; }
 
-        public string Description { get; set; }
+        public int Finish { get; set; }
 
-        public IEnumerable<string> Attendees { get; set; }
+        public int Fruity { get; set; }
+
+        public int Vanilla { get; set; }
+
+        public int Smokey { get; set; }
+
+        public int Citris { get; set; }
+
+        public int Oily { get; set; }
+
+        public int Peppery { get; set; }
+
+        public string Thoughts { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
     public class BottleEntity : TableEntity
     {
         private string _distillery;
-        private string _name;
+        private string _id;
 
         public BottleEntity()
         {
@@ -27,19 +27,21 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
             }
         }
 
-        public string Name
+        public string Id
         {
             get
             {
-                return _name;
+                return _id;
             }
 
             set
             {
-                _name = value;
+                _id = value;
                 RowKey = value;
             }
         }
+
+        public string Name { get; set; }
 
         public int Age { get; set; }
 

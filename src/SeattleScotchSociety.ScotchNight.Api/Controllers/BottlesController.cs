@@ -26,14 +26,16 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public Bottle Get(Guid id)
+        public Task<Bottle> Get(string id)
         {
-            return null;
+            return _bottleStore.GetAsync(id);
         }
 
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]Bottle bottle)
         {
+            bottle.Id = Guid.NewGuid().ToString();
+
             await _bottleStore.AddAsync(bottle);
 
             return Accepted();

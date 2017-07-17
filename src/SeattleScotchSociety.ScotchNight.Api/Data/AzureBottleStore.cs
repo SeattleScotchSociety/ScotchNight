@@ -54,9 +54,21 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
 
         public async Task<IEnumerable<Bottle>> GetAllAsync()
         {
-            var bob = await _table.ExecuteQuerySegmentedAsync(new TableQuery<BottleEntity>(), null);
+            var bottles = await _table.ExecuteQuerySegmentedAsync(new TableQuery<BottleEntity>(), null);
 
-            return bob.Results.Adapt<IEnumerable<Bottle>>();
+            return bottles.Results.Adapt<IEnumerable<Bottle>>();
+        }
+
+        public async Task<Bottle> GetAsync(string id)
+        {
+            var filter = TableQuery.GenerateFilterCondition(
+                "RowKey",
+                QueryComparisons.GreaterThanOrEqual,
+                id);
+
+            var bottles = await _table.ExecuteQuerySegmentedAsync(new TableQuery<BottleEntity>().Where(filter), null);
+
+            return bottles.Results.Adapt<IList<Bottle>>()[0];
         }
     }
 }

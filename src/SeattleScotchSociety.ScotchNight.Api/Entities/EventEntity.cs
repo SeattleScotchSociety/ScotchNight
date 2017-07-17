@@ -14,20 +14,6 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
         {
         }
 
-        public string Id
-        {
-            get
-            {
-                return _id;
-            }
-
-            set
-            {
-                _id = value;
-                PartitionKey = value;
-            }
-        }
-
         public string LocationId
         {
             get
@@ -38,6 +24,20 @@ namespace SeattleScotchSociety.ScotchNight.Api.Entities
             set
             {
                 _locationId = value;
+                PartitionKey = value;
+            }
+        }
+
+        public string Id
+        {
+            get
+            {
+                return _id;
+            }
+
+            set
+            {
+                _id = value;
                 RowKey = value;
             }
         }
