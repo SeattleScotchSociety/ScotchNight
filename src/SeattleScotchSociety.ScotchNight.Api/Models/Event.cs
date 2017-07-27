@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Models
 {
@@ -14,5 +15,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
         public string Description { get; set; }
 
         public IEnumerable<string> Attendees { get; set; }
+
+        public DateTimeOffset Date { get; set; }
     }
 }
