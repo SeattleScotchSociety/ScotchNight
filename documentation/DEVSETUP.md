@@ -4,7 +4,7 @@
 
 ### Prerequisites
 1. [Node](https://nodejs.org/en/)
-2. [Yarn] (https://yarnpkg.com/lang/en/docs/install/)
+2. [Yarn](https://yarnpkg.com/lang/en/docs/install/)
 3. An editor of your choice
 4. Currently we use Expo, so the easiest way to get started dev'ing is installing the [Expo XDE](https://github.com/expo/xde)
 5. Follow the [React Native Getting Started docs](https://facebook.github.io/react-native/docs/getting-started.html) for your platform
@@ -29,9 +29,10 @@
 ### Prerequisites
 
 1. [.Net Core (currently 1.1.2)](https://www.microsoft.com/net/download/core)
-2. An editor of your choice
-3. Set up the [User Secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets) store
-4. Add the following entry to the secret store
+2. [Node](https://nodejs.org/en/)
+3. An editor of your choice
+4. Set up the [User Secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets) store
+5. Add the following entry to the secret store
 
 ```json
 {
