@@ -4,6 +4,8 @@ import { Button, Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as memberActions from '../MemberActions';
+import User from '../../user';
+let { currentUserUpdated } = User.Actions;
 
 class SetMember extends Component {
     static navigationOptions = {
@@ -18,7 +20,7 @@ class SetMember extends Component {
     }
 
     _handleTextChange(member) {
-        this.props.actions.setMember(member);
+        this.props.actions.currentUserUpdated(member);
     }
 
     _handleOnPress() {
@@ -27,16 +29,16 @@ class SetMember extends Component {
     }
 
     render() {
-        let { members } = this.props;
+        let { members, user } = this.props;
 
         console.log('memeber!');
         console.log(members);
         let memberItems = members.map((member) => {
             return (
                 <Picker.Item
-                    key={member.username}
+                    key={member.email}
                     label={`${member.firstName} ${member.lastName}`}
-                    value={member.username} />
+                    value={member.email} />
             );
         });
 
@@ -48,7 +50,7 @@ class SetMember extends Component {
                     featured
                     caption="" />
                 <Picker
-                    selectedValue={members.current}
+                    selectedValue={user}
                     onValueChange={member => this._handleTextChange(member)}>
                     {memberItems}
                 </Picker>
@@ -59,14 +61,13 @@ class SetMember extends Component {
 }
 
 function mapStateToProps(state) {
-
-    console.log('state!');
-    console.log(state);
     return state;
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators(memberActions, dispatch) };
+    let actions = { ...memberActions, currentUserUpdated };
+
+    return { actions: bindActionCreators(actions, dispatch) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetMember);
