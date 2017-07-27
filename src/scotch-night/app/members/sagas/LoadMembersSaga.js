@@ -8,6 +8,8 @@ export function* loadMembers() {
         console.log('loading members');
         const members = yield call(getAllMembers);
 
+        console.log('putting!');
+        console.log(members);
         yield put(membersLoaded(null, members));
     } catch (error) {
         yield put(membersLoaded(error));

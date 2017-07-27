@@ -11,7 +11,7 @@ export const setMember = (member) => {
         type: SET_MEMBER,
         payload: member
     };
-}
+};
 
 export const membersLoaded = (error, members) => {
     const isError = !!error;

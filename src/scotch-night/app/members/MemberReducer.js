@@ -6,13 +6,16 @@ const membersReducer = (state = [], action) => {
             let newState = Object.assign({}, state);
             newState.members = action.payload;
 
+
+            console.log('loaded2!');
+            console.log(action.payload);
             return newState;
         }
 
         case SET_MEMBER: {
             let newState = Object.assign({}, state);
             newState.current = action.payload;
-            
+
             return newState;
         }
 

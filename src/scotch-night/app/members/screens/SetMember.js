@@ -29,14 +29,16 @@ class SetMember extends Component {
     render() {
         let { members } = this.props;
 
-        let memberItems = members.members.map((member) => {
+        console.log('memeber!');
+        console.log(members);
+        let memberItems = members.map((member) => {
             return (
                 <Picker.Item
                     key={member.username}
                     label={`${member.firstName} ${member.lastName}`}
                     value={member.username} />
             );
-        })
+        });
 
         return (
             <View style={{ flex: 1 }}>
@@ -57,6 +59,9 @@ class SetMember extends Component {
 }
 
 function mapStateToProps(state) {
+
+    console.log('state!');
+    console.log(state);
     return state;
 }
 

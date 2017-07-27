@@ -7,7 +7,7 @@ export function* loadBottles() {
     try {
         console.log('loading bottles');
         const bottles = yield call(getAllBottles);
-
+        console.log('putting bottles');
         yield put(bottlesLoaded(null, bottles));
     } catch (error) {
         yield put(bottlesLoaded(error));

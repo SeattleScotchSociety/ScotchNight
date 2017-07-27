@@ -28,10 +28,18 @@
 
 ### Prerequisites
 
-1. [.Net Core (currently 1.1.1)](https://www.microsoft.com/net/download/core)
+1. [.Net Core (currently 1.1.2)](https://www.microsoft.com/net/download/core)
 2. An editor of your choice
-3. Install the SeattleScotchSociety certificate to access data stores
-    * This will need to be requested from a project maintainer
+3. Set up the [User Secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets) store
+4. Add the following entry to the secret store
+
+```json
+{
+    "AzureAd": {
+        "ClientSecret": "<ask the project maintainer>"
+    }
+}
+```
 
 ### Run
 

@@ -10,7 +10,7 @@ export const bottlesLoaded = (error, bottles) => {
     const isError = !!error;
 
     const payload = isError ? error : bottles;
-
+    console.log('loaded bottles');
     return {
         type: BOTTLES_LOADED,
         payload,
