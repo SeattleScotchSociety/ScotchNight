@@ -9,7 +9,11 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 function EventSubList(props) {
     let { list, onPress } = props;
 
-    if(list.length === 0) {
+    if (!list) {
+        return null;
+    }
+
+    if (list.length === 0) {
         return (
             <Text style={styles.noEvents}>No Events</Text>
         );
@@ -47,35 +51,9 @@ class EventList extends React.Component {
 
     constructor(props) {
         super(props);
-        const events = getAllEvents();
-        let past = [];
-        let upcoming = [];
-        let today = [];
-        let now = new Date();
-
-        events.forEach((event) => {
-            let date = new Date(event.date);
-
-            if(date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear() && date.getDate() === now.getDate()) {
-                today.push(event);
-            }
-            else if(date < now) {
-                past.push(event);
-            }
-            else {
-                upcoming.push(event);
-            }
-        });
 
         this._handleOnPress = this._handleOnPress.bind(this);
         this._handleOnAddEvent = this._handleOnAddEvent.bind(this);
-
-        this.state = {
-            events,
-            past,
-            upcoming,
-            today
-        };
     }
 
     componentWillMount() {
@@ -113,8 +91,36 @@ class EventList extends React.Component {
     }
 }
 
-function mapStateToProps() {
-    return { events: [] };
+function mapStateToProps(state) {
+    let { events } = state;
+    let past = [];
+    let upcoming = [];
+    let today = [];
+    let now = new Date();
+
+    console.log('inevents');
+    console.log(events);
+
+    events.forEach((event) => {
+        let date = new Date(event.date);
+
+        if (date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear() && date.getDate() === now.getDate()) {
+            today.push(event);
+        }
+        else if (date < now) {
+            past.push(event);
+        }
+        else {
+            upcoming.push(event);
+        }
+    });
+
+    return {
+        events,
+        past,
+        upcoming,
+        today
+    };
 }
 
 export default connect(mapStateToProps)(EventList);

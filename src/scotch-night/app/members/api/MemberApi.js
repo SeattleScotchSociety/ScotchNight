@@ -47,8 +47,6 @@ export const getAllMembers = () => {
                 return;
             }
 
-            console.log('users!');
-            console.log(users);
             return users;
         })
         .catch(error => {

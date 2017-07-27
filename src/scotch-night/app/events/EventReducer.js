@@ -1,6 +1,6 @@
 import { ADD_EVENT, EVENTS_LOADED } from './EventActionTypes';
 
-const BottleReducer = (state = [], action) => {
+const EventReducer = (state = [], action) => {
     switch (action.type) {
         case ADD_EVENT: {
             let id = 1;
@@ -25,4 +25,4 @@ const BottleReducer = (state = [], action) => {
     }
 };
 
-export default BottleReducer;
+export default EventReducer;
