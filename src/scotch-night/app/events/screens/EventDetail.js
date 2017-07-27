@@ -1,27 +1,70 @@
 // @flow
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { List, ListItem, Button } from 'react-native-elements';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
-const EventDetail = (props: any) => {
-    let { event } = props.navigation.state.params;
+function TastingMenu(props) {
+    let { menu, onPress } = props;
+
+    if(!menu || menu.length === 0) {
+        return (<Text style={styles.noBottles}>No Bottles</Text>);
+    }
+
+    let menuList = menu.map((item, index) => {
+        return (
+            <ListItem key={index} title={`${item.distillery} ${item.name}`} onPress={onPress.bind(null, item)} />
+        );
+    });
 
     return (
-        <View style={styles.container}>
-            <View style={styles.eventContainer}>
-                <Image
-                    style={{ width: 100, height: 100 }}
-                    source={{
-                        uri: event.eventImageUrl
-                    }}
-                />
-                <View style={styles.eventDetailContainer}>
-                    <Text style={styles.distillery}>{event.date}</Text>
-                    <Text style={styles.eventName}>{event.location}</Text>
-                    <Text style={styles.description}>{event.description}</Text>
-                </View>
-            </View>
-        </View>
+        <List>{menuList}</List>
     );
+}
+
+class EventDetail extends Component {
+    constructor(props) {
+        super(props);
+
+        this._handleOnPress = this._handleOnPress.bind(this);
+        this._handleOnAddBottle = this._handleOnAddBottle.bind(this);
+    }
+
+    _handleOnPress(bottle) {
+        let { navigate } = this.props.navigation;
+        navigate('Bottle', { bottle: bottle });
+    }
+
+    _handleOnAddBottle() {
+        let { navigate } = this.props.navigation;
+        navigate('AddBottle', {eventId: this.props.navigation.state.params.id});
+    }
+
+    render() {
+        let { title, location, description, date, menu } = this.props.navigation.state.params;
+
+        return (
+            <View style={styles.container}>
+                <View style={styles.eventContainer}>
+                    <Text style={styles.eventTitle}>{title}</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 5 }}>
+                        <View style={{ flexDirection: 'row', marginRight: 10 }}>
+                            <SimpleLineIcons name='location-pin' color='#80807f' size={16} />
+                            <Text style={styles.eventDetail}>{location}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <SimpleLineIcons name='calendar' color='#80807f' size={16} />
+                            <Text style={styles.eventDetail}>{date}</Text>
+                        </View>
+                    </View>
+                    <Text style={styles.description}>{description}</Text>
+                </View>
+                <Text style={styles.menuHeader}>Tasting Menu</Text>
+                <TastingMenu menu={menu} onPress={this._handleOnPress} />
+                <Button title='Add Bottle' backgroundColor='#00817d' style={{ marginTop: 20 }} onPress={this._handleOnAddBottle} />
+            </View>
+        );
+    }
 };
 
 const PROVIDER_IMAGE_SIZE = 40;
@@ -32,45 +75,37 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     eventContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
-    eventDetailContainer: {
-        marginLeft: 20
-    },
-    distillery: {
-        fontSize: 24,
-        fontWeight: '500'
-    },
-    eventName: {
-        fontSize: 18,
-        marginBottom: 12
+    eventTitle: {
+        marginTop: 20,
+        marginLeft: 15,
+        marginBottom: 5,
+        color: '#00817d',
+        fontWeight: 'bold',
+        fontSize: 18
     },
     description: {
-        fontSize: 14
+        marginBottom: 20,
+        marginLeft: 15
     },
-    providerContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 20,
-        flexDirection: 'row'
+    eventDetail: {
+        color: '#80807f',
+        marginLeft: 5
     },
-    providerImage: {
-        width: PROVIDER_IMAGE_SIZE,
-        height: PROVIDER_IMAGE_SIZE,
-        borderRadius: PROVIDER_IMAGE_SIZE / 2,
-        marginRight: 10
+    menuHeader: {
+        color: '#00817d',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: -10,
+        marginLeft: 15
     },
-    providerDetailsContainer: {
-        justifyContent: 'center'
-    },
-    providerName: {
-        color: 'purple',
-        fontSize: 18,
-        fontWeight: '500'
-    },
-    meetingDate: {
-        fontSize: 13
+    noBottles: {
+        marginTop: 20,
+        marginLeft: 15,
+        marginBottom: 20,
+        color: '#80807f'
     }
 });
 export default EventDetail;

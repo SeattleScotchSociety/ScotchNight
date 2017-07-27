@@ -261,3 +261,5 @@ flow-typed/
 
 # Expo
 */.expo/
+
+.DS_Store
