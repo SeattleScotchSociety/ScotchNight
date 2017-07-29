@@ -27,6 +27,7 @@ class AddBottle extends Component {
             bottle: {
                 distillery: '',
                 name: '',
+                age: '',
                 description: ''
             }
         };
@@ -83,6 +84,20 @@ class AddBottle extends Component {
                             value={bottle.name}
                             placeholder="Name"
                             onChangeText={this._handleOnChange.bind(this, 'name')}
+                            style={styles.textInput}
+                            autoCapitalize="words"
+                            autoCorrect={false}
+                            blurOnSubmit={false}
+                            returnKeyType="next" />
+                    </View>
+                    <View style={styles.row}>
+                        <TextInput
+                            ref={view => {
+                                this.name = view;
+                            }}
+                            value={bottle.age}
+                            placeholder="Age"
+                            onChangeText={this._handleOnChange.bind(this, 'age')}
                             style={styles.textInput}
                             autoCapitalize="words"
                             autoCorrect={false}

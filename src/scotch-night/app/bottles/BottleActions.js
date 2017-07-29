@@ -1,4 +1,9 @@
-import { LOAD_BOTTLES, BOTTLES_LOADED, ADD_BOTTLE } from './BottleActionTypes';
+import {
+    LOAD_BOTTLES,
+    BOTTLES_LOADED,
+    ADD_BOTTLE,
+    BOTTLE_ADDED
+} from './BottleActionTypes';
 
 export const loadBottles = () => {
     return {
@@ -10,7 +15,7 @@ export const bottlesLoaded = (error, bottles) => {
     const isError = !!error;
 
     const payload = isError ? error : bottles;
-    console.log('loaded bottles');
+
     return {
         type: BOTTLES_LOADED,
         payload,
@@ -22,5 +27,17 @@ export const addBottle = bottle => {
     return {
         type: ADD_BOTTLE,
         payload: bottle
+    };
+};
+
+export const bottleAdded = (error, bottle) => {
+    const isError = !!error;
+
+    const payload = isError ? error : bottle;
+
+    return {
+        type: BOTTLE_ADDED,
+        payload,
+        error: isError
     };
 };
