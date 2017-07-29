@@ -2,19 +2,37 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { addBottle } from '../api/BottlesApi';
 import { bottleAdded } from '../BottleActions';
 import { ADD_BOTTLE } from '../BottleActionTypes';
+import Events from '../../events';
+let {
+    updateExistingEvent
+} = Events.Sagas;
 
 export function* addNewBottle(action) {
     try {
-        const bottle = action.payload;
+        const { bottle, event } = action.payload;
 
-        const result = yield call(addBottle, bottle);
+        const id = yield call(addBottle, bottle);
 
-        console.log('bottle added result');
-        console.log(result);
+        const newBottle = { ...bottle, id };
 
-        yield put(bottleAdded(null, bottle));
+        yield put(bottleAdded(null, newBottle));
+
+        if (!event) {
+            return;
+        }
+
+        let updatedEvent = { ...event };
+
+        if (updatedEvent.bottles) {
+            updatedEvent.bottles.push(newBottle.id);
+        } else {
+            updatedEvent.bottles = [newBottle.id];
+        }
+
+        yield* updateExistingEvent(updatedEvent);
     } catch (error) {
-        yield put(bottleAdded(error));
+        console.log(error);
+        //yield put(bottleAdded(error));
     }
 }
 

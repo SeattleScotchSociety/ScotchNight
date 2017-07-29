@@ -23,10 +23,10 @@ export const bottlesLoaded = (error, bottles) => {
     };
 };
 
-export const addBottle = bottle => {
+export const addBottle = (bottle, event) => {
     return {
         type: ADD_BOTTLE,
-        payload: bottle
+        payload: { bottle, event }
     };
 };
 

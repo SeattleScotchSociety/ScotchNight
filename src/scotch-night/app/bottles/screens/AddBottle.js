@@ -47,8 +47,9 @@ class AddBottle extends Component {
         let { addBottle } = this.props.actions;
         const { navigate } = this.props.navigation;
         let { bottle } = this.state;
+        let { event } = this.props.navigation.state.params;
 
-        addBottle(bottle);
+        addBottle(bottle, event);
         navigate('EventList', {});
     };
 

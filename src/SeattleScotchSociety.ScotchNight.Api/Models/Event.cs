@@ -14,6 +14,8 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
 
         public string Description { get; set; }
 
+        public IEnumerable<string> Bottles { get; set; }
+
         public IEnumerable<string> Attendees { get; set; }
 
         public DateTimeOffset Date { get; set; }

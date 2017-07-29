@@ -1,4 +1,10 @@
-import { ADD_EVENT, EVENTS_LOADED } from './EventActionTypes';
+import _ from 'lodash';
+
+import {
+    ADD_EVENT,
+    EVENTS_LOADED,
+    EVENT_UPDATED
+} from './EventActionTypes';
 
 const EventReducer = (state = [], action) => {
     switch (action.type) {
@@ -17,6 +23,20 @@ const EventReducer = (state = [], action) => {
 
         case EVENTS_LOADED: {
             return action.payload;
+        }
+
+        case EVENT_UPDATED: {
+            let updatedEvent = action.payload;
+
+            let newState = _.filter(state, event => event.id !== updatedEvent.id);
+
+            if (newState) {
+                newState.push(updatedEvent);
+            } else {
+                newState = [updatedEvent];
+            }
+
+            return newState;
         }
 
         default: {

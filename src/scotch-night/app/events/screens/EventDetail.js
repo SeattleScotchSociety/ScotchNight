@@ -38,11 +38,11 @@ class EventDetail extends Component {
 
     _handleOnAddBottle() {
         let { navigate } = this.props.navigation;
-        navigate('AddBottle', { eventId: this.props.navigation.state.params.id });
+        navigate('AddBottle', { event: this.props.navigation.state.params });
     }
 
     render() {
-        let { title, location, description, date, menu } = this.props.navigation.state.params;
+        let { title, location, description, date, bottles } = this.props.navigation.state.params;
 
         return (
             <View style={styles.container}>
@@ -61,7 +61,7 @@ class EventDetail extends Component {
                     <Text style={styles.description}>{description}</Text>
                 </View>
                 <Text style={styles.menuHeader}>Tasting Menu</Text>
-                <TastingMenu menu={menu} onPress={this._handleOnPress} />
+                <TastingMenu menu={bottles} onPress={this._handleOnPress} />
                 <Button title='Add Bottle' backgroundColor='#00817d' style={{ marginTop: 20 }} onPress={this._handleOnAddBottle} />
             </View>
         );

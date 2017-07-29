@@ -32,8 +32,15 @@ export const addBottle = (bottle) => {
     })
         .then(response => {
             if (response.ok) {
-                return response;
+                return response.json();
             }
+        })
+        .then(bottle => {
+            if (!bottle) {
+                return;
+            }
+
+            return bottle.id;
         })
         .catch(error => {
             console.log(error);

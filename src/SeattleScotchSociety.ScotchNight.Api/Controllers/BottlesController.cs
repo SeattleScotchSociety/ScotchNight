@@ -38,7 +38,9 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
 
             await _bottleStore.AddAsync(bottle);
 
-            return Accepted();
+            var getUrl = Url.Action("Get", new { id = bottle.Id });
+
+            return Created(getUrl, new { id = bottle.Id });
         }
 
         [HttpPut]
