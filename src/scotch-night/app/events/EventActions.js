@@ -3,7 +3,8 @@ import {
     EVENTS_LOADED,
     ADD_EVENT,
     UPDATE_EVENT,
-    EVENT_UPDATED
+    EVENT_UPDATED,
+    EVENT_SELECTED
 } from './EventActionTypes';
 
 export const loadEvents = () => {
@@ -47,5 +48,12 @@ export const eventUpdated = (error, event) => {
         type: EVENT_UPDATED,
         payload,
         error: isError
+    };
+};
+
+export const eventSelected = eventId => {
+    return {
+        type: EVENT_SELECTED,
+        payload: eventId
     };
 };

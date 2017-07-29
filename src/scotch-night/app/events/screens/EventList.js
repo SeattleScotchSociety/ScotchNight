@@ -1,11 +1,12 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { getAllEvents } from '../api/EventsApi';
+import { bindActionCreators } from 'redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import * as moment from 'moment';
+import { eventSelected } from '../EventActions';
 
 function EventSubList(props) {
     let { list, onPress } = props;
@@ -57,16 +58,12 @@ class EventList extends React.Component {
         this._handleOnAddEvent = this._handleOnAddEvent.bind(this);
     }
 
-    componentWillMount() {
-        const events = getAllEvents();
-
-        this.setState({
-            events
-        });
-    }
-
     _handleOnPress(e) {
         let { navigate } = this.props.navigation;
+        let { eventSelected } = this.props.actions;
+
+        eventSelected(e.id);
+
         navigate('EventDetail', e);
     }
 
@@ -93,7 +90,7 @@ class EventList extends React.Component {
 }
 
 function mapStateToProps(state) {
-    let { events } = state;
+    let events = state.events.all;
     let past = [];
     let upcoming = [];
     let today = [];
@@ -121,7 +118,13 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(EventList);
+function mapDispatchToProps(dispatch) {
+    let actions = { eventSelected };
+
+    return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventList);
 
 const styles = StyleSheet.create({
     container: {

@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import * as moment from 'moment';
+import _ from 'lodash';
 
 function TastingMenu(props) {
     let { menu, onPress } = props;
@@ -42,7 +44,8 @@ class EventDetail extends Component {
     }
 
     render() {
-        let { title, location, description, date, bottles } = this.props.navigation.state.params;
+        let { menu } = this.props;
+        let { title, location, description, date } = this.props.event;
 
         return (
             <View style={styles.container}>
@@ -61,7 +64,7 @@ class EventDetail extends Component {
                     <Text style={styles.description}>{description}</Text>
                 </View>
                 <Text style={styles.menuHeader}>Tasting Menu</Text>
-                <TastingMenu menu={bottles} onPress={this._handleOnPress} />
+                <TastingMenu menu={menu} onPress={this._handleOnPress} />
                 <Button title='Add Bottle' backgroundColor='#00817d' style={{ marginTop: 20 }} onPress={this._handleOnAddBottle} />
             </View>
         );
@@ -109,4 +112,16 @@ const styles = StyleSheet.create({
         color: '#80807f'
     }
 });
-export default EventDetail;
+
+function mapStateToProps(state) {
+    let currentEvent = state.events.selected;
+    let menu = [];
+
+    if (currentEvent.bottles) {
+        menu = _.filter(state.bottles, bottle => currentEvent.bottles.includes(bottle.id));
+    }
+
+    return { event: currentEvent, menu };
+}
+
+export default connect(mapStateToProps)(EventDetail);

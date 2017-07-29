@@ -3,7 +3,8 @@ import _ from 'lodash';
 import {
     ADD_EVENT,
     EVENTS_LOADED,
-    EVENT_UPDATED
+    EVENT_UPDATED,
+    EVENT_SELECTED
 } from './EventActionTypes';
 
 const EventReducer = (state = [], action) => {
@@ -22,21 +23,34 @@ const EventReducer = (state = [], action) => {
         }
 
         case EVENTS_LOADED: {
-            return action.payload;
+            return { all: action.payload };
         }
 
         case EVENT_UPDATED: {
             let updatedEvent = action.payload;
 
-            let newState = _.filter(state, event => event.id !== updatedEvent.id);
+            let allEvents = _.filter(state.all, event => event.id !== updatedEvent.id);
 
-            if (newState) {
-                newState.push(updatedEvent);
+            if (allEvents) {
+                allEvents.push(updatedEvent);
             } else {
-                newState = [updatedEvent];
+                allEvents = [updatedEvent];
+            }
+
+            let newState = { ...state, all: allEvents };
+
+            if (state.selected.id === updatedEvent.id) {
+                newState.selected = updatedEvent;
             }
 
             return newState;
+        }
+
+        case EVENT_SELECTED: {
+            let eventId = action.payload;
+            let selectedEvent = _.find(state.all, event => event.id === eventId);
+
+            return { ...state, selected: selectedEvent };
         }
 
         default: {
