@@ -5,6 +5,7 @@ import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getAllEvents } from '../api/EventsApi';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import * as moment from 'moment';
 
 function EventSubList(props) {
     let { list, onPress } = props;
@@ -27,7 +28,7 @@ function EventSubList(props) {
                         key={i}
                         title={
                             <View style={{ flexDirection: 'row', margin: 5 }}>
-                                <View><Text style={{ fontSize: 13 }}>{l.date}</Text></View>
+                                <View><Text style={{ fontSize: 13 }}>{moment.default(l.date).format('dddd, MMMM, YYYY, h:mm')}</Text></View>
                                 <View style={{ flexDirection: 'column', marginLeft: 10 }}>
                                     <View><Text style={{ fontSize: 15 }}>{l.title}</Text></View>
                                     <View style={{ flexDirection: 'row' }}>
@@ -75,7 +76,7 @@ class EventList extends React.Component {
     }
 
     render() {
-        let { past, upcoming, today, events } = this.state;
+        let { past, upcoming, today, events } = this.props;
 
         return (
             <View style={styles.container}>
@@ -98,13 +99,10 @@ function mapStateToProps(state) {
     let today = [];
     let now = new Date();
 
-    console.log('inevents');
-    console.log(events);
-
     events.forEach((event) => {
-        let date = new Date(event.date);
+        let date = moment.default(event.date);
 
-        if (date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear() && date.getDate() === now.getDate()) {
+        if (date.month() === now.getMonth() && date.year() === now.getFullYear() && date.date() === now.getDate()) {
             today.push(event);
         }
         else if (date < now) {
