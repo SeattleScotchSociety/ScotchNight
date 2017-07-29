@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import * as moment from 'moment';
 
 function TastingMenu(props) {
     let { menu, onPress } = props;
 
-    if(!menu || menu.length === 0) {
+    if (!menu || menu.length === 0) {
         return (<Text style={styles.noBottles}>No Bottles</Text>);
     }
 
@@ -37,7 +38,7 @@ class EventDetail extends Component {
 
     _handleOnAddBottle() {
         let { navigate } = this.props.navigation;
-        navigate('AddBottle', {eventId: this.props.navigation.state.params.id});
+        navigate('AddBottle', { eventId: this.props.navigation.state.params.id });
     }
 
     render() {
@@ -54,7 +55,7 @@ class EventDetail extends Component {
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <SimpleLineIcons name='calendar' color='#80807f' size={16} />
-                            <Text style={styles.eventDetail}>{date}</Text>
+                            <Text style={styles.eventDetail}>{moment.default(date).format('dddd, MMMM, YYYY, h:mm')}</Text>
                         </View>
                     </View>
                     <Text style={styles.description}>{description}</Text>
