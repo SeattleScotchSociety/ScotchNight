@@ -4,14 +4,12 @@ using SeattleScotchSociety.ScotchNight.Api.Models;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Data
 {
-    public interface IUserStore
+    public interface IMemberStore
     {
-        Task AddAsync(User user);
+        Task AddAsync(Member member);
 
-        Task UpdateAsync(User user);
+        Task UpdateAsync(Member member);
 
-        Task<IEnumerable<User>> GetAllAsync();
-
-        Task InitializeAsync();
+        Task<IEnumerable<Member>> GetAllAsync();
     }
 }

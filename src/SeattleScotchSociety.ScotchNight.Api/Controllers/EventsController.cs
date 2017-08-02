@@ -34,7 +34,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]Event @event)
         {
-            @event.Id = Guid.NewGuid().ToString();
+            @event.Id = Guid.NewGuid();
 
             await _eventStore.AddAsync(@event);
 

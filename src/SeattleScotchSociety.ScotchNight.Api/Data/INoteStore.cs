@@ -6,14 +6,12 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
 {
     public interface INoteStore
     {
-        Task AddAsync(Note bottle);
+        Task AddAsync(Note note);
 
-        Task UpdateAsync(Note bottle);
+        Task UpdateAsync(Note note);
 
-        Task DeleteAsync(Note bottle);
+        Task DeleteAsync(Note note);
 
         Task<IEnumerable<Note>> GetAllAsync();
-
-        Task InitializeAsync();
     }
 }

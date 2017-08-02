@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Models
 {
     public class Note
     {
-        public string BottleId { get; set; }
+        public Guid BottleId { get; set; }
 
-        public string UserId { get; set; }
+        public Guid MemberId { get; set; }
 
         [Required]
         [Range(1, 5)]
@@ -30,7 +31,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
 
         [Required]
         [Range(1, 5)]
-        public int Citris { get; set; }
+        public int Citrus { get; set; }
 
         [Required]
         [Range(1, 5)]

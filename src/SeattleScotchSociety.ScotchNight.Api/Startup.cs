@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Dapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,8 @@ using SeattleScotchSociety.ScotchNight.Api.Configuration;
 using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Extensions;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
@@ -48,52 +51,13 @@ namespace SeattleScotchSociety.ScotchNight.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAzureTableStorage(Configuration["TableStorageConnectionString"]);
+            var connectionString = Configuration.GetConnectionString("ScotchNightDatabase");
 
-            services.AddSingleton<IBottleStore>(provider =>
-            {
-                var store = new AzureBottleStore(provider.GetService<CloudTableClient>());
-
-                store.InitializeAsync().Wait();
-
-                return store;
-            });
-
-            services.AddSingleton<IUserStore>(provider =>
-            {
-                var store = new AzureUserStore(provider.GetService<CloudTableClient>());
-
-                store.InitializeAsync().Wait();
-
-                return store;
-            });
-
-            services.AddSingleton<IEventStore>(provider =>
-            {
-                var store = new AzureEventStore(provider.GetService<CloudTableClient>());
-
-                store.InitializeAsync().Wait();
-
-                return store;
-            });
-
-            services.AddSingleton<INoteStore>(provider =>
-            {
-                var store = new AzureNoteStore(provider.GetService<CloudTableClient>());
-
-                store.InitializeAsync().Wait();
-
-                return store;
-            });
-
-            services.AddSingleton<ILocationStore>(provider =>
-            {
-                var store = new AzureLocationStore(provider.GetService<CloudTableClient>());
-
-                store.InitializeAsync().Wait();
-
-                return store;
-            });
+            services.AddSingleton<IBottleStore>(p => new SqlBottleStore(connectionString))
+                    .AddSingleton<IMemberStore>(p => new SqlMemberStore(connectionString))
+                    .AddSingleton<IEventStore>(p => new SqlEventStore(connectionString))
+                    .AddSingleton<INoteStore>(p => new SqlNoteStore(connectionString))
+                    .AddSingleton<ILocationStore>(p => new SqlLocationStore(connectionString));
 
             services.AddMvc();
         }

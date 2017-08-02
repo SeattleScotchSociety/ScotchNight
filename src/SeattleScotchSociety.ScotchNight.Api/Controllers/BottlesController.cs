@@ -34,7 +34,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]Bottle bottle)
         {
-            bottle.Id = Guid.NewGuid().ToString();
+            bottle.Id = Guid.NewGuid();
 
             await _bottleStore.AddAsync(bottle);
 
