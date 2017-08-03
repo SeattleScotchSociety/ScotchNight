@@ -1,20 +1,49 @@
-import Reviews from '../Reviews';
+export const getReviews = (bottleId) => {
+    return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/bottle/${bottleId}`, {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(reviews => {
+            if (!reviews) {
+                return;
+            }
 
-export const getAllReviews = () => {
-    return Reviews;
+            return reviews;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 
-    // fetch('http://seattlescotchsocietyscotchnightapi20170429083006.azurewebsites.net/api/bottles', {
-    //     Accept: 'application/json'
-    // })
-    //     .then(response => response.json())
-    //     .then(bottles => {
-    //         if (!bottles) {
-    //             return;
-    //         }
+export const addReview = (review) => {
+    return fetch('https://scotchnightapi.azurewebsites.net/api/notes', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(review)
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(review => {
+            if (!review) {
+                return;
+            }
 
-    //         this.setState({ bottles });
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
+            return review.id;
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };

@@ -25,10 +25,10 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             return _noteStore.GetAllAsync();
         }
 
-        [HttpGet("{id}")]
-        public Note Get(Guid id)
+        [HttpGet("bottle/{bottleId}")]
+        public Task<IEnumerable<Note>> Get(Guid bottleId)
         {
-            return null;
+            return _noteStore.GetByBottle(bottleId);
         }
 
         [HttpPost]

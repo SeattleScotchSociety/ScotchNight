@@ -32,7 +32,7 @@ export function* addNewBottle(action) {
         yield* updateExistingEvent(updatedEvent);
     } catch (error) {
         console.log(error);
-        //yield put(bottleAdded(error));
+        yield put(bottleAdded(error));
     }
 }
 

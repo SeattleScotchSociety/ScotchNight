@@ -5,8 +5,10 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
 {
     public class Note
     {
+        [Required]
         public Guid BottleId { get; set; }
 
+        [Required]
         public Guid MemberId { get; set; }
 
         [Required]

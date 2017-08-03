@@ -11,6 +11,16 @@ let { watchLoadMembers } = Members.Sagas;
 import Events from './events';
 let { watchLoadEvents } = Events.Sagas;
 
+import Reviews from './reviews';
+let { watchLoadReviews, watchAddReview } = Reviews.Sagas;
+
 export default function* rootSaga() {
-    yield all([watchLoadBottles(), watchAddBottle(), watchLoadMembers(), watchLoadEvents()]);
+    yield all([
+        watchLoadBottles(),
+        watchAddBottle(),
+        watchLoadMembers(),
+        watchLoadEvents(),
+        watchLoadReviews(),
+        watchAddReview()
+    ]);
 }

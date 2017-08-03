@@ -3,7 +3,6 @@ DROP TABLE dbo.Note
 GO
 CREATE TABLE dbo.Note
 (
-    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     BottleId UNIQUEIDENTIFIER NOT NULL,
     MemberId UNIQUEIDENTIFIER NOT NULL,
     Thoughts [NVARCHAR](2000) NULL,
@@ -15,6 +14,7 @@ CREATE TABLE dbo.Note
     Citrus [INT] NULL,
     Oily [INT] NULL,
     Peppery [INT] NULL,
+    PRIMARY KEY (BottleId, MemberId),
     FOREIGN KEY (BottleId) REFERENCES Bottle(Id),
     FOREIGN KEY (MemberId) REFERENCES Member(Id)
 );
