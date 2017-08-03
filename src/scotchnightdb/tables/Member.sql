@@ -1,0 +1,12 @@
+IF OBJECT_ID('dbo.Member', 'U') IS NOT NULL
+DROP TABLE dbo.Member
+GO
+CREATE TABLE dbo.Member
+(
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Email [NVARCHAR](200) NOT NULL,
+    FirstName [NVARCHAR](200) NOT NULL,
+    LastName [NVARCHAR](200) NOT NULL,
+    IsActive [BIT] NOT NULL
+);
+GO

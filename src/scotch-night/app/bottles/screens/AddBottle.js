@@ -27,6 +27,7 @@ class AddBottle extends Component {
             bottle: {
                 distillery: '',
                 name: '',
+                age: '',
                 description: ''
             }
         };
@@ -46,8 +47,9 @@ class AddBottle extends Component {
         let { addBottle } = this.props.actions;
         const { navigate } = this.props.navigation;
         let { bottle } = this.state;
+        let { event } = this.props.navigation.state.params;
 
-        addBottle(bottle);
+        addBottle(bottle, event);
         navigate('EventList', {});
     };
 
@@ -83,6 +85,20 @@ class AddBottle extends Component {
                             value={bottle.name}
                             placeholder="Name"
                             onChangeText={this._handleOnChange.bind(this, 'name')}
+                            style={styles.textInput}
+                            autoCapitalize="words"
+                            autoCorrect={false}
+                            blurOnSubmit={false}
+                            returnKeyType="next" />
+                    </View>
+                    <View style={styles.row}>
+                        <TextInput
+                            ref={view => {
+                                this.name = view;
+                            }}
+                            value={bottle.age}
+                            placeholder="Age"
+                            onChangeText={this._handleOnChange.bind(this, 'age')}
                             style={styles.textInput}
                             autoCapitalize="words"
                             autoCorrect={false}

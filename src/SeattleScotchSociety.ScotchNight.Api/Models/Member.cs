@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Models
 {
-    public class User
+    public class Member
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string Email { get; set; }

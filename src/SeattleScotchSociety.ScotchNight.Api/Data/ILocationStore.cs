@@ -13,7 +13,5 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
         Task DeleteAsync(Location location);
 
         Task<IEnumerable<Location>> GetAllAsync();
-
-        Task InitializeAsync();
     }
 }

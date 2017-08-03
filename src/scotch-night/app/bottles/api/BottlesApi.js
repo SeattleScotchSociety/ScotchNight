@@ -1,21 +1,48 @@
-import Bottles from './Bottles';
-
 export const getAllBottles = () => {
-    return Bottles;
-    // fetch('https://scotchnightapi.azurewebsites.net/api/bottles', {
-    //     Accept: 'application/json'
-    // })
-    //     .then(response => {
-    //         return response.json();
-    //     })
-    //     .then(bottles => {
-    //         if (!bottles) {
-    //             return;
-    //         }
+    return fetch('https://scotchnightapi.azurewebsites.net/api/bottles', {
+        Accept: 'application/json'
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
 
-    //         return bottles;
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
+            return null;
+        })
+        .then(bottles => {
+            if (!bottles) {
+                return;
+            }
+
+            return bottles;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+export const addBottle = (bottle) => {
+    return fetch('https://scotchnightapi.azurewebsites.net/api/bottles', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bottle)
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(bottle => {
+            if (!bottle) {
+                return;
+            }
+
+            return bottle.id;
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };

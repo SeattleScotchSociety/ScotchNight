@@ -1,6 +1,13 @@
-import { ADD_EVENT, EVENTS_LOADED } from './EventActionTypes';
+import _ from 'lodash';
 
-const BottleReducer = (state = [], action) => {
+import {
+    ADD_EVENT,
+    EVENTS_LOADED,
+    EVENT_UPDATED,
+    EVENT_SELECTED
+} from './EventActionTypes';
+
+const EventReducer = (state = [], action) => {
     switch (action.type) {
         case ADD_EVENT: {
             let id = 1;
@@ -16,7 +23,34 @@ const BottleReducer = (state = [], action) => {
         }
 
         case EVENTS_LOADED: {
-            return action.payload;
+            return { all: action.payload };
+        }
+
+        case EVENT_UPDATED: {
+            let updatedEvent = action.payload;
+
+            let allEvents = _.filter(state.all, event => event.id !== updatedEvent.id);
+
+            if (allEvents) {
+                allEvents.push(updatedEvent);
+            } else {
+                allEvents = [updatedEvent];
+            }
+
+            let newState = { ...state, all: allEvents };
+
+            if (state.selected.id === updatedEvent.id) {
+                newState.selected = updatedEvent;
+            }
+
+            return newState;
+        }
+
+        case EVENT_SELECTED: {
+            let eventId = action.payload;
+            let selectedEvent = _.find(state.all, event => event.id === eventId);
+
+            return { ...state, selected: selectedEvent };
         }
 
         default: {
@@ -25,4 +59,4 @@ const BottleReducer = (state = [], action) => {
     }
 };
 
-export default BottleReducer;
+export default EventReducer;

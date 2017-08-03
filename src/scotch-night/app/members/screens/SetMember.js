@@ -25,14 +25,13 @@ class SetMember extends Component {
 
     _handleOnPress() {
         const { navigate } = this.props.navigation;
+
         navigate('Events', {});
     }
 
     render() {
         let { members, user } = this.props;
 
-        console.log('memeber!');
-        console.log(members);
         let memberItems = members.map((member) => {
             return (
                 <Picker.Item

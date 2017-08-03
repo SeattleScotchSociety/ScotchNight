@@ -15,7 +15,5 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
         Task<IEnumerable<Bottle>> GetAllAsync();
 
         Task<Bottle> GetAsync(string id);
-
-        Task InitializeAsync();
     }
 }

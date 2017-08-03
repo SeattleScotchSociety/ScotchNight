@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Models
 {
     public class Location
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

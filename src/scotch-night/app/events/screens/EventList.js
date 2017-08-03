@@ -1,15 +1,21 @@
 // @flow
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { getAllEvents } from '../api/EventsApi';
+import { bindActionCreators } from 'redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import * as moment from 'moment';
+import { eventSelected } from '../EventActions';
 
 function EventSubList(props) {
     let { list, onPress } = props;
 
-    if(list.length === 0) {
+    if (!list) {
+        return null;
+    }
+
+    if (list.length === 0) {
         return (
             <Text style={styles.noEvents}>No Events</Text>
         );
@@ -23,7 +29,7 @@ function EventSubList(props) {
                         key={i}
                         title={
                             <View style={{ flexDirection: 'row', margin: 5 }}>
-                                <View><Text style={{ fontSize: 13 }}>{l.date}</Text></View>
+                                <View><Text style={{ fontSize: 13 }}>{moment.default(l.date).format('llll')}</Text></View>
                                 <View style={{ flexDirection: 'column', marginLeft: 10 }}>
                                     <View><Text style={{ fontSize: 15 }}>{l.title}</Text></View>
                                     <View style={{ flexDirection: 'row' }}>
@@ -47,47 +53,17 @@ class EventList extends React.Component {
 
     constructor(props) {
         super(props);
-        const events = getAllEvents();
-        let past = [];
-        let upcoming = [];
-        let today = [];
-        let now = new Date();
-
-        events.forEach((event) => {
-            let date = new Date(event.date);
-
-            if(date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear() && date.getDate() === now.getDate()) {
-                today.push(event);
-            }
-            else if(date < now) {
-                past.push(event);
-            }
-            else {
-                upcoming.push(event);
-            }
-        });
 
         this._handleOnPress = this._handleOnPress.bind(this);
         this._handleOnAddEvent = this._handleOnAddEvent.bind(this);
-
-        this.state = {
-            events,
-            past,
-            upcoming,
-            today
-        };
-    }
-
-    componentWillMount() {
-        const events = getAllEvents();
-
-        this.setState({
-            events
-        });
     }
 
     _handleOnPress(e) {
         let { navigate } = this.props.navigation;
+        let { eventSelected } = this.props.actions;
+
+        eventSelected(e.id);
+
         navigate('EventDetail', e);
     }
 
@@ -97,7 +73,7 @@ class EventList extends React.Component {
     }
 
     render() {
-        let { past, upcoming, today, events } = this.state;
+        let { past, upcoming, today, events } = this.props;
 
         return (
             <View style={styles.container}>
@@ -113,11 +89,42 @@ class EventList extends React.Component {
     }
 }
 
-function mapStateToProps() {
-    return { events: [] };
+function mapStateToProps(state) {
+    let events = state.events.all;
+    let past = [];
+    let upcoming = [];
+    let today = [];
+    let now = new Date();
+
+    events.forEach((event) => {
+        let date = moment.default(event.date);
+
+        if (date.month() === now.getMonth() && date.year() === now.getFullYear() && date.date() === now.getDate()) {
+            today.push(event);
+        }
+        else if (date < now) {
+            past.push(event);
+        }
+        else {
+            upcoming.push(event);
+        }
+    });
+
+    return {
+        events,
+        past,
+        upcoming,
+        today
+    };
 }
 
-export default connect(mapStateToProps)(EventList);
+function mapDispatchToProps(dispatch) {
+    let actions = { eventSelected };
+
+    return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventList);
 
 const styles = StyleSheet.create({
     container: {

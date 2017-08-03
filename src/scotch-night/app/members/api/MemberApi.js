@@ -38,18 +38,16 @@ export const getMemberDetails = username => {
 };
 
 export const getAllMembers = () => {
-    return fetch('https://scotchnightapi.azurewebsites.net/api/users', {
+    return fetch('https://scotchnightapi.azurewebsites.net/api/members', {
         Accept: 'application/json'
     })
         .then(response => response.json())
-        .then(users => {
-            if (!users) {
+        .then(members => {
+            if (!members) {
                 return;
             }
 
-            console.log('users!');
-            console.log(users);
-            return users;
+            return members;
         })
         .catch(error => {
             console.log(error);

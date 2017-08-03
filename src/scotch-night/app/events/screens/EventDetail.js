@@ -1,13 +1,16 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import * as moment from 'moment';
+import _ from 'lodash';
 
 function TastingMenu(props) {
     let { menu, onPress } = props;
 
-    if(!menu || menu.length === 0) {
+    if (!menu || menu.length === 0) {
         return (<Text style={styles.noBottles}>No Bottles</Text>);
     }
 
@@ -37,11 +40,12 @@ class EventDetail extends Component {
 
     _handleOnAddBottle() {
         let { navigate } = this.props.navigation;
-        navigate('AddBottle', {eventId: this.props.navigation.state.params.id});
+        navigate('AddBottle', { event: this.props.navigation.state.params });
     }
 
     render() {
-        let { title, location, description, date, menu } = this.props.navigation.state.params;
+        let { menu } = this.props;
+        let { title, location, description, date } = this.props.event;
 
         return (
             <View style={styles.container}>
@@ -54,7 +58,7 @@ class EventDetail extends Component {
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <SimpleLineIcons name='calendar' color='#80807f' size={16} />
-                            <Text style={styles.eventDetail}>{date}</Text>
+                            <Text style={styles.eventDetail}>{moment.default(date).format('dddd, MMMM, YYYY, h:mm')}</Text>
                         </View>
                     </View>
                     <Text style={styles.description}>{description}</Text>
@@ -108,4 +112,16 @@ const styles = StyleSheet.create({
         color: '#80807f'
     }
 });
-export default EventDetail;
+
+function mapStateToProps(state) {
+    let currentEvent = state.events.selected;
+    let menu = [];
+
+    if (currentEvent.bottles) {
+        menu = _.filter(state.bottles, bottle => currentEvent.bottles.includes(bottle.id));
+    }
+
+    return { event: currentEvent, menu };
+}
+
+export default connect(mapStateToProps)(EventDetail);

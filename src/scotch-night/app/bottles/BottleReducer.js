@@ -1,16 +1,13 @@
-import { ADD_BOTTLE, BOTTLES_LOADED } from './BottleActionTypes';
+import {
+    ADD_BOTTLE,
+    BOTTLES_LOADED,
+    BOTTLE_ADDED
+} from './BottleActionTypes';
 
 const BottleReducer = (state = [], action) => {
     switch (action.type) {
-        case ADD_BOTTLE: {
-            let id = 1;
-            if (state.length > 0) {
-                const ids = state.map(bottle => bottle.id);
-                id = Math.max(ids) + 1;
-            }
-
-            let newBottle = { ...action.payload, id };
-            let bottles = [newBottle, ...state];
+        case BOTTLE_ADDED: {
+            let bottles = [action.payload, ...state];
 
             return bottles;
         }
