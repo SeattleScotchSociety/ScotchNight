@@ -29,13 +29,16 @@ function EventSubList(props) {
                         key={i}
                         title={
                             <View style={{ flexDirection: 'row', margin: 5 }}>
-                                <View><Text style={{ fontSize: 13 }}>{moment.default(l.date).format('llll')}</Text></View>
-                                <View style={{ flexDirection: 'column', marginLeft: 10 }}>
-                                    <View><Text style={{ fontSize: 15 }}>{l.title}</Text></View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <SimpleLineIcons name='location-pin' size={16} color='#80807f' />
-                                        <Text style={{ color: '#80807f' }}> {l.location}</Text>
-                                    </View>
+                                <View>
+                                    <Text style={{ fontSize: 13 }}>{moment.default(l.date).format('llll')}</Text>
+                                    <View><Text style={{ fontSize: 15, fontWeight: 'bold' }}>{l.title}</Text></View>
+                                    {
+                                        l.location ?
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <SimpleLineIcons name='location-pin' size={16} color='#80807f' />
+                                            <Text style={{ color: '#80807f' }}> {l.location}</Text>
+                                        </View> : null
+                                    }
                                 </View>
                             </View>
                         }
