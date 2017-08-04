@@ -61,10 +61,13 @@ class EventDetail extends Component {
                 <View style={styles.eventContainer}>
                     <Text style={styles.eventTitle}>{title}</Text>
                     <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 5 }}>
-                        <View style={{ flexDirection: 'row', marginRight: 10 }}>
-                            <SimpleLineIcons name='location-pin' color='#80807f' size={16} />
-                            <Text style={styles.eventDetail}>{location}</Text>
-                        </View>
+                        {
+                            location ?
+                                <View style={{ flexDirection: 'row', marginRight: 10 }}>
+                                    <SimpleLineIcons name='location-pin' color='#80807f' size={16} />
+                                    <Text style={styles.eventDetail}>{location}</Text>
+                                </View> : null
+                        }
                         <View style={{ flexDirection: 'row' }}>
                             <SimpleLineIcons name='calendar' color='#80807f' size={16} />
                             <Text style={styles.eventDetail}>{moment.default(date).format('dddd, MMMM, YYYY, h:mm')}</Text>
