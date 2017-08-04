@@ -4,4 +4,4 @@ export const isUserLoggedIn = (state) => {
     }
 
     return false;
-}
+};

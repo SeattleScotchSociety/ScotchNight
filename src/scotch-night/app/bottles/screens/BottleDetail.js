@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     let currentBottle = state.bottles.selected;
-    let notes = state.reviews.all;
+    let notes = state.reviews.summary;
     // let ratings = [];
 
     // if (currentBottle.bottles) {

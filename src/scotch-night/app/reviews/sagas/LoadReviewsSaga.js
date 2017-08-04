@@ -3,7 +3,7 @@ import { getReviews } from '../api/ReviewsApi';
 import { reviewsLoaded } from '../ReviewActions';
 import { LOAD_REVIEWS } from '../ReviewActionTypes';
 
-export function* reviews(action) {
+export function* loadBottleReviews(action) {
     try {
         const reviews = yield call(getReviews, action.payload.bottleId);
 
@@ -14,5 +14,5 @@ export function* reviews(action) {
 }
 
 export function* watchLoadReviews() {
-    yield takeLatest(LOAD_REVIEWS, reviews);
+    yield takeLatest(LOAD_REVIEWS, loadBottleReviews);
 }

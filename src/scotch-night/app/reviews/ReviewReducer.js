@@ -8,7 +8,7 @@ import {
 const BottleReducer = (state = [], action) => {
     switch (action.type) {
         case REVIEWS_LOADED: {
-            return { ...state, all: action.payload };
+            return { ...state, summary: action.payload };
         }
 
         default: {

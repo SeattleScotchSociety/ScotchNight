@@ -1,5 +1,5 @@
 export const getReviews = (bottleId) => {
-    return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/bottle/${bottleId}`, {
+    return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/summary/${bottleId}`, {
         method: 'get',
         headers: {
             'Accept': 'application/json'
@@ -10,12 +10,12 @@ export const getReviews = (bottleId) => {
                 return response.json();
             }
         })
-        .then(reviews => {
-            if (!reviews) {
+        .then(summaryReview => {
+            if (!summaryReview) {
                 return;
             }
 
-            return reviews;
+            return summaryReview;
         })
         .catch(error => {
             console.log(error);

@@ -4,8 +4,6 @@ import { Button, Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as memberActions from '../MemberActions';
-import User from '../../user';
-let { currentUserUpdated } = User.Actions;
 
 class SetMember extends Component {
     static navigationOptions = {
@@ -20,7 +18,7 @@ class SetMember extends Component {
     }
 
     _handleTextChange(member) {
-        this.props.actions.currentUserUpdated(member);
+        this.props.actions.memberSelected(member);
     }
 
     _handleOnPress() {
@@ -30,14 +28,14 @@ class SetMember extends Component {
     }
 
     render() {
-        let { members, user } = this.props;
+        let { members, currentMember } = this.props;
 
         let memberItems = members.map((member) => {
             return (
                 <Picker.Item
                     key={member.email}
                     label={`${member.firstName} ${member.lastName}`}
-                    value={member.email} />
+                    value={member.id} />
             );
         });
 
@@ -49,7 +47,7 @@ class SetMember extends Component {
                     featured
                     caption="" />
                 <Picker
-                    selectedValue={user}
+                    selectedValue={currentMember}
                     onValueChange={member => this._handleTextChange(member)}>
                     {memberItems}
                 </Picker>
@@ -60,11 +58,14 @@ class SetMember extends Component {
 }
 
 function mapStateToProps(state) {
-    return state;
+    let members = state.members.all;
+    let currentMember = state.members.selected;
+
+    return { members, currentMember };
 }
 
 function mapDispatchToProps(dispatch) {
-    let actions = { ...memberActions, currentUserUpdated };
+    let actions = { ...memberActions };
 
     return { actions: bindActionCreators(actions, dispatch) };
 }
