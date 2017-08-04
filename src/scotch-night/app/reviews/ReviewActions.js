@@ -7,17 +7,10 @@ export const loadReviews = (bottleId) => {
     };
 };
 
-<<<<<<< HEAD
 export const reviewsLoaded = (error, summaryReview, memberReview) => {
     const isError = !!error;
 
     const payload = isError ? error : { summaryReview, memberReview };
-=======
-export const reviewsLoaded = (error, reviews) => {
-    const isError = !!error;
-
-    const payload = isError ? error : reviews;
->>>>>>> origin/master
 
     return {
         type: REVIEWS_LOADED,

@@ -81,7 +81,6 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
                 return await connection.QueryAsync<Note>(query);
             }
         }
-<<<<<<< HEAD
 
         public async Task<Note> GetByMember(Guid memberId)
         {
@@ -96,7 +95,5 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
                 return results.Count > 0 ? results[0] : null;
             }
         }
-=======
->>>>>>> origin/master
     }
 }

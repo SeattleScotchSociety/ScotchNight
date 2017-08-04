@@ -116,11 +116,7 @@ class BottleDetail extends React.Component {
         this._handleOnSaveNotes = this._handleOnSaveNotes.bind(this);
         this._handleOnChange = this._handleOnChange.bind(this);
 
-<<<<<<< HEAD
         let notes = props.memberNotes ? { ...props.memberNotes } : {};
-=======
-        let notes = this.props.notes ? { ...this.props.notes } : {};
->>>>>>> origin/master
 
         this.state = {
             resetCount: 0,
@@ -134,11 +130,7 @@ class BottleDetail extends React.Component {
     }
 
     _handleOnPressRating(rating) {
-<<<<<<< HEAD
         this.setState({ notes: { ...this.state.notes, rating: rating } });
-=======
-        this.setState({ notes: { rating: rating } });
->>>>>>> origin/master
     }
 
     _handleOnChange(note, value) {
@@ -175,11 +167,7 @@ class BottleDetail extends React.Component {
                         selectedIndex={view}
                         onPress={this._handleSelectView} />
                     <Overview view={view} notes={notes} thoughts={this.state.notes.thoughts} />
-<<<<<<< HEAD
                     <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onFinishRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
-=======
-                    <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onPressRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
->>>>>>> origin/master
                 </View>
             </ScrollView>
         );
@@ -218,19 +206,10 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
     let currentBottle = state.bottles.selected;
     let notes = state.reviews.summary;
-<<<<<<< HEAD
+
     let memberNotes = state.reviews.member;
 
     return { bottle: currentBottle, notes, memberNotes };
-=======
-    // let ratings = [];
-
-    // if (currentBottle.bottles) {
-    //     ratings = _.filter(state.bottles.all, bottle => currentEvent.bottles.includes(bottle.id));
-    // }
-
-    return { bottle: currentBottle, notes };
->>>>>>> origin/master
 }
 
 function mapDispatchToProps(dispatch) {
@@ -240,7 +219,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottleDetail);
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master

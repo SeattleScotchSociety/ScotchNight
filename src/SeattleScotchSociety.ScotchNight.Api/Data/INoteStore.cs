@@ -16,10 +16,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
         Task<IEnumerable<Note>> GetAllAsync();
 
         Task<IEnumerable<Note>> GetByBottle(Guid bottleId);
-<<<<<<< HEAD
 
         Task<Note> GetByMember(Guid memberId);
-=======
->>>>>>> origin/master
     }
 }

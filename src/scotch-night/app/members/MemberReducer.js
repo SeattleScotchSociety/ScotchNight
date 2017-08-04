@@ -11,17 +11,11 @@ const membersReducer = (state = { all: [], selected: {} }, action) => {
 
         case MEMBER_SELECTED: {
             let memberId = action.payload;
-<<<<<<< HEAD
             let newMember = _.find(state.all, { 'id': memberId });
 
             let newState = { ...state, selected: newMember };
 
             return newState;
-=======
-            let selected = _.find(state.all, member => member.id === memberId);
-
-            return { ...state, selected };
->>>>>>> origin/master
         }
 
         default: {
