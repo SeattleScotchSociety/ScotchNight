@@ -17,7 +17,7 @@ const bottles = [
             finish: 80,
             fruity: 30,
             vanilla: 20,
-            smoky: 10,
+            smokey: 10,
             citrus: 99,
             oily: 10,
             peppery: 50

@@ -21,6 +21,8 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
 
         public async Task AddAsync(Note note)
         {
+            await DeleteAsync(note);
+
             using (var connection = new SqlConnection(_connectionString))
             {
                 string query = "INSERT INTO Note (BottleId, MemberId, Rating, Finish, Fruity, Vanilla, Smokey, Citrus, Oily, Peppery, Thoughts)"
@@ -49,7 +51,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 string query = "DELETE Note "
-                                + " WHERE Id = @Id";
+                                + " WHERE MemberId = @MemberId AND BottleId = @BottleId";
                 connection.Open();
 
                 await connection.ExecuteAsync(query, note);
@@ -79,5 +81,22 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
                 return await connection.QueryAsync<Note>(query);
             }
         }
+<<<<<<< HEAD
+
+        public async Task<Note> GetByMember(Guid memberId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                string query = $"SELECT * FROM Note WHERE MemberId = '{memberId}'";
+
+                connection.Open();
+
+                var results = (await connection.QueryAsync<Note>(query)).AsList();
+
+                return results.Count > 0 ? results[0] : null;
+            }
+        }
+=======
+>>>>>>> origin/master
     }
 }
