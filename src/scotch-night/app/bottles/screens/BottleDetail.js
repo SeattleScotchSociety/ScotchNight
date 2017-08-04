@@ -2,7 +2,7 @@
 import React from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { Rating, ButtonGroup, Button, Slider } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
+import StarRating from '../components/StarRating';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import GrowingTextInput from '../../components/GrowingTextInput';
@@ -48,7 +48,7 @@ function Overview(props) {
     return (
         <View style={{ flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 15 }}>
-                <Rating imageSize={40} readonly startingValue={4.5} />
+                <StarRating rating={4.5} />
             </View>
             <NoteDisplay note='Finish' rating={notes ? notes.finish : 0} />
             <NoteDisplay note='Fruity' rating={notes ? notes.fruity : 0} />
@@ -64,7 +64,7 @@ function Overview(props) {
 }
 
 function MyNotes(props) {
-    let { onFinishRating, view, notes, save, reset, resetCount, onChange } = props;
+    let { onPressRating, view, notes, save, reset, resetCount, onChange } = props;
 
     if (view !== 1) {
         return null;
@@ -75,7 +75,7 @@ function MyNotes(props) {
     return (
         <View>
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 15 }}>
-                <Rating key={resetCount} imageSize={40} startingValue={notes.rating ? notes.rating : 0} onFinishRating={onFinishRating} />
+                <StarRating rating={notes.rating} onPress={onPressRating} />
             </View>
             <NoteEditor resetCount={resetCount} note='Finish' rating={notes.finish} onChange={onChange.bind(null, 'finish')} />
             <NoteEditor resetCount={resetCount} note='Fruity' rating={notes.fruity} onChange={onChange.bind(null, 'fruity')} />
@@ -116,7 +116,11 @@ class BottleDetail extends React.Component {
         this._handleOnSaveNotes = this._handleOnSaveNotes.bind(this);
         this._handleOnChange = this._handleOnChange.bind(this);
 
+<<<<<<< HEAD
         let notes = props.memberNotes ? { ...props.memberNotes } : {};
+=======
+        let notes = this.props.notes ? { ...this.props.notes } : {};
+>>>>>>> origin/master
 
         this.state = {
             resetCount: 0,
@@ -130,7 +134,11 @@ class BottleDetail extends React.Component {
     }
 
     _handleOnPressRating(rating) {
+<<<<<<< HEAD
         this.setState({ notes: { ...this.state.notes, rating: rating } });
+=======
+        this.setState({ notes: { rating: rating } });
+>>>>>>> origin/master
     }
 
     _handleOnChange(note, value) {
@@ -167,7 +175,11 @@ class BottleDetail extends React.Component {
                         selectedIndex={view}
                         onPress={this._handleSelectView} />
                     <Overview view={view} notes={notes} thoughts={this.state.notes.thoughts} />
+<<<<<<< HEAD
                     <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onFinishRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
+=======
+                    <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onPressRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
+>>>>>>> origin/master
                 </View>
             </ScrollView>
         );
@@ -206,9 +218,19 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
     let currentBottle = state.bottles.selected;
     let notes = state.reviews.summary;
+<<<<<<< HEAD
     let memberNotes = state.reviews.member;
 
     return { bottle: currentBottle, notes, memberNotes };
+=======
+    // let ratings = [];
+
+    // if (currentBottle.bottles) {
+    //     ratings = _.filter(state.bottles.all, bottle => currentEvent.bottles.includes(bottle.id));
+    // }
+
+    return { bottle: currentBottle, notes };
+>>>>>>> origin/master
 }
 
 function mapDispatchToProps(dispatch) {
@@ -218,4 +240,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottleDetail);
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master

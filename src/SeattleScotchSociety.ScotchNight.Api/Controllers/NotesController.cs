@@ -60,12 +60,15 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             summaryNote.Vanilla = SummarizeRating(allNotes.Where(note => note.Vanilla != null).Select(note => note.Vanilla));
 
             return summaryNote;
+<<<<<<< HEAD
         }
 
         [HttpGet("member/{memberId}")]
         public async Task<Note> GetByMember(Guid memberId)
         {
             return await _noteStore.GetByMember(memberId);
+=======
+>>>>>>> origin/master
         }
 
         [HttpPost]

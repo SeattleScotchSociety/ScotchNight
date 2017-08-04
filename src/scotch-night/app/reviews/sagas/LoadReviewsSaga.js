@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import { getReviews, getMemberReview } from '../api/ReviewsApi';
 import { reviewsLoaded } from '../ReviewActions';
@@ -11,6 +12,18 @@ export function* loadBottleReviews(action) {
         const memberReview = yield call(getMemberReview, currentMember.id);
 
         yield put(reviewsLoaded(null, summaryReview, memberReview));
+=======
+import { takeLatest, call, put } from 'redux-saga/effects';
+import { getReviews } from '../api/ReviewsApi';
+import { reviewsLoaded } from '../ReviewActions';
+import { LOAD_REVIEWS } from '../ReviewActionTypes';
+
+export function* loadBottleReviews(action) {
+    try {
+        const reviews = yield call(getReviews, action.payload.bottleId);
+
+        yield put(reviewsLoaded(null, reviews));
+>>>>>>> origin/master
     } catch (error) {
         yield put(reviewsLoaded(error));
     }
