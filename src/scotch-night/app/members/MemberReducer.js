@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { MEMBERS_LOADED, MEMBER_SELECTED } from './MemberActionTypes';
 
-const membersReducer = (state = [], action) => {
+const membersReducer = (state = { all: [], selected: {} }, action) => {
     switch (action.type) {
         case MEMBERS_LOADED: {
             let selected = action.payload[0];
@@ -11,9 +11,11 @@ const membersReducer = (state = [], action) => {
 
         case MEMBER_SELECTED: {
             let memberId = action.payload;
-            let selected = _.find(state.all, member => member.id === memberId);
+            let newMember = _.find(state.all, { 'id': memberId });
 
-            return { ...state, selected };
+            let newState = { ...state, selected: newMember };
+
+            return newState;
         }
 
         default: {

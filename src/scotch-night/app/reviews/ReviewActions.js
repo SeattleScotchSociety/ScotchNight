@@ -7,10 +7,10 @@ export const loadReviews = (bottleId) => {
     };
 };
 
-export const reviewsLoaded = (error, reviews) => {
+export const reviewsLoaded = (error, summaryReview, memberReview) => {
     const isError = !!error;
 
-    const payload = isError ? error : reviews;
+    const payload = isError ? error : { summaryReview, memberReview };
 
     return {
         type: REVIEWS_LOADED,

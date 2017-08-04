@@ -22,6 +22,30 @@ export const getReviews = (bottleId) => {
         });
 };
 
+export const getMemberReview = (memberId) => {
+    return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/member/${memberId}`, {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(review => {
+            if (!review) {
+                return;
+            }
+
+            return review;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
 export const addReview = (review) => {
     return fetch('https://scotchnightapi.azurewebsites.net/api/notes', {
         method: 'post',

@@ -53,7 +53,7 @@ function Overview(props) {
             <NoteDisplay note='Finish' rating={notes ? notes.finish : 0} />
             <NoteDisplay note='Fruity' rating={notes ? notes.fruity : 0} />
             <NoteDisplay note='Vanilla' rating={notes ? notes.vanilla : 0} />
-            <NoteDisplay note='Smoky' rating={notes ? notes.smoky : 0} />
+            <NoteDisplay note='Smokey' rating={notes ? notes.smokey : 0} />
             <NoteDisplay note='Citrus' rating={notes ? notes.citrus : 0} />
             <NoteDisplay note='Oily' rating={notes ? notes.oily : 0} />
             <NoteDisplay note='Peppery' rating={notes ? notes.peppery : 0} />
@@ -80,7 +80,7 @@ function MyNotes(props) {
             <NoteEditor resetCount={resetCount} note='Finish' rating={notes.finish} onChange={onChange.bind(null, 'finish')} />
             <NoteEditor resetCount={resetCount} note='Fruity' rating={notes.fruity} onChange={onChange.bind(null, 'fruity')} />
             <NoteEditor resetCount={resetCount} note='Vanilla' rating={notes.vanilla} onChange={onChange.bind(null, 'vanilla')} />
-            <NoteEditor resetCount={resetCount} note='Smoky' rating={notes.smoky} onChange={onChange.bind(null, 'smoky')} />
+            <NoteEditor resetCount={resetCount} note='Smokey' rating={notes.smokey} onChange={onChange.bind(null, 'smokey')} />
             <NoteEditor resetCount={resetCount} note='Citrus' rating={notes.citrus} onChange={onChange.bind(null, 'citrus')} />
             <NoteEditor resetCount={resetCount} note='Oily' rating={notes.oily} onChange={onChange.bind(null, 'oily')} />
             <NoteEditor resetCount={resetCount} note='Peppery' rating={notes.peppery} onChange={onChange.bind(null, 'peppery')} />
@@ -116,7 +116,7 @@ class BottleDetail extends React.Component {
         this._handleOnSaveNotes = this._handleOnSaveNotes.bind(this);
         this._handleOnChange = this._handleOnChange.bind(this);
 
-        let notes = this.props.notes ? { ...this.props.notes } : {};
+        let notes = props.memberNotes ? { ...props.memberNotes } : {};
 
         this.state = {
             resetCount: 0,
@@ -130,7 +130,7 @@ class BottleDetail extends React.Component {
     }
 
     _handleOnPressRating(rating) {
-        this.setState({ notes: { rating: rating } });
+        this.setState({ notes: { ...this.state.notes, rating: rating } });
     }
 
     _handleOnChange(note, value) {
@@ -206,13 +206,9 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
     let currentBottle = state.bottles.selected;
     let notes = state.reviews.summary;
-    // let ratings = [];
+    let memberNotes = state.reviews.member;
 
-    // if (currentBottle.bottles) {
-    //     ratings = _.filter(state.bottles.all, bottle => currentEvent.bottles.includes(bottle.id));
-    // }
-
-    return { bottle: currentBottle, notes };
+    return { bottle: currentBottle, notes, memberNotes };
 }
 
 function mapDispatchToProps(dispatch) {

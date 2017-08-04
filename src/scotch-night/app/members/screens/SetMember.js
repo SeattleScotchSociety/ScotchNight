@@ -47,7 +47,7 @@ class SetMember extends Component {
                     featured
                     caption="" />
                 <Picker
-                    selectedValue={currentMember}
+                    selectedValue={currentMember.id}
                     onValueChange={member => this._handleTextChange(member)}>
                     {memberItems}
                 </Picker>
