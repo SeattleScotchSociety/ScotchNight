@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SeattleScotchSociety.ScotchNight.Api.Models;
 
@@ -13,5 +14,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
         Task DeleteAsync(Note note);
 
         Task<IEnumerable<Note>> GetAllAsync();
+
+        Task<IEnumerable<Note>> GetByBottle(Guid bottleId);
     }
 }

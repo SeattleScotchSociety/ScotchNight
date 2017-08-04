@@ -3,9 +3,13 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import * as moment from 'moment';
 import _ from 'lodash';
+
+import { bottleSelected } from '../../bottles/BottleActions';
+import { loadReviews } from '../../reviews/ReviewActions';
 
 function TastingMenu(props) {
     let { menu, onPress } = props;
@@ -35,6 +39,11 @@ class EventDetail extends Component {
 
     _handleOnPress(bottle) {
         let { navigate } = this.props.navigation;
+        let { bottleSelected, loadReviews } = this.props.actions;
+
+        loadReviews(bottle.id);
+        bottleSelected(bottle.id);
+
         navigate('Bottle', { bottle: bottle });
     }
 
@@ -118,10 +127,16 @@ function mapStateToProps(state) {
     let menu = [];
 
     if (currentEvent.bottles) {
-        menu = _.filter(state.bottles, bottle => currentEvent.bottles.includes(bottle.id));
+        menu = _.filter(state.bottles.all, bottle => currentEvent.bottles.includes(bottle.id));
     }
 
     return { event: currentEvent, menu };
 }
 
-export default connect(mapStateToProps)(EventDetail);
+function mapDispatchToProps(dispatch) {
+    let actions = { bottleSelected, loadReviews };
+
+    return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

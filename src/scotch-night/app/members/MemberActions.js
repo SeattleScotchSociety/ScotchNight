@@ -1,4 +1,4 @@
-import { LOAD_MEMBERS, MEMBERS_LOADED } from './MemberActionTypes';
+import { LOAD_MEMBERS, MEMBERS_LOADED, MEMBER_SELECTED } from './MemberActionTypes';
 
 export const loadMembers = () => {
     return {
@@ -15,5 +15,12 @@ export const membersLoaded = (error, members) => {
         type: MEMBERS_LOADED,
         payload,
         error: isError
+    };
+};
+
+export const memberSelected = (member) => {
+    return {
+        type: MEMBER_SELECTED,
+        payload: member
     };
 };

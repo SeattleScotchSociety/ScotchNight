@@ -3,6 +3,7 @@ using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SeattleScotchSociety.ScotchNight.Api.Filters;
 
@@ -25,10 +26,40 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             return _noteStore.GetAllAsync();
         }
 
-        [HttpGet("{id}")]
-        public Note Get(Guid id)
+        [HttpGet("summary/{bottleId}")]
+        public async Task<Note> Get(Guid bottleId)
         {
-            return null;
+            var allNotes = await _noteStore.GetByBottle(bottleId);
+
+            var summaryNote = new Note
+            {
+                BottleId = bottleId,
+                MemberId = Guid.Empty,
+                Thoughts = string.Empty,
+            };
+
+            float? SummarizeRating(IEnumerable<float?> allRatings)
+            {
+                float? summarizedValue = null;
+
+                if (allRatings.Count() > 0)
+                {
+                    summarizedValue = (float)(allRatings.Sum(rating => rating) / allRatings.Count());
+                }
+
+                return summarizedValue;
+            }
+
+            summaryNote.Citrus = SummarizeRating(allNotes.Where(note => note.Citrus != null).Select(note => note.Citrus));
+            summaryNote.Finish = SummarizeRating(allNotes.Where(note => note.Finish != null).Select(note => note.Finish));
+            summaryNote.Fruity = SummarizeRating(allNotes.Where(note => note.Fruity != null).Select(note => note.Fruity));
+            summaryNote.Oily = SummarizeRating(allNotes.Where(note => note.Oily != null).Select(note => note.Oily));
+            summaryNote.Peppery = SummarizeRating(allNotes.Where(note => note.Peppery != null).Select(note => note.Peppery));
+            summaryNote.Rating = SummarizeRating(allNotes.Where(note => note.Rating != null).Select(note => note.Rating));
+            summaryNote.Smokey = SummarizeRating(allNotes.Where(note => note.Smokey != null).Select(note => note.Smokey));
+            summaryNote.Vanilla = SummarizeRating(allNotes.Where(note => note.Vanilla != null).Select(note => note.Vanilla));
+
+            return summaryNote;
         }
 
         [HttpPost]
