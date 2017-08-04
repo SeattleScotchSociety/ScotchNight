@@ -37,8 +37,15 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
 
                 await connection.ExecuteAsync(query, @event);
 
-                await connection.ExecuteAsync(bottleQuery, @event.Bottles.ToList().Select(bottleId => new EventBottle { EventId = @event.Id, BottleId = bottleId }));
-                await connection.ExecuteAsync(memberQuery, @event.Attendees.ToList().Select(memberId => new EventMember { EventId = @event.Id, MemberId = memberId }));
+                if (@event.Bottles.Count() > 0)
+                {
+                    await connection.ExecuteAsync(bottleQuery, @event.Bottles.ToList().Select(bottleId => new EventBottle { EventId = @event.Id, BottleId = bottleId }));
+                }
+
+                if (@event.Attendees.Count() > 0)
+                {
+                    await connection.ExecuteAsync(memberQuery, @event.Attendees.ToList().Select(memberId => new EventMember { EventId = @event.Id, MemberId = memberId }));
+                }
             }
         }
 

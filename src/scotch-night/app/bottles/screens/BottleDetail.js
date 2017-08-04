@@ -48,7 +48,7 @@ function Overview(props) {
     return (
         <View style={{ flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 15 }}>
-                <StarRating rating={4.5} />
+                <StarRating rating={notes ? notes.rating : 0} />
             </View>
             <NoteDisplay note='Finish' rating={notes ? notes.finish : 0} />
             <NoteDisplay note='Fruity' rating={notes ? notes.fruity : 0} />
@@ -145,7 +145,7 @@ class BottleDetail extends React.Component {
         addReview(this.state.notes);
 
         this.setState({ view: 0 });
-        this.view.scrollTo({ x: 0, y: 0, animated: true });
+        // this.view.scrollTo({ x: 0, y: 0, animated: true });
     }
 
     _handleOnResetNotes() {
@@ -167,7 +167,7 @@ class BottleDetail extends React.Component {
                         selectedIndex={view}
                         onPress={this._handleSelectView} />
                     <Overview view={view} notes={notes} thoughts={this.state.notes.thoughts} />
-                    <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onFinishRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
+                    <MyNotes resetCount={resetCount} notes={this.state.notes} view={view} onPressRating={this._handleOnPressRating} reset={this._handleOnResetNotes} save={this._handleOnSaveNotes} onChange={this._handleOnChange} />
                 </View>
             </ScrollView>
         );

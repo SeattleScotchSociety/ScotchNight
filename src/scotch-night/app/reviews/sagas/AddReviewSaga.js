@@ -1,8 +1,7 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import { addReview } from '../api/ReviewsApi';
-import { reviewAdded } from '../ReviewActions';
+import { reviewAdded, loadReviews } from '../ReviewActions';
 import { ADD_REVIEW } from '../ReviewActionTypes';
-import { loadBottleReviews } from './LoadReviewsSaga';
 import { getCurrentMember } from '../../members/MemberSelectors';
 import { getCurrentBottle } from '../../bottles/BottleSelectors';
 
@@ -15,11 +14,11 @@ export function* addNewReview(action) {
         review.memberId = currentMember.id;
         review.bottleId = currentBottle.id;
 
-        const id = yield call(addReview, review);
+        yield call(addReview, review);
 
         yield put(reviewAdded(null, review));
 
-        yield call(loadBottleReviews, review.bottleId);
+        yield put(loadReviews(review.bottleId));
     } catch (error) {
         console.log(error);
         yield put(reviewAdded(error));

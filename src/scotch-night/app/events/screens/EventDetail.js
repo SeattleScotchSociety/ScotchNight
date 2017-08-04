@@ -41,8 +41,8 @@ class EventDetail extends Component {
         let { navigate } = this.props.navigation;
         let { bottleSelected, loadReviews } = this.props.actions;
 
-        loadReviews(bottle.id);
         bottleSelected(bottle.id);
+        loadReviews(bottle.id);
 
         navigate('Bottle', { bottle: bottle });
     }
