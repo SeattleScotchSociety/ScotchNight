@@ -125,6 +125,12 @@ class BottleDetail extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        let notes = nextProps.memberNotes ? { ...nextProps.memberNotes } : {};
+
+        this.setState({ notes });
+    }
+
     _handleSelectView(index) {
         this.setState({ view: index });
     }

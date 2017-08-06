@@ -9,9 +9,8 @@ import {
 const BottleReducer = (state = [], action) => {
     switch (action.type) {
         case BOTTLE_ADDED: {
-            let currentBottles = state.all;
-
-            let all = [action.payload, currentBottles];
+            let all = [...state.all];
+            all.push(action.payload);
 
             return { ...state, all };
         }

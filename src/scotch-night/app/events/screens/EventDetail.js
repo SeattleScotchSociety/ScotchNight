@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -57,7 +57,7 @@ class EventDetail extends Component {
         let { title, location, description, date } = this.props.event;
 
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={styles.eventContainer}>
                     <Text style={styles.eventTitle}>{title}</Text>
                     <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 5 }}>
@@ -78,7 +78,7 @@ class EventDetail extends Component {
                 <Text style={styles.menuHeader}>Tasting Menu</Text>
                 <TastingMenu menu={menu} onPress={this._handleOnPress} />
                 <Button title='Add Bottle' backgroundColor='#00817d' style={{ marginTop: 20 }} onPress={this._handleOnAddBottle} />
-            </View>
+            </ScrollView>
         );
     }
 };
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     eventContainer: {
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginBottom: -10
     },
     eventTitle: {
         marginTop: 20,

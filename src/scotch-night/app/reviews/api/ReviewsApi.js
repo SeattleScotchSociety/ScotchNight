@@ -22,8 +22,8 @@ export const getReviews = (bottleId) => {
         });
 };
 
-export const getMemberReview = (memberId) => {
-    return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/member/${memberId}`, {
+export const getMemberReview = (memberId, bottleId) => {
+    return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/member/${memberId}/bottle/${bottleId}`, {
         method: 'get',
         headers: {
             'Accept': 'application/json'

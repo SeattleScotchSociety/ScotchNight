@@ -82,11 +82,11 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             }
         }
 
-        public async Task<Note> GetByMember(Guid memberId)
+        public async Task<Note> GetByMember(Guid memberId, Guid bottleId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT * FROM Note WHERE MemberId = '{memberId}'";
+                string query = $"SELECT * FROM Note WHERE MemberId = '{memberId}' AND BottleId = '{bottleId}'";
 
                 connection.Open();
 

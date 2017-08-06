@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { NavigationActions } from 'react-navigation';
 import * as bottleActions from '../BottleActions';
 import GrowingTextInput from '../../components/GrowingTextInput';
 
@@ -45,12 +46,14 @@ class AddBottle extends Component {
 
     _handleOnAddPress = () => {
         let { addBottle } = this.props.actions;
-        const { navigate } = this.props.navigation;
         let { bottle } = this.state;
         let { event } = this.props.navigation.state.params;
 
         addBottle(bottle, event);
-        navigate('EventList', {});
+        const backAction = NavigationActions.back({
+        });
+
+        this.props.navigation.dispatch(backAction);
     };
 
     render() {

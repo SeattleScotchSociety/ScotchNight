@@ -8,7 +8,7 @@ export function* loadBottleReviews(action) {
     try {
         let currentMember = yield select(getCurrentMember);
         const summaryReview = yield call(getReviews, action.payload.bottleId);
-        const memberReview = yield call(getMemberReview, currentMember.id);
+        const memberReview = yield call(getMemberReview, currentMember.id, action.payload.bottleId);
 
         yield put(reviewsLoaded(null, summaryReview, memberReview));
     } catch (error) {
