@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "module": "commonjs",
+        "target": "es5",
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "es6",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ]
+    },
+    "include": [
+        "./src/app/**/*"
+    ]
+}

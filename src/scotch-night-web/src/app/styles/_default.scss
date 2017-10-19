@@ -1,0 +1,256 @@
+/* Prevent font scaling in landscape while allowing user zoom */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* ------------------- Universal ---------------- */
+* { 
+    /* Apply natural box layout */
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* ------------------- Body ---------------- */
+body {
+    /* Text settings */
+    color: $textColor;
+    font-family: $fontFamily;
+    font-size: 16px;
+    font-weight: $normalWeight;
+    -webkit-font-smoothing: antialiased;
+
+    .btn-outline-primary {
+        color: #ff5a5f;
+        border-color: #ff5a5f;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #ff5a5f;
+        color: #fff;
+        border-color: #ff5a5f;
+    }
+
+    .btn-outline-primary:active, .btn-outline-primary.active, .show > .btn-outline-primary.dropdown-toggle {
+        background-color: #ff5a5f;
+        color: #fff;
+        border-color: #ff5a5f;
+    }
+}
+
+/* ------------------- Header ---------------- */
+#site-head {
+    background: white;
+    border-bottom: 1px solid #e4e4e4;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    padding: 0 2rem;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
+
+.navbar {
+        padding: 0;
+}
+
+header{
+    line-height: 64px;
+
+    a {
+        white-space: nowrap;
+        color: $textColor;
+        font-family: $fontFamily;
+        -webkit-font-smoothing: antialiased
+    }
+
+    a:hover {
+        color: $textColor;
+    }
+
+    .nav-link {
+        font-size: 13px;
+    }
+
+    .nav-item {
+        line-height: 1;
+        margin-left: 1.5rem;
+    }
+
+    .nav-item:hover {
+        border-bottom: 2px solid $textColor;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: $boldWeight;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+}
+
+/* ------------------- Navigation ---------------- */
+nav {
+    line-height: 1;
+    margin-right: 2rem;
+    padding: 0;
+
+    .active {
+        border-bottom: 2px solid #008489;
+        color: #008489;
+    }
+
+    .nav-link {
+        font-size: .7rem;
+        font-weight: $boldWeight;
+        margin-right: 2rem;
+        padding: 0.7rem 0;
+        text-transform: uppercase;
+    }
+
+    a {
+        white-space: nowrap;
+        color: $textColor;
+        font-family: $fontFamily;
+        -webkit-font-smoothing: antialiased
+    }
+
+    a:hover {
+        color: $textColor;
+    }
+
+    .active & a:hover {
+        color: #008489;
+    }
+}
+
+/* ------------------- main ---------------- */
+main {
+    margin: 0 2rem;
+    overflow: auto;
+    padding-top: 135px;
+    z-index: -5;
+
+    .row {
+        margin-bottom: 3rem;
+    }
+    
+    .experience-detail {
+        img {
+            height: 200px;
+            width: 200px;
+        }
+
+        .accept-button {
+            text-align: center;
+        }
+    }
+
+    .branch-selection {
+        margin: 1rem 0;
+    }
+
+    #overview-map {
+        height: 10rem;
+    }
+}
+
+/* ------------------- adventure-card ---------------- */
+.adventure-card {
+    color: $textColor;
+
+    img {
+        height: 300px;
+        width: 100%;
+    }
+
+    .card-day {
+        color: rgb(133, 127, 75);
+        font-size: .7rem;
+        font-weight: $boldWeight;
+        text-transform: uppercase;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: $boldWeight;
+    }
+
+    .card-detail {
+    }
+}
+
+.adventure-card:hover {
+    color: $textColor;
+    text-decoration: none;  
+}
+
+/* ------------------- your-adventure ---------------- */
+
+#your-adventure {
+    display: block; 
+    width: auto;
+    word-wrap: break-word;
+
+    img {
+        height: 100%;
+        max-height: 300px;
+        width: 100%;
+    }
+
+    .left-col {
+        float: left;
+        z-index: 10;
+    }
+
+    .right-col {
+        float: left;
+        position: fixed;
+        height: 100%;
+        width: 95%;
+        z-index: -1;
+    }
+
+    .adventure-section {
+        border-bottom: 1px solid #dbdbdb;
+        margin-bottom: 1.8rem;
+        white-space: normal;
+
+        img {
+            max-height: 11rem;
+        }
+
+        .row {
+            margin-bottom: 0.8rem;
+        }
+    }
+
+    .adventure-map {
+        height: 17rem;
+    }
+
+    .detail-header {
+        font-weight: $boldWeight;
+    }
+
+    #book-it-button {
+        margin: 2rem 35%;
+    }
+}
+
+.square {
+    height: 250px;
+    width: 250px;
+    background-color: blue;
+    transition-property: background-color;
+    transition-duration: 5s;
+}
+
+.square:hover {
+    background-color: green;
+}
