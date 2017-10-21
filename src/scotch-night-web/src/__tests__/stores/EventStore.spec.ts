@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import { when } from "mobx";
 
 import { events } from "../../../public/events";
-import { IEvent, EventStore } from "../../app/stores/EventStore";
+import { EventStore, IEvent } from "../../app/stores/EventStore";
 import { eventApi } from "../mocks";
 
 describe("EventStore", () => {
