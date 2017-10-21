@@ -5,13 +5,19 @@ import { getEnv, getParent, process, types } from "mobx-state-tree";
 import EventApi from "../api/EventApi";
 import { Bottle } from "./BottleStore";
 
+export const Location = types.model("Location", {
+    lat: types.number,
+    lng: types.number,
+});
+
 export const Event = types.model("Event", {
     id: types.identifier(),
     date: types.string,
     title: types.string,
-    public: types.boolean,
+    public: types.optional(types.boolean, false),
+    loction: types.maybe(Location),
     description: types.maybe(types.string),
-    menu: types.maybe(types.reference(types.array(Bottle)))
+    menu: types.maybe(types.array(types.reference(Bottle)))
 });
 
 export const EventStore = types
@@ -39,7 +45,7 @@ export const EventStore = types
         const loadEvents = process(function* loadAllEvents() {
             const { eventApi }: { eventApi: EventApi } = getEnv(self);
 
-            const events = yield eventApi.getAllEvents();
+            const events = yield eventApi.getAll();
             updateEvents(events);
             markLoading(false);
         });

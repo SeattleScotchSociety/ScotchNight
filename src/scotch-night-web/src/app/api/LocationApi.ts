@@ -1,8 +1,8 @@
-import { IEvent } from "../stores/EventStore";
+import { ILocation } from "../stores/LocationStore";
 
-export default class EventApi {
+export default class LocationApi {
     public getAll() {
-        return fetch("https://scotchnightapi.azurewebsites.net/api/events")
+        return fetch("https://scotchnightapi.azurewebsites.net/api/locations")
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -10,38 +10,38 @@ export default class EventApi {
 
                 return null;
             })
-            .then((events: IEvent[]) => {
-                if (!events) {
+            .then((locations: ILocation[]) => {
+                if (!locations) {
                     return;
                 }
 
-                return events;
+                return locations;
             })
             .catch((error) => {
                 console.log(error);
             });
     }
 
-    public addEvent(event) {
-        return fetch("https://scotchnightapi.azurewebsites.net/api/events", {
+    public addLocation(location) {
+        return fetch("https://scotchnightapi.azurewebsites.net/api/locations", {
             method: "post",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(event)
+            body: JSON.stringify(location)
         })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
                 }
             })
-            .then((newEvent: IEvent) => {
-                if (!newEvent) {
+            .then((newLocation: ILocation) => {
+                if (!newLocation) {
                     return;
                 }
 
-                return newEvent.id;
+                return newLocation.id;
             })
             .catch((error) => {
                 console.log(error);

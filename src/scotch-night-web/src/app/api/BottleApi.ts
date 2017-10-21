@@ -1,7 +1,7 @@
 import { IBottle } from "../stores/BottleStore";
 
 export default class BottleApi {
-    public getAllBottles() {
+    public getAll() {
         return fetch("https://scotchnightapi.azurewebsites.net/api/bottles")
             .then((response) => {
                 if (response.ok) {

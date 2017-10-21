@@ -4,24 +4,20 @@ import toJson from "enzyme-to-json";
 import React from "react";
 import ReactDOM from "react-dom";
 
+import { locations } from "../../../public/locations";
 import GenericMap from "../../app/components/GenericMap";
-import { IAdventureChoice } from "../../app/stores/EventStore";
-import { experiences, rootStore } from "../mocks";
 
 configure({ adapter: new Adapter() });
 
-describe("Component: ExperienceMap", () => {
+describe("Component: GenericMap", () => {
     it("should render without throwing an error", () => {
-        const userLocation = rootStore.userStore.location;
-        const markers = experiences.map((experience) => {
-            const position = {
-                lat: experience.location.lat,
-                lng: experience.location.lng
-            };
+        const location = locations[0];
+        const markers = locations.map((l) => {
+            const position = { ...l.position };
 
             return {
                 position,
-                key: experience.name,
+                key: location.name,
                 animation: 2
             };
         });
@@ -36,7 +32,7 @@ describe("Component: ExperienceMap", () => {
                 }
                 ref={() => null}
                 defaultZoom={13}
-                defaultCenter={userLocation}
+                defaultCenter={location.position}
                 onClick={() => null}
                 markers={markers}
             />

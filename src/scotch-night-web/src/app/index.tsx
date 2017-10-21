@@ -36,5 +36,6 @@ function renderApp(root: JSX.Element, store: IRootStore) {
 renderApp(<App />, reduxStore);
 
 rootStore.bottleStore.loadBottles();
+rootStore.eventStore.loadEvents();
 rootStore.memberStore.loadMembers();
 syncHistoryWithStore(browserHistory, rootStore.navigation).subscribe();

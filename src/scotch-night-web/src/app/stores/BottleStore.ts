@@ -64,7 +64,7 @@ export const BottleStore = types
         const loadBottles = process(function* loadAllBottles() {
             const { bottleApi }: { bottleApi: BottleApi } = getEnv(self);
 
-            const bottles = yield bottleApi.getAllBottles();
+            const bottles = yield bottleApi.getAll();
             updateBottles(bottles);
             markLoading(false);
         });

@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import { observable } from "mobx";
 import { getEnv, getParent, process, types } from "mobx-state-tree";
 
-import { Member } from "./MemberStore";
+import { IMember, Member } from "./MemberStore";
 
 import { Location } from "../types/mobxCommon";
 
@@ -11,7 +11,12 @@ export const ScotchNightStore = types
         currentUser: types.maybe(types.reference(Member))
     })
     .actions((self) => {
+        const setCurrentUser = (member: IMember) => {
+            self.currentUser = member;
+        };
+
         return {
+            setCurrentUser
         };
     });
 
