@@ -62,10 +62,10 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             return summaryNote;
         }
 
-        [HttpGet("member/{memberId}")]
-        public async Task<Note> GetByMember(Guid memberId)
+        [HttpGet("member/{memberId}/bottle/{bottleId}")]
+        public async Task<Note> GetByMember(Guid memberId, Guid bottleId)
         {
-            return await _noteStore.GetByMember(memberId);
+            return await _noteStore.GetByMember(memberId, bottleId);
         }
 
         [HttpPost]
