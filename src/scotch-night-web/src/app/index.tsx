@@ -11,14 +11,15 @@ import { Router } from "react-router-dom";
 import "./styles/app.scss";
 
 import App from "./App";
+import Auth from "./services/Auth";
 import { createStore } from "./store";
 import { IRootStore, RootStore } from "./stores/RootStore";
 import { RouterStore, syncHistoryWithStore } from "./stores/RouterStore";
 
 const browserHistory = createBrowserHistory();
-
 const patches = observable.shallowArray();
 const rootStore = createStore(browserHistory);
+const auth = new Auth(rootStore.scotchNightStore);
 const reduxStore = asReduxStore(rootStore);
 connectReduxDevtools(require("remotedev"), rootStore);
 
@@ -33,9 +34,19 @@ function renderApp(root: JSX.Element, store: IRootStore) {
     );
 }
 
-renderApp(<App />, reduxStore);
+const initializeUserCallback = (err, profile) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    rootStore.scotchNightStore.setCurrentUserByEmail(profile.email);
+};
+
+auth.getProfile(initializeUserCallback);
+
+renderApp(<App auth={auth} />, reduxStore);
 
 rootStore.bottleStore.loadBottles();
 rootStore.eventStore.loadEvents();
-rootStore.memberStore.loadMembers();
 syncHistoryWithStore(browserHistory, rootStore.navigation).subscribe();

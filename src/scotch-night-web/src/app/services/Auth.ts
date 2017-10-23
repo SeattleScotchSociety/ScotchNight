@@ -1,8 +1,10 @@
 import { WebAuth } from "auth0-js";
 import createBrowserHistory from "history/createBrowserHistory";
+import { IScotchNightStore } from "../stores/ScotchNightStore";
 
-export default class Auth {
+export class Auth {
     private history = createBrowserHistory();
+    private scotchNightStore;
 
     private auth0 = new WebAuth({
         domain: "seattle-scotch-society.auth0.com",
@@ -10,14 +12,17 @@ export default class Auth {
         redirectUri: "http://localhost:8080/callback",
         audience: "https://seattle-scotch-society.auth0.com/userinfo",
         responseType: "token id_token",
-        scope: "openid"
+        scope: "openid email"
     });
 
-    public constructor() {
+    public constructor(appStore: IScotchNightStore) {
+        this.scotchNightStore = appStore;
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.handleAuthentication = this.handleAuthentication.bind(this);
         this.isAuthenticated = this.isAuthenticated.bind(this);
+        this.getProfile = this.getProfile.bind(this);
+        this.initializeUserCallback = this.initializeUserCallback.bind(this);
     }
 
     public login() {
@@ -28,11 +33,31 @@ export default class Auth {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
-                this.history.replace("/home");
+                this.history.replace("/");
             } else if (err) {
-                this.history.replace("/home");
+                this.history.replace("/");
                 console.log(err);
             }
+        });
+    }
+
+    public getAccessToken() {
+        const accessToken = localStorage.getItem("access_token");
+        if (!accessToken) {
+            return "";
+        }
+        return accessToken;
+    }
+
+    public getProfile(cb) {
+        const accessToken = this.getAccessToken();
+        if (!accessToken) {
+            cb(null, {});
+            return;
+        }
+
+        this.auth0.client.userInfo(accessToken, (err, profile) => {
+            cb(err, profile);
         });
     }
 
@@ -42,8 +67,9 @@ export default class Auth {
         localStorage.setItem("access_token", authResult.accessToken);
         localStorage.setItem("id_token", authResult.idToken);
         localStorage.setItem("expires_at", expiresAt);
+        this.getProfile(this.initializeUserCallback);
         // navigate to the home route
-        this.history.replace("/home");
+        this.history.replace("/");
     }
 
     public logout() {
@@ -51,14 +77,28 @@ export default class Auth {
         localStorage.removeItem("access_token");
         localStorage.removeItem("id_token");
         localStorage.removeItem("expires_at");
+        this.scotchNightStore.setCurrentUser(null);
         // navigate to the home route
-        this.history.replace("/home");
+        this.history.push("/bottles");
     }
 
     public isAuthenticated() {
         // Check whether the current time is past the
         // access token"s expiry time
         const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
-        return new Date().getTime() < expiresAt;
+        const isLoggedIn = new Date().getTime() < expiresAt;
+
+        return isLoggedIn;
+    }
+
+    private initializeUserCallback(err, profile) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        this.scotchNightStore.setCurrentUserByEmail(profile.email);
     }
 }
+
+export default Auth;

@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import Auth from "../services/Auth";
 import { IScotchNightStore } from "../stores/ScotchNightStore";
@@ -12,7 +13,7 @@ export const Header = observer((props: IHeaderProps) => {
 
     let logInLink = (<a
         className="nav-link"
-        href="#"
+        href="/"
         onClick={(e) => {
             e.preventDefault();
             auth.login();
@@ -22,15 +23,15 @@ export const Header = observer((props: IHeaderProps) => {
     </a>);
 
     if (currentUser) {
-        logInLink = (<a
+        logInLink = (<Link
             className="nav-link"
-            href="#"
-            onClick={() => {
-                auth.login();
+            to="/login"
+            onClick={(e) => {
+                auth.logout();
             }}
         >
-            {`${currentUser.firstName} ${currentUser.lastName}`}
-        </a>);
+            Log Out
+        </Link>);
     }
 
     return (<header className="navbar navbar-expand-sm">

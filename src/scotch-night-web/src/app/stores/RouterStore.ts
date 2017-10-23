@@ -29,6 +29,8 @@ export const RouterStore = types.model("RouterStore",
         },
     }));
 
+export default RouterStore;
+
 export type IRouterStore = typeof RouterStore.Type;
 
 export type SimpleLocationListener = (location: string, action: string) => void;

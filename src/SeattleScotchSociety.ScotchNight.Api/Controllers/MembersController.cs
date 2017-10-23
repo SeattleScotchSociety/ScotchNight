@@ -3,6 +3,7 @@ using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SeattleScotchSociety.ScotchNight.Api.Filters;
 
@@ -25,10 +26,12 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             return await _memberStore.GetAllAsync();
         }
 
-        [HttpGet("{id}")]
-        public Member Get(Guid id)
+        [HttpGet("{email}")]
+        public async Task<Member> Get(string email)
         {
-            return null;
+            var members = await _memberStore.GetAllAsync();
+
+            return members.FirstOrDefault(m => m.Email == email);
         }
 
         [HttpPost]

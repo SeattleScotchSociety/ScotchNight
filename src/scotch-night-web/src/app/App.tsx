@@ -1,30 +1,49 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
+import { Redirect, Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 
 import { BottleList } from "./components/BottleList";
 import Callback from "./components/Callback";
 import { ChooseUser } from "./components/ChooseUser";
 import { EventList } from "./components/EventList";
 import { Header } from "./components/Header";
+import { Login } from "./components/Login";
 import { NavigationBar } from "./components/NavigationBar";
-import Auth from "./services/Auth";
+import { Auth } from "./services/Auth";
 import { IRootStore } from "./stores/RootStore";
 
-export interface IAppProps { store?: IRootStore; }
+export interface IAppProps { store?: IRootStore; auth: Auth; }
 
 interface IRouteProps extends RouteComponentProps<any>, React.Props<any>, IAppProps {
 }
 
-const auth = new Auth();
-
-const handleAuthentication = (nextState, replace) => {
+const handleAuthentication = (nextState, auth) => {
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
         auth.handleAuthentication();
     }
 };
 
+const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+    <Route
+        {...rest}
+        render={(props) => (
+            auth.isAuthenticated() ? (
+                <Component {...props} />
+            ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+        )}
+    />
+);
+
 const App = inject("store")(observer((props: IRouteProps) => {
+    const { auth } = props;
+
     return (<div>
         <div id="site-head">
             <Header scotchNightStore={props.store.scotchNightStore} auth={auth} />
@@ -32,16 +51,22 @@ const App = inject("store")(observer((props: IRouteProps) => {
         </div>
         <main>
             <Switch>
-                <Route exact path="/bottles" component={BottleList} />
-                <Route exact path="/events" component={EventList} />
+                <Route
+                    path="/login"
+                    render={(p) => {
+                        return <Login auth={auth} />;
+                    }}
+                />
+                <PrivateRoute exact path="/bottles" component={BottleList} auth={auth} />
+                <PrivateRoute exact path="/events" component={EventList} auth={auth} />
                 <Route
                     path="/callback"
                     render={(p) => {
-                        handleAuthentication(p, null);
-                        return <Callback {...p} />;
+                        handleAuthentication(p, auth);
+                        return <Callback />;
                     }}
                 />
-                <Route exact path="/" component={ChooseUser} />
+                <PrivateRoute path="/" component={ChooseUser} auth={auth} />
             </Switch>
         </main>
     </div>);
