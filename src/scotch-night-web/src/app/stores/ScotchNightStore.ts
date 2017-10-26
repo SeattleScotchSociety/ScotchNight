@@ -3,17 +3,23 @@ import { observable } from "mobx";
 import { getEnv, getParent, process, types } from "mobx-state-tree";
 
 import MemberApi from "../api/MemberApi";
+import { Event, IEvent } from "./EventStore";
 import { IMember, Member } from "./MemberStore";
 
 import { Location } from "../types/mobxCommon";
 
 export const ScotchNightStore = types
     .model("ScotchNightStore", {
-        currentUser: types.maybe(Member)
+        currentUser: types.maybe(Member),
+        currentEvent: types.maybe(types.reference(Event)),
     })
     .actions((self) => {
         const setCurrentUser = (member: IMember) => {
             self.currentUser = member;
+        };
+
+        const setCurrentEvent = (event: IEvent) => {
+            self.currentEvent = event;
         };
 
         const setCurrentUserByEmail = process(function* setUser(email: string) {
@@ -31,6 +37,7 @@ export const ScotchNightStore = types
         });
 
         return {
+            setCurrentEvent,
             setCurrentUser,
             setCurrentUserByEmail
         };
