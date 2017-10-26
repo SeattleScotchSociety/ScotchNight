@@ -4,6 +4,7 @@ import { getEnv, getParent, process, types } from "mobx-state-tree";
 
 import EventApi from "../api/EventApi";
 import { Bottle } from "./BottleStore";
+import { IMember, Member } from "./MemberStore";
 
 export const Location = types.model("Location", {
     lat: types.number,
@@ -17,7 +18,8 @@ export const Event = types.model("Event", {
     public: types.optional(types.boolean, false),
     loction: types.maybe(Location),
     description: types.maybe(types.string),
-    menu: types.maybe(types.array(types.reference(Bottle)))
+    menu: types.maybe(types.array(types.reference(Bottle))),
+    attendees: types.maybe(types.array(types.reference(Member)))
 });
 
 export const EventStore = types
@@ -30,8 +32,8 @@ export const EventStore = types
             self.isLoading = loading;
         }
 
-        function updateEvents(json: IEvent[]): void {
-            json.forEach((event: IEvent) => {
+        function updateEvents(events: IEvent[]): void {
+            events.forEach((event: IEvent) => {
                 const index = _.findIndex(self.events, ["id", event.id]);
 
                 if (index > 0) {
@@ -50,8 +52,22 @@ export const EventStore = types
             markLoading(false);
         });
 
+        const loadEventsForMember = process(function* loadAllEvents(member: IMember) {
+            const { eventApi }: { eventApi: EventApi } = getEnv(self);
+
+            let events: IEvent[] = [];
+
+            if (member) {
+                events = yield eventApi.getAllForMember(member);
+            }
+
+            updateEvents(events);
+            markLoading(false);
+        });
+
         return {
             loadEvents,
+            loadEventsForMember,
             updateEvents
         };
     });

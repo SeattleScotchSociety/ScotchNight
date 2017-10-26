@@ -11,10 +11,11 @@
     "prebuild": "rimraf dist",
     "build": "webpack -p --env.prod",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "start": "webpack-dev-server --env.dev",
+    "start": "webpack-dashboard -- webpack-dev-server --env.dev",
     "test": "jest --no-cache"
   },
   "devDependencies": {
+    "@types/auth0-js": "^8.10.0",
     "@types/history": "^4.6.1",
     "@types/jest": "^21.1.4",
     "@types/lodash": "^4.14.77",
@@ -51,6 +52,7 @@
     "yarn": "^1.2.1"
   },
   "dependencies": {
+    "auth0-js": "^8.10.1",
     "date-fns": "^1.29.0",
     "fs": "^0.0.1-security",
     "history": "^4.7.2",

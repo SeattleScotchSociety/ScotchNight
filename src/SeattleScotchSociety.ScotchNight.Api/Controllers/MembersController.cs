@@ -3,6 +3,7 @@ using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SeattleScotchSociety.ScotchNight.Api.Filters;
 
@@ -12,11 +13,14 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
     [ValidateModel]
     public class MembersController : Controller
     {
+        private IEventStore _eventStore;
+
         private IMemberStore _memberStore;
 
-        public MembersController(IMemberStore memberStore)
+        public MembersController(IMemberStore memberStore, IEventStore eventStore)
         {
             _memberStore = memberStore;
+            _eventStore = eventStore;
         }
 
         [HttpGet]
@@ -25,10 +29,20 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             return await _memberStore.GetAllAsync();
         }
 
-        [HttpGet("{id}")]
-        public Member Get(Guid id)
+        [HttpGet("{email}")]
+        public async Task<Member> Get(string email)
         {
-            return null;
+            var members = await _memberStore.GetAllAsync();
+
+            return members.FirstOrDefault(m => m.Email == email);
+        }
+
+        [HttpGet("{memberId}/events")]
+        public async Task<IEnumerable<Event>> GetEvents(Guid memberId)
+        {
+            var events = await _eventStore.GetAllAsync();
+
+            return events.Where(e => e.Attendees.Contains(memberId));
         }
 
         [HttpPost]

@@ -1,17 +1,37 @@
 import { observer } from "mobx-react";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
+import Auth from "../services/Auth";
 import { IScotchNightStore } from "../stores/ScotchNightStore";
 
-interface IHeaderProps { scotchNightStore: IScotchNightStore; }
+interface IHeaderProps { scotchNightStore: IScotchNightStore; auth: any; }
 
 export const Header = observer((props: IHeaderProps) => {
+    const { auth } = props;
     const { currentUser } = props.scotchNightStore;
 
-    let logInLink = (<a className="nav-link" href="#">Log In</a>);
+    let logInLink = (<a
+        className="nav-link"
+        href="/"
+        onClick={(e) => {
+            e.preventDefault();
+            auth.login();
+        }}
+    >
+        Log In
+    </a>);
 
     if (currentUser) {
-        logInLink = (<a className="nav-link" href="#">{`${currentUser.firstName} ${currentUser.lastName}`}</a>);
+        logInLink = (<Link
+            className="nav-link"
+            to="/login"
+            onClick={(e) => {
+                auth.logout();
+            }}
+        >
+            Log Out
+        </Link>);
     }
 
     return (<header className="navbar navbar-expand-sm">

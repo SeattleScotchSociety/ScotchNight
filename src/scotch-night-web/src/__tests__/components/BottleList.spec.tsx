@@ -5,16 +5,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { locations } from "../../../public/locations";
-import ChooseUser from "../../app/components/ChooseUser";
+import BottleList from "../../app/components/BottleList";
 
 import { rootStore } from "../mocks";
 
 configure({ adapter: new Adapter() });
 
-describe("Component: ChooseUser", () => {
+describe("Component: BottleList", () => {
     it("should render without throwing an error", () => {
         const wrapper = shallow(
-            <ChooseUser
+            <BottleList
                 store={rootStore}
             />
         ).toJson;

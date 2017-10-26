@@ -1,3 +1,4 @@
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const { resolve } = require('path');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -48,7 +49,8 @@ module.exports = (env) => {
         },
         plugins: [
             new CheckerPlugin(),
-            extractSass
+            extractSass,
+            new DashboardPlugin()
         ],
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
