@@ -22,16 +22,12 @@ export class NavigationBar extends React.Component<INavigationBarProps, INavigat
     public render() {
         const links = [
             {
-                text: "Home",
+                text: "Events",
                 link: "/"
             },
             {
                 text: "Bottles",
                 link: "/bottles"
-            },
-            {
-                text: "Events",
-                link: "/events"
             }
         ];
 

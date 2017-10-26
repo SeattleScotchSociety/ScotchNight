@@ -1,9 +1,11 @@
 import { WebAuth } from "auth0-js";
 import createBrowserHistory from "history/createBrowserHistory";
+import { IEventStore } from "../stores/EventStore";
 import { IScotchNightStore } from "../stores/ScotchNightStore";
 
 export class Auth {
     private history = createBrowserHistory();
+    private eventStore;
     private scotchNightStore;
 
     private auth0 = new WebAuth({
@@ -15,8 +17,9 @@ export class Auth {
         scope: "openid email"
     });
 
-    public constructor(appStore: IScotchNightStore) {
-        this.scotchNightStore = appStore;
+    public constructor(scotchNightStore: IScotchNightStore, eventStore: IEventStore) {
+        this.scotchNightStore = scotchNightStore;
+        this.eventStore = eventStore;
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.handleAuthentication = this.handleAuthentication.bind(this);
@@ -91,13 +94,14 @@ export class Auth {
         return isLoggedIn;
     }
 
-    private initializeUserCallback(err, profile) {
+    private async initializeUserCallback(err, profile) {
         if (err) {
             console.log(err);
             return;
         }
 
-        this.scotchNightStore.setCurrentUserByEmail(profile.email);
+        const member = await this.scotchNightStore.setCurrentUserByEmail(profile.email);
+        this.eventStore.loadEventsForMember(member);
     }
 }
 

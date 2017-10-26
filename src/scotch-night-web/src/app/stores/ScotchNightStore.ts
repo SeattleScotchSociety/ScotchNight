@@ -20,12 +20,14 @@ export const ScotchNightStore = types
             const { memberApi }: { memberApi: MemberApi } = getEnv(self);
 
             if (!email || email === "") {
-                return;
+                return null;
             }
 
             const member: IMember = yield memberApi.getByEmail(email);
 
             setCurrentUser(member);
+
+            return member;
         });
 
         return {

@@ -21,6 +21,7 @@ export class EventList extends React.Component<IEventListProps> {
 
         return (
             <div>
+                <h3>My Events</h3>
                 {eventElements}
             </div>
         );

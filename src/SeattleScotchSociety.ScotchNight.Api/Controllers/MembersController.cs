@@ -13,11 +13,14 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
     [ValidateModel]
     public class MembersController : Controller
     {
+        private IEventStore _eventStore;
+
         private IMemberStore _memberStore;
 
-        public MembersController(IMemberStore memberStore)
+        public MembersController(IMemberStore memberStore, IEventStore eventStore)
         {
             _memberStore = memberStore;
+            _eventStore = eventStore;
         }
 
         [HttpGet]
@@ -32,6 +35,14 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
             var members = await _memberStore.GetAllAsync();
 
             return members.FirstOrDefault(m => m.Email == email);
+        }
+
+        [HttpGet("{memberId}/events")]
+        public async Task<IEnumerable<Event>> GetEvents(Guid memberId)
+        {
+            var events = await _eventStore.GetAllAsync();
+
+            return events.Where(e => e.Attendees.Contains(memberId));
         }
 
         [HttpPost]

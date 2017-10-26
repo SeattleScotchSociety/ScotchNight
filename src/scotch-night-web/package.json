@@ -11,7 +11,7 @@
     "prebuild": "rimraf dist",
     "build": "webpack -p --env.prod",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "start": "webpack-dev-server --env.dev",
+    "start": "webpack-dashboard -- webpack-dev-server --env.dev",
     "test": "jest --no-cache"
   },
   "devDependencies": {

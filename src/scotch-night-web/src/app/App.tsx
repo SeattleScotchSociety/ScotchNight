@@ -4,7 +4,6 @@ import { Redirect, Route, RouteComponentProps, Switch, withRouter } from "react-
 
 import { BottleList } from "./components/BottleList";
 import Callback from "./components/Callback";
-import { ChooseUser } from "./components/ChooseUser";
 import { EventList } from "./components/EventList";
 import { Header } from "./components/Header";
 import { Login } from "./components/Login";
@@ -66,7 +65,7 @@ const App = inject("store")(observer((props: IRouteProps) => {
                         return <Callback />;
                     }}
                 />
-                <PrivateRoute path="/" component={ChooseUser} auth={auth} />
+                <PrivateRoute path="/" component={EventList} auth={auth} />
             </Switch>
         </main>
     </div>);

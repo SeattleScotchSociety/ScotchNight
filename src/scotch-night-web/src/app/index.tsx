@@ -19,7 +19,7 @@ import { RouterStore, syncHistoryWithStore } from "./stores/RouterStore";
 const browserHistory = createBrowserHistory();
 const patches = observable.shallowArray();
 const rootStore = createStore(browserHistory);
-const auth = new Auth(rootStore.scotchNightStore);
+const auth = new Auth(rootStore.scotchNightStore, rootStore.eventStore);
 const reduxStore = asReduxStore(rootStore);
 connectReduxDevtools(require("remotedev"), rootStore);
 
@@ -34,13 +34,16 @@ function renderApp(root: JSX.Element, store: IRootStore) {
     );
 }
 
-const initializeUserCallback = (err, profile) => {
+const initializeUserCallback = async (err, profile) => {
+    const { eventStore, scotchNightStore } = rootStore;
+
     if (err) {
         console.log(err);
         return;
     }
 
-    rootStore.scotchNightStore.setCurrentUserByEmail(profile.email);
+    const member = await scotchNightStore.setCurrentUserByEmail(profile.email);
+    eventStore.loadEventsForMember(member);
 };
 
 auth.getProfile(initializeUserCallback);
@@ -48,5 +51,5 @@ auth.getProfile(initializeUserCallback);
 renderApp(<App auth={auth} />, reduxStore);
 
 rootStore.bottleStore.loadBottles();
-rootStore.eventStore.loadEvents();
+rootStore.memberStore.loadMembers();
 syncHistoryWithStore(browserHistory, rootStore.navigation).subscribe();
