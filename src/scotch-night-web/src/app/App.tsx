@@ -3,7 +3,6 @@ import * as React from "react";
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 
 import { BottleList } from "./components/BottleList";
-import Callback from "./components/Callback";
 import { EventList } from "./components/EventList";
 import { Header } from "./components/Header";
 import { Login } from "./components/Login";
@@ -41,7 +40,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
 );
 
 const App = inject("store")(observer((props: IRouteProps) => {
-    const { auth } = props;
+    const { auth, store } = props;
 
     return (<div>
         <div id="site-head">
@@ -62,7 +61,7 @@ const App = inject("store")(observer((props: IRouteProps) => {
                     path="/callback"
                     render={(p) => {
                         handleAuthentication(p, auth);
-                        return <Callback />;
+                        return <EventList store={store} />;
                     }}
                 />
                 <PrivateRoute path="/" component={EventList} auth={auth} />

@@ -23,7 +23,7 @@ const auth = new Auth(rootStore.scotchNightStore, rootStore.eventStore);
 const reduxStore = asReduxStore(rootStore);
 connectReduxDevtools(require("remotedev"), rootStore);
 
-function renderApp(root: JSX.Element, store: IRootStore) {
+function renderApp(root: JSX.Element) {
     ReactDOM.render(
         <Provider store={rootStore}>
             <Router history={browserHistory} >
@@ -48,7 +48,7 @@ const initializeUserCallback = async (err, profile) => {
 
 auth.getProfile(initializeUserCallback);
 
-renderApp(<App auth={auth} />, reduxStore);
+renderApp(<App auth={auth} />);
 
 rootStore.bottleStore.loadBottles();
 rootStore.memberStore.loadMembers();
