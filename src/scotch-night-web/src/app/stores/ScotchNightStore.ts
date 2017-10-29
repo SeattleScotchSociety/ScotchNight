@@ -3,6 +3,8 @@ import { observable } from "mobx";
 import { getEnv, getParent, process, types } from "mobx-state-tree";
 
 import MemberApi from "../api/MemberApi";
+import NoteApi from "../api/NoteApi";
+import { Bottle, BottleNote, IBottle } from "./BottleStore";
 import { Event, IEvent } from "./EventStore";
 import { IMember, Member } from "./MemberStore";
 
@@ -12,8 +14,20 @@ export const ScotchNightStore = types
     .model("ScotchNightStore", {
         currentUser: types.maybe(Member),
         currentEvent: types.maybe(types.reference(Event)),
+        currentBottle: types.maybe(types.reference(Bottle)),
+        summaryNotes: types.maybe(BottleNote),
+        memberNotes: types.maybe(BottleNote),
     })
     .actions((self) => {
+        const setCurrentBottle = process(function* setBottle(bottle: IBottle) {
+            const { noteApi }: { noteApi: NoteApi } = getEnv(self);
+
+            self.currentBottle = bottle;
+
+            self.summaryNotes = yield noteApi.getSummaryNotes(bottle.id);
+            self.memberNotes = yield noteApi.getMemberNotes(self.currentUser.id, bottle.id);
+        });
+
         const setCurrentUser = (member: IMember) => {
             self.currentUser = member;
         };
@@ -37,6 +51,7 @@ export const ScotchNightStore = types
         });
 
         return {
+            setCurrentBottle,
             setCurrentEvent,
             setCurrentUser,
             setCurrentUserByEmail

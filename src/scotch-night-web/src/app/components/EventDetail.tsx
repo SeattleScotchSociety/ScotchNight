@@ -3,6 +3,7 @@ import * as React from "react";
 import { Button } from "reactstrap";
 
 import { IRootStore } from "../stores/RootStore";
+import { TastingMenu } from "./TastingMenu";
 
 import * as format from "date-fns/format";
 
@@ -26,10 +27,10 @@ export class EventDetail extends React.Component<IEventDetailProps> {
             <div className="container">
                 <div className="eventContainer">
                     <div className="eventTitle">{title}</div>
-                    <div style={{ "flex-direction": "row", "margin-left": 15, "margin-bottom": 5 }}>
+                    <div style={{ flexDirection: "row", marginLeft: 15, marginBottom: 5 }}>
                         {
                             location ?
-                                <div style={{ "flex-direction": "row", "margin-right": 10 }}>
+                                <div style={{ flexDirection: "row", marginRight: 10 }}>
                                     <div id="location-pin" />
                                     <div className="eventDetail">{location}</div>
                                 </div> : null
@@ -42,7 +43,8 @@ export class EventDetail extends React.Component<IEventDetailProps> {
                     <div className="event-description">{description}</div>
                 </div>
                 <div className="menuHeader">Tasting Menu</div>
-                <Button style={{ "margin-top": 20, "background-color": "#00817d" }} onClick={this.handleOnAddBottle}>Add Bottle</Button>
+                <TastingMenu store={this.props.store} />
+                <Button style={{ marginTop: 20, backgroundColor: "#00817d" }} onClick={this.handleOnAddBottle}>Add Bottle</Button>
             </div>
         );
     }

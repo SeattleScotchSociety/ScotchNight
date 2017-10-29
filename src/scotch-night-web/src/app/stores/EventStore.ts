@@ -14,7 +14,7 @@ export const Event = types.model("Event", {
     public: types.optional(types.boolean, false),
     location: types.maybe(types.reference(Location)),
     description: types.maybe(types.string),
-    menu: types.maybe(types.array(types.reference(Bottle))),
+    bottles: types.maybe(types.array(types.reference(Bottle))),
     attendees: types.maybe(types.array(types.reference(Member)))
 });
 

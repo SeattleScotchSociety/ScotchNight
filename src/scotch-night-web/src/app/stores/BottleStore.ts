@@ -3,11 +3,13 @@ import { observable } from "mobx";
 import { getEnv, getParent, process, types } from "mobx-state-tree";
 
 import BottleApi from "../api/BottleApi";
+import NoteApi from "../api/NoteApi";
+
 import { Member } from "./MemberStore";
 
-export const BottleNote = types.model("BottleBranch", {
-    id: types.identifier(),
-    member: types.reference(Member),
+export const BottleNote = types.model("BottleNote", {
+    bottleId: types.string,
+    memberId: types.string,
     rating: types.maybe(types.number),
     finish: types.maybe(types.number),
     fruity: types.maybe(types.number),
@@ -15,7 +17,8 @@ export const BottleNote = types.model("BottleBranch", {
     smokey: types.maybe(types.number),
     citrus: types.maybe(types.number),
     oily: types.maybe(types.number),
-    peppery: types.maybe(types.number)
+    peppery: types.maybe(types.number),
+    thoughts: types.maybe(types.string),
 });
 
 export const BottleRating = types.model("BottleRating", {
@@ -30,7 +33,7 @@ export const Bottle = types.model("Bottle", {
     distillery: types.string,
     name: types.string,
     age: types.number,
-    description: types.maybe(types.string)
+    description: types.maybe(types.string),
     // bottleUrl: types.maybe(types.string),
     // distilleryUrl: types.maybe(types.string),
     // bottleImageUrl: types.maybe(types.string),
@@ -65,6 +68,7 @@ export const BottleStore = types
             const { bottleApi }: { bottleApi: BottleApi } = getEnv(self);
 
             const bottles = yield bottleApi.getAll();
+
             updateBottles(bottles);
             markLoading(false);
         });

@@ -35,7 +35,7 @@ export const Header = observer((props: IHeaderProps) => {
     }
 
     return (<header className="navbar navbar-expand-sm">
-        <a className="navbar-brand" href="#">Scotch Night</a>
+        <a className="navbar-brand" href="/">Scotch Night</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
         </button>
