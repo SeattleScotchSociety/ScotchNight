@@ -1,13 +1,11 @@
 using Dapper;
-using Mapster;
-using Microsoft.WindowsAzure.Storage.Table;
 using SeattleScotchSociety.ScotchNight.Api.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Data
 {

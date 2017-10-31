@@ -17,9 +17,6 @@ module.exports = (env) => {
         devtool: env.prod ? 'source-map' : 'eval',
         entry: './app/index.tsx',
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "react-router-dom": "ReactRouterDOM"
         },
         module: {
             rules: [

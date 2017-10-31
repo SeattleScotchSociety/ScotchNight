@@ -16,5 +16,9 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
         public int Age { get; set; }
 
         public string Description { get; set; }
+
+        public Note SummaryNote { get; set; }
+
+        public Note MemberNote { get; set; }
     }
 }

@@ -5,7 +5,7 @@ export const events: IEvent[] = [
         id: "8ff33e2f-642c-4196-8c8e-c2e2b60a1205",
         date: "5/30/2017",
         title: "The First",
-        location: "Phillabaums",
+        location: "a15a7cb9-6cf7-4e97-900c-32b3f0427263",
         public: false,
         description: "The very first Seattle Scotch Society night. Join us for scotch and pizza!"
     },
@@ -13,7 +13,7 @@ export const events: IEvent[] = [
         id: "93aec433-52f1-4cbf-824e-c19397359109",
         title: "The Second",
         date: "8/5/2017",
-        location: "Fixs",
+        location: "5b14026b-0da2-492c-88ee-68df1aebcdb1",
         public: false,
         description: `The first was a success, now let's keep them coming... onto our second scotch night!`,
         menu: [

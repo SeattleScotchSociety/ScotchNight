@@ -2,6 +2,7 @@ import BottleApi from "./api/BottleApi";
 import EventApi from "./api/EventApi";
 import LocationApi from "./api/LocationApi";
 import MemberApi from "./api/MemberApi";
+import NoteApi from "./api/NoteApi";
 import { IRootStore, RootStore } from "./stores/RootStore";
 
 export const createStore: (history: any) => IRootStore = (history) => {
@@ -19,6 +20,7 @@ export const createStore: (history: any) => IRootStore = (history) => {
             history,
             locale: "en-US",
             locationApi: new LocationApi(),
-            memberApi: new MemberApi()
+            memberApi: new MemberApi(),
+            noteApi: new NoteApi()
         });
 };

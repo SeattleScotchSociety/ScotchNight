@@ -158,99 +158,14 @@ main {
     #overview-map {
         height: 10rem;
     }
-}
 
-/* ------------------- adventure-card ---------------- */
-.adventure-card {
-    color: $textColor;
-
-    img {
-        height: 300px;
-        width: 100%;
+    .notes {
+        margin: 10 0;
+        height: 10;
+        border-color: '#a6a6a5';
+        border-width: 1;
+        flex-direction: 'row';
+        justify-content: 'flex-start';
+        width: '100%';
     }
-
-    .card-day {
-        color: rgb(133, 127, 75);
-        font-size: .7rem;
-        font-weight: $boldWeight;
-        text-transform: uppercase;
-    }
-
-    .card-title {
-        font-size: 1.3rem;
-        font-weight: $boldWeight;
-    }
-
-    .card-detail {
-    }
-}
-
-.adventure-card:hover {
-    color: $textColor;
-    text-decoration: none;  
-}
-
-/* ------------------- your-adventure ---------------- */
-
-#your-adventure {
-    display: block; 
-    width: auto;
-    word-wrap: break-word;
-
-    img {
-        height: 100%;
-        max-height: 300px;
-        width: 100%;
-    }
-
-    .left-col {
-        float: left;
-        z-index: 10;
-    }
-
-    .right-col {
-        float: left;
-        position: fixed;
-        height: 100%;
-        width: 95%;
-        z-index: -1;
-    }
-
-    .adventure-section {
-        border-bottom: 1px solid #dbdbdb;
-        margin-bottom: 1.8rem;
-        white-space: normal;
-
-        img {
-            max-height: 11rem;
-        }
-
-        .row {
-            margin-bottom: 0.8rem;
-        }
-    }
-
-    .adventure-map {
-        height: 17rem;
-    }
-
-    .detail-header {
-        font-weight: $boldWeight;
-    }
-
-    #book-it-button {
-        margin: 2rem 35%;
-    }
-}
-
-.square {
-    height: 250px;
-    width: 250px;
-    background-color: blue;
-    transition-property: background-color;
-    transition-duration: 5s;
-}
-
-.square:hover {
-    background-color: green;
 }
