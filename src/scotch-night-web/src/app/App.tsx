@@ -2,6 +2,7 @@ import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 
+import { AddBottle } from "./components/AddBottle";
 import { BottleDetail } from "./components/BottleDetail";
 import { BottleList } from "./components/BottleList";
 import { EventDetail } from "./components/EventDetail";
@@ -59,6 +60,7 @@ const App = inject("store")(observer((props: IRouteProps) => {
                 />
                 <PrivateRoute exact path="/bottles/:id" component={BottleDetail} auth={auth} />
                 <PrivateRoute exact path="/bottles" component={BottleList} auth={auth} />
+                <PrivateRoute path="/events/:id/add-bottle" component={AddBottle} auth={auth} />
                 <PrivateRoute path="/events/:id" component={EventDetail} auth={auth} />
                 <PrivateRoute exact path="/events" component={EventList} auth={auth} />
                 <Route

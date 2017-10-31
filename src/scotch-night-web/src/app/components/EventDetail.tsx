@@ -54,8 +54,9 @@ export class EventDetail extends React.Component<IEventDetailProps> {
     }
 
     private handleOnAddBottle() {
+        const { scotchNightStore } = this.props.store;
         const { navigation } = this.props.store;
-        navigation.push("/addBottle");
+        navigation.push(`${scotchNightStore.currentEvent.id}/add-bottle`);
     }
 }
 
