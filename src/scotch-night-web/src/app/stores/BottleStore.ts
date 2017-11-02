@@ -3,8 +3,10 @@ import { observable } from "mobx";
 import { getEnv, getParent, process, types } from "mobx-state-tree";
 
 import BottleApi from "../api/BottleApi";
+import EventApi from "../api/EventApi";
 import NoteApi from "../api/NoteApi";
 
+import { IEvent } from "./EventStore";
 import { Member } from "./MemberStore";
 
 export const BottleNote = types.model("BottleNote", {
@@ -52,6 +54,20 @@ export const BottleStore = types
             self.isLoading = loading;
         }
 
+        const addBottle = process(function* addNewBottle(bottle: IBottle) {
+            const { bottleApi, eventApi }: { bottleApi: BottleApi, eventApi: EventApi } = getEnv(self);
+
+            const bottleId = yield bottleApi.addBottle(bottle);
+
+            yield loadBottles();
+
+            const index = _.findIndex(self.bottles, ["id", bottleId]);
+
+            const newBottle = self.bottles[index];
+
+            return newBottle;
+        });
+
         function updateBottles(json: IBottle[]): void {
             json.forEach((bottle: IBottle) => {
                 const index = _.findIndex(self.bottles, ["id", bottle.id]);
@@ -74,6 +90,7 @@ export const BottleStore = types
         });
 
         return {
+            addBottle,
             loadBottles,
             updateBottles
         };

@@ -3,7 +3,7 @@ import { observable } from "mobx";
 import { getEnv, getParent, process, types } from "mobx-state-tree";
 
 import EventApi from "../api/EventApi";
-import { Bottle } from "./BottleStore";
+import { Bottle, IBottle } from "./BottleStore";
 import { Location } from "./LocationStore";
 import { IMember, Member } from "./MemberStore";
 
@@ -61,7 +61,21 @@ export const EventStore = types
             markLoading(false);
         });
 
+        const addBottle = process(function* addBottleToEvent(event: IEvent, bottle: IBottle) {
+            const { eventApi }: { eventApi: EventApi } = getEnv(self);
+
+            if (!bottle) {
+                return;
+            }
+
+            event.bottles.push(bottle);
+            yield eventApi.updateEvent(event);
+
+            yield loadEvents();
+        });
+
         return {
+            addBottle,
             loadEvents,
             loadEventsForMember,
             updateEvents

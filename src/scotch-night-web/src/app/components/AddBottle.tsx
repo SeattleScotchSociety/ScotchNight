@@ -2,7 +2,7 @@ import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { Button, ButtonGroup } from "reactstrap";
 
-import { IBottle } from "../stores/BottleStore";
+import { Bottle, IBottle } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
 import { MyNotes } from "./MyNotes";
@@ -10,12 +10,7 @@ import { NotesOverview } from "./NotesOverview";
 
 interface IAddBottleProps { store: IRootStore; }
 interface IAddBottleState {
-    bottle: {
-        distillery: string;
-        name: string;
-        age: string;
-        description: string;
-    };
+    bottle: IBottle;
 }
 
 @inject("store")
@@ -30,12 +25,7 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
         super(props);
 
         this.state = {
-            bottle: {
-                distillery: "",
-                name: "",
-                age: "",
-                description: ""
-            }
+            bottle: { id: undefined, distillery: "", age: 0, description: "", name: "" }
         };
 
         this.handleOnAddPress = this.handleOnAddPress.bind(this);
@@ -109,12 +99,15 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
     }
 
     private handleOnAddPress = () => {
-        const { bottleStore, navigation, scotchNightStore } = this.props.store;
+        const { bottleStore, eventStore, navigation, scotchNightStore } = this.props.store;
         const { bottle } = this.state;
         const { currentEvent } = scotchNightStore;
 
-        // bottleStore.addBottle(bottle, currentEvent);
-        navigation.goBack();
+        bottleStore.addBottle(bottle).then((newBottle: IBottle) => {
+            eventStore.addBottle(currentEvent, newBottle);
+
+            navigation.goBack();
+        });
     }
 }
 
