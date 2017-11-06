@@ -18,12 +18,6 @@ export interface IAppProps { store?: IRootStore; auth: Auth; }
 interface IRouteProps extends RouteComponentProps<any>, React.Props<any>, IAppProps {
 }
 
-const handleAuthentication = (nextState, auth) => {
-    if (/access_token|id_token|error/.test(nextState.location.hash)) {
-        auth.handleAuthentication();
-    }
-};
-
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     <Route
         {...rest}
@@ -42,38 +36,69 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     />
 );
 
-const App = inject("store")(observer((props: IRouteProps) => {
-    const { auth, store } = props;
+@inject("store")
+@observer
+export class App extends React.Component<IRouteProps> {
+    constructor(props: IRouteProps) {
+        super(props);
 
-    return (<div>
-        <div id="site-head">
-            <Header scotchNightStore={props.store.scotchNightStore} auth={auth} />
-            <NavigationBar scotchNightStore={props.store.scotchNightStore} />
-        </div>
-        <main>
-            <Switch>
-                <Route
-                    path="/login"
-                    render={(p) => {
-                        return <Login auth={auth} />;
-                    }}
-                />
-                <PrivateRoute exact path="/bottles/:id" component={BottleDetail} auth={auth} />
-                <PrivateRoute exact path="/bottles" component={BottleList} auth={auth} />
-                <PrivateRoute path="/events/:id/add-bottle" component={AddBottle} auth={auth} />
-                <PrivateRoute path="/events/:id" component={EventDetail} auth={auth} />
-                <PrivateRoute exact path="/events" component={EventList} auth={auth} />
-                <Route
-                    path="/callback"
-                    render={(p) => {
-                        handleAuthentication(p, auth);
-                        return <EventList store={store} />;
-                    }}
-                />
-                <PrivateRoute path="/" component={EventList} auth={auth} />
-            </Switch>
-        </main>
-    </div>);
-}));
+        this.handleAuthentication = this.handleAuthentication.bind(this);
+        this.initializeUserCallback = this.initializeUserCallback.bind(this);
+    }
+
+    public render() {
+        const { auth, store } = this.props;
+        const { scotchNightStore } = store;
+
+        return (<div>
+            <div id="site-head">
+                <Header scotchNightStore={scotchNightStore} auth={auth} />
+                <NavigationBar scotchNightStore={scotchNightStore} />
+            </div>
+            <main>
+                <Switch>
+                    <Route
+                        path="/login"
+                        render={(p) => {
+                            return <Login auth={auth} />;
+                        }}
+                    />
+                    <PrivateRoute exact path="/bottles/:id" component={BottleDetail} auth={auth} />
+                    <PrivateRoute exact path="/bottles" component={BottleList} auth={auth} />
+                    <PrivateRoute path="/events/:id/add-bottle" component={AddBottle} auth={auth} />
+                    <PrivateRoute path="/events/:id" component={EventDetail} auth={auth} />
+                    <PrivateRoute exact path="/events" component={EventList} auth={auth} />
+                    <Route
+                        path="/callback"
+                        render={(p) => {
+                            this.handleAuthentication(p, auth);
+                            return <EventList store={store} />;
+                        }}
+                    />
+                    <PrivateRoute path="/" component={EventList} auth={auth} />
+                </Switch>
+            </main>
+        </div>);
+    }
+
+    private async initializeUserCallback(err, profile) {
+        const { store } = this.props;
+        const { eventStore, scotchNightStore } = store;
+
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        const member = await scotchNightStore.setCurrentUserByEmail(profile.email);
+        eventStore.loadEventsForMember(member);
+    }
+
+    private handleAuthentication(nextState, auth) {
+        if (/access_token|id_token|error/.test(nextState.location.hash)) {
+            auth.handleAuthentication(this.initializeUserCallback);
+        }
+    }
+}
 
 export default withRouter(App) as React.ComponentClass<IAppProps>;

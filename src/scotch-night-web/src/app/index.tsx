@@ -18,8 +18,8 @@ import { RouterStore, syncHistoryWithStore } from "./stores/RouterStore";
 
 const browserHistory = createBrowserHistory();
 const patches = observable.shallowArray();
-const rootStore = createStore(browserHistory);
-const auth = new Auth(rootStore.scotchNightStore, rootStore.eventStore);
+const auth = new Auth();
+const rootStore = createStore(browserHistory, auth);
 const reduxStore = asReduxStore(rootStore);
 connectReduxDevtools(require("remotedev"), rootStore);
 

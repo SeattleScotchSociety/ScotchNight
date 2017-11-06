@@ -1,8 +1,19 @@
 import { IBottle } from "../stores/BottleStore";
 
 export default class BottleApi {
+    private auth;
+
+    public constructor(auth) {
+        this.auth = auth;
+    }
+
     public getAll() {
-        return fetch("https://scotchnightapi.azurewebsites.net/api/bottles")
+        const { getAccessToken } = this.auth;
+        const headers = { Authorization: `Bearer ${getAccessToken()}` };
+
+        return fetch("https://scotchnightapi.azurewebsites.net/api/bottles", {
+            headers
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -23,12 +34,16 @@ export default class BottleApi {
     }
 
     public addBottle(bottle) {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
         return fetch("https://scotchnightapi.azurewebsites.net/api/bottles", {
             method: "post",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify(bottle)
         })
             .then((response) => {

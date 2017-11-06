@@ -1,12 +1,23 @@
 import { IBottle } from "../stores/BottleStore";
 
 export default class NoteApi {
-    public getSummaryNotes = (bottleId: string) => {
+    private auth;
+
+    public constructor(auth) {
+        this.auth = auth;
+    }
+
+    public getSummaryNotes = (bottleId: any) => {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
         return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/summary/${bottleId}`, {
             method: "get",
-            headers: {
-                Accept: "application/json"
-            }
+            headers
         })
             .then((response) => {
                 if (response.ok) {
@@ -25,12 +36,17 @@ export default class NoteApi {
             });
     }
 
-    public getMemberNotes = (memberId: string, bottleId: string) => {
+    public getMemberNotes = (memberId: any, bottleId: any) => {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
         return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/member/${memberId}/bottle/${bottleId}`, {
             method: "get",
-            headers: {
-                Accept: "application/json"
-            }
+            headers
         })
             .then((response) => {
                 if (response.ok) {
@@ -50,12 +66,16 @@ export default class NoteApi {
     }
 
     public addReview = (note) => {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
         return fetch("https://scotchnightapi.azurewebsites.net/api/notes", {
             method: "post",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify(note)
         })
             .then((response) => {

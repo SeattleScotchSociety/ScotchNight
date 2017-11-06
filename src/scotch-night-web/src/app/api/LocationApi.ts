@@ -1,8 +1,23 @@
 import { ILocation } from "../stores/LocationStore";
 
 export default class LocationApi {
+    private auth;
+
+    public constructor(auth) {
+        this.auth = auth;
+    }
+
     public getAll() {
-        return fetch("https://scotchnightapi.azurewebsites.net/api/locations")
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
+        return fetch("https://scotchnightapi.azurewebsites.net/api/locations", {
+            headers
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -23,12 +38,16 @@ export default class LocationApi {
     }
 
     public addLocation(location) {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
         return fetch("https://scotchnightapi.azurewebsites.net/api/locations", {
             method: "post",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify(location)
         })
             .then((response) => {

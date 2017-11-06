@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SeattleScotchSociety.ScotchNight.Api.Data;
 using SeattleScotchSociety.ScotchNight.Api.Models;
 using System;
@@ -8,6 +9,7 @@ using SeattleScotchSociety.ScotchNight.Api.Filters;
 
 namespace SeattleScotchSociety.ScotchNight.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ValidateModel]
     public class LocationsController : Controller

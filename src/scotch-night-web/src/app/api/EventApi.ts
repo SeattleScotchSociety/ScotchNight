@@ -2,8 +2,23 @@ import { IEvent } from "../stores/EventStore";
 import { IMember } from "../stores/MemberStore";
 
 export default class EventApi {
+    private auth;
+
+    public constructor(auth) {
+        this.auth = auth;
+    }
+
     public getAll(): Promise<IEvent[]> {
-        return fetch("https://scotchnightapi.azurewebsites.net/api/events")
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
+        return fetch("https://scotchnightapi.azurewebsites.net/api/events", {
+            headers
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -25,7 +40,16 @@ export default class EventApi {
     }
 
     public getAllForMember(member: IMember): Promise<IEvent[]> {
-        return fetch(`https://scotchnightapi.azurewebsites.net/api/members/${member.id}/events`)
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
+        return fetch(`https://scotchnightapi.azurewebsites.net/api/members/${member.id}/events`, {
+            headers
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -47,12 +71,16 @@ export default class EventApi {
     }
 
     public addEvent(event) {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
         return fetch("https://scotchnightapi.azurewebsites.net/api/events", {
             method: "post",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify(event)
         })
             .then((response) => {
@@ -73,12 +101,16 @@ export default class EventApi {
     }
 
     public updateEvent(event) {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
         return fetch("https://scotchnightapi.azurewebsites.net/api/events", {
             method: "put",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify(event)
         })
             .then((response) => {

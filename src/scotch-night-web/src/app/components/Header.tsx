@@ -8,8 +8,8 @@ import { IScotchNightStore } from "../stores/ScotchNightStore";
 interface IHeaderProps { scotchNightStore: IScotchNightStore; auth: any; }
 
 export const Header = observer((props: IHeaderProps) => {
-    const { auth } = props;
-    const { currentUser } = props.scotchNightStore;
+    const { auth, scotchNightStore } = props;
+    const { currentUser } = scotchNightStore;
 
     let logInLink = (<a
         className="nav-link"
@@ -28,6 +28,7 @@ export const Header = observer((props: IHeaderProps) => {
             to="/login"
             onClick={(e) => {
                 auth.logout();
+                scotchNightStore.setCurrentUser(null);
             }}
         >
             Log Out
