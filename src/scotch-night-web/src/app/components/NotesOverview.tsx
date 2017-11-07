@@ -9,7 +9,7 @@ import { IRootStore } from "../stores/RootStore";
 
 import { NoteDisplay } from "./NoteDisplay";
 
-interface INotesOverviewProps { view: number; notes: IBottleNote; thoughts: string; }
+interface INotesOverviewProps { view: number; notes: IBottleNote; tags: string, thoughts: string; }
 
 @observer
 export class NotesOverview extends React.Component<INotesOverviewProps> {
@@ -18,7 +18,7 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
     }
 
     public render() {
-        const { view, notes, thoughts } = this.props;
+        const { view, notes, tags, thoughts } = this.props;
 
         if (view !== 0) {
             return null;
@@ -36,6 +36,10 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
                 <NoteDisplay note="Citrus" rating={notes ? notes.citrus : 0} />
                 <NoteDisplay note="Oily" rating={notes ? notes.oily : 0} />
                 <NoteDisplay note="Peppery" rating={notes ? notes.peppery : 0} />
+                <div>
+                    <h3>My Tags</h3>
+                    {tags ? tags : "No additional notes"}
+                </div>
                 <h3>My Thoughts</h3>
                 <div style={{ marginTop: 10 }}>{thoughts ? thoughts : "No additional notes"}</div>
             </div>
