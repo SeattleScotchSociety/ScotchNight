@@ -29,6 +29,11 @@ export const EventStore = types
         }
 
         function updateEvents(events: IEvent[]): void {
+            if (!events) {
+                console.log("no events");
+                return;
+            }
+
             events.forEach((event: IEvent) => {
                 const index = _.findIndex(self.events, ["id", event.id]);
 

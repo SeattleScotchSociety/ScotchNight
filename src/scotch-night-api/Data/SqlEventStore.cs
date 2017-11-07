@@ -25,7 +25,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 string query = "INSERT INTO Event (Id, LocationId, Title, Description, Date)"
-                                + " VALUES(@Id, @LocationId, @Title, @Description, @Date)";
+                                + " VALUES(@Id, @Location, @Title, @Description, @Date)";
 
                 string bottleQuery = @"INSERT INTO EventBottle (EventId, BottleId)
                                         VALUES(@EventId, @BottleId)";
@@ -78,7 +78,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT * FROM Event";
+                string query = "SELECT Id, LocationId AS Location, Title, Description, Date FROM Event";
 
                 connection.Open();
 

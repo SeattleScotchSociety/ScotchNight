@@ -69,6 +69,11 @@ export const BottleStore = types
         });
 
         function updateBottles(json: IBottle[]): void {
+            if (!json) {
+                console.log("no bottles to update");
+                return;
+            }
+
             json.forEach((bottle: IBottle) => {
                 const index = _.findIndex(self.bottles, ["id", bottle.id]);
 

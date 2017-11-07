@@ -46,6 +46,7 @@ namespace SeattleScotchSociety.ScotchNight.Api
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
 
+            services.AddCors();
             services.AddMvc();
         }
 
@@ -58,7 +59,11 @@ namespace SeattleScotchSociety.ScotchNight.Api
             }
 
             app.UseAuthentication();
-
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:8080")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+            );
             app.UseMvc();
         }
     }
