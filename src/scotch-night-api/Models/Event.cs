@@ -8,7 +8,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
     {
         public Guid Id { get; set; }
 
-        public Guid LocationId { get; set; }
+        public Guid Location { get; set; }
 
         public string Title { get; set; }
 

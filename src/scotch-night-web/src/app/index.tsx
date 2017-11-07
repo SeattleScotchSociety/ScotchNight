@@ -52,4 +52,5 @@ renderApp(<App auth={auth} />);
 
 rootStore.bottleStore.loadBottles();
 rootStore.memberStore.loadMembers();
+rootStore.locationStore.loadLocations();
 syncHistoryWithStore(browserHistory, rootStore.navigation).subscribe();

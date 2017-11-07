@@ -33,7 +33,7 @@ export class EventDetail extends React.Component<IEventDetailProps> {
                             location ?
                                 <div style={{ flexDirection: "row", marginRight: 10 }}>
                                     <div id="location-pin" />
-                                    <div className="eventDetail">{location}</div>
+                                    <div className="eventDetail">{location.name}</div>
                                 </div> : null
                         }
                         <div style={{ flexDirection: "row" }}>

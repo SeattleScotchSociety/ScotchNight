@@ -36,7 +36,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 string query = "UPDATE Member "
-                                + " SET Email = @Email, FirstName = @FirstName, LastName = @LastName, IsActive = @IsActive)"
+                                + " SET Email = @Email, FirstName = @FirstName, LastName = @LastName, IsActive = @IsActive"
                                 + " WHERE Id = @Id";
                 connection.Open();
 
