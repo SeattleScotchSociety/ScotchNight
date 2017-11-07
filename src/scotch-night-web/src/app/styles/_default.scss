@@ -5,11 +5,20 @@ html {
 }
 
 /* ------------------- Universal ---------------- */
-* { 
+* {
     /* Apply natural box layout */
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 /* ------------------- Body ---------------- */
@@ -40,132 +49,35 @@ body {
 }
 
 /* ------------------- Header ---------------- */
-#site-head {
-    background: white;
-    border-bottom: 1px solid #e4e4e4;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-    margin-bottom: 3rem;
-    overflow: hidden;
-    padding: 0 2rem;
-    position: fixed;
-    width: 100%;
-    z-index: 999;
-}
-
-.navbar {
-        padding: 0;
-}
-
-header{
-    line-height: 64px;
-
-    a {
-        white-space: nowrap;
-        color: $textColor;
-        font-family: $fontFamily;
-        -webkit-font-smoothing: antialiased
-    }
-
-    a:hover {
-        color: $textColor;
-    }
-
-    .nav-link {
-        font-size: 13px;
-    }
-
-    .nav-item {
-        line-height: 1;
-        margin-left: 1.5rem;
-    }
-
-    .nav-item:hover {
-        border-bottom: 2px solid $textColor;
-    }
-}
-
 h1 {
     font-size: 2rem;
     font-weight: $boldWeight;
+    margin: 0 0 15px 0;
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: $boldWeight;
+    margin: 0 0 15px 0;
 }
 
-/* ------------------- Navigation ---------------- */
-nav {
-    line-height: 1;
-    margin-right: 2rem;
-    padding: 0;
+// Boxes
 
-    .active {
-        border-bottom: 2px solid #008489;
-        color: #008489;
-    }
-
-    .nav-link {
-        font-size: .7rem;
-        font-weight: $boldWeight;
-        margin-right: 2rem;
-        padding: 0.7rem 0;
-        text-transform: uppercase;
-    }
-
-    a {
-        white-space: nowrap;
-        color: $textColor;
-        font-family: $fontFamily;
-        -webkit-font-smoothing: antialiased
-    }
-
-    a:hover {
-        color: $textColor;
-    }
-
-    .active & a:hover {
-        color: #008489;
-    }
+.container {
+    padding: 15px;
 }
 
-/* ------------------- main ---------------- */
-main {
-    margin: 0 2rem;
-    overflow: auto;
-    padding-top: 135px;
-    z-index: -5;
+.box {
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
 
-    .row {
-        margin-bottom: 3rem;
-    }
-    
-    .experience-detail {
-        img {
-            height: 200px;
-            width: 200px;
-        }
+.box-action {
+    cursor: pointer;
 
-        .accept-button {
-            text-align: center;
-        }
-    }
+    &:hover {
 
-    .branch-selection {
-        margin: 1rem 0;
-    }
-
-    #overview-map {
-        height: 10rem;
-    }
-
-    .notes {
-        margin: 10 0;
-        height: 10;
-        border-color: '#a6a6a5';
-        border-width: 1;
-        flex-direction: 'row';
-        justify-content: 'flex-start';
-        width: '100%';
     }
 }

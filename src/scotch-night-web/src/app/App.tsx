@@ -51,10 +51,7 @@ export class App extends React.Component<IRouteProps> {
         const { scotchNightStore } = store;
 
         return (<div>
-            <div id="site-head">
-                <Header scotchNightStore={scotchNightStore} auth={auth} />
-                <NavigationBar scotchNightStore={scotchNightStore} />
-            </div>
+            <Header scotchNightStore={scotchNightStore} auth={auth} />
             <main>
                 <Switch>
                     <Route

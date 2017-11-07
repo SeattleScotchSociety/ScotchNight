@@ -64,7 +64,7 @@
     "mobx-react-devtools": "^4.2.15",
     "mobx-react-router": "^4.0.1",
     "mobx-remotedev": "^0.2.8",
-    "mobx-state-tree": "^1.0.1",
+    "mobx-state-tree": "1.0.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-google-maps": "^9.0.1",

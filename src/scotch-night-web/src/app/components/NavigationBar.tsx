@@ -19,6 +19,11 @@ export class NavigationBar extends React.Component<INavigationBarProps, INavigat
         this.onLinkClick = this.onLinkClick.bind(this);
     }
 
+
+    private onLinkClick(index) {
+        this.setState({ activeIndex: index });
+    }
+
     public render() {
         const links = [
             {
@@ -45,9 +50,5 @@ export class NavigationBar extends React.Component<INavigationBarProps, INavigat
                 {navLinks}
             </nav>
         );
-    }
-
-    private onLinkClick(index) {
-        this.setState({ activeIndex: index });
     }
 }
