@@ -26,7 +26,8 @@ export class EventDetail extends React.Component<IEventDetailProps> {
         return (
             <div className="container">
                 <div className="eventContainer">
-                    <div className="eventTitle">{title}</div>
+                    <h1>{title}</h1>
+                    
                     <div style={{ flexDirection: "row", marginLeft: 15, marginBottom: 5 }}>
                         {
                             location ?
