@@ -9,7 +9,7 @@ import { IRootStore } from "../stores/RootStore";
 
 import { NoteDisplay } from "./NoteDisplay";
 
-interface INotesOverviewProps { view: number; notes: IBottleNote; tags: string, thoughts: string; }
+interface INotesOverviewProps { view: number; notes: IBottleNote; tags: string; thoughts: string; }
 
 @observer
 export class NotesOverview extends React.Component<INotesOverviewProps> {
