@@ -1071,6 +1071,7 @@ function(t,e,n){var r=n(/*! ./authentication */72),o=n(/*! ./management */219),i
   \**************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){function r(t){if(t)return o(t)}function o(t){for(var e in r.prototype)t[e]=r.prototype[e];return t}t.exports=r,r.prototype.on=r.prototype.addEventListener=function(t,e){return this._callbacks=this._callbacks||{},(this._callbacks["$"+t]=this._callbacks["$"+t]||[]).push(e),this},r.prototype.once=function(t,e){function n(){this.off(t,n),e.apply(this,arguments)}return n.fn=e,this.on(t,n),this},r.prototype.off=r.prototype.removeListener=r.prototype.removeAllListeners=r.prototype.removeEventListener=function(t,e){if(this._callbacks=this._callbacks||{},0==arguments.length)return this._callbacks={},this;var n=this._callbacks["$"+t];if(!n)return this;if(1==arguments.length)return delete this._callbacks["$"+t],this;for(var r,o=0;o<n.length;o++)if((r=n[o])===e||r.fn===e){n.splice(o,1);break}return this},r.prototype.emit=function(t){this._callbacks=this._callbacks||{};var e=[].slice.call(arguments,1),n=this._callbacks["$"+t];if(n){n=n.slice(0);for(var r=0,o=n.length;r<o;++r)n[r].apply(this,e)}return this},r.prototype.listeners=function(t){return this._callbacks=this._callbacks||{},this._callbacks["$"+t]||[]},r.prototype.hasListeners=function(t){return!!this.listeners(t).length}},/*!******************************************************!*\
   !*** ../node_modules/superagent/lib/request-base.js ***!
   \******************************************************/
@@ -1362,59 +1363,4740 @@ function(t,e,n){(function(e){var n=function(){this._internalStorage={}};n.protot
 /*! dynamic exports provided */
 /*! all exports used */
 function(t,e,n){(function(e){var n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",r=function(t){for(var e=new Uint8Array(t),r=e.length,o="",i=0;i<r;i+=3)o+=n[e[i]>>2],o+=n[(3&e[i])<<4|e[i+1]>>4],o+=n[(15&e[i+1])<<2|e[i+2]>>6],o+=n[63&e[i+2]];return r%3==2?o=o.substring(0,o.length-1)+"=":r%3==1&&(o=o.substring(0,o.length-2)+"=="),o},o=function(t,n){if(e.ArrayBuffer&&n instanceof e.ArrayBuffer)return{base64:!0,data:r(n)};if(e.Buffer){if(n instanceof e.Buffer)return{base64:!0,data:n.toString("base64")};if(n&&"Buffer"===n.type&&Array.isArray(n.data)){var o;return o=e.Buffer.from?e.Buffer.from(n.data):new e.Buffer(n.data),{base64:!0,data:o.toString("base64")}}}return n};t.exports.decode=function(t){if(null==t)return null;if("#1"===t||"#2"===t)return t;var e=t.toString();try{return JSON.parse(e)}catch(t){}return e},t.exports.encode=function(t){return"#1"===t||"#2"===t?t:JSON.stringify(t,o)}}).call(e,n(/*! ./../webpack/buildin/global.js */7))},/*!***************************************************************!*\
+=======
+/***/ (function(module, exports) {
+
+function DummyCache() {}
+
+DummyCache.prototype.get = function () {
+  return null;
+};
+
+DummyCache.prototype.has = function () {
+  return false;
+};
+
+DummyCache.prototype.set = function () {
+};
+
+module.exports = DummyCache;
+
+
+/***/ }),
+/* 208 */
+/*!******************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/plugins.js ***!
+  \******************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var version = __webpack_require__(/*! ../version */ 42);
+
+function PluginHandler(webAuth, plugins) {
+  this.plugins = plugins;
+
+  for (var a = 0; a < this.plugins.length; a++) {
+    if (this.plugins[a].version !== version.raw) {
+      var pluginName = '';
+
+      if (this.plugins[a].constructor && this.plugins[a].constructor.name) {
+        pluginName = this.plugins[a].constructor.name;
+      }
+
+      throw new Error(
+        'Plugin ' +
+          pluginName +
+          ' version (' +
+          this.plugins[a].version +
+          ') ' +
+          'is not compatible with the SDK version (' +
+          version.raw +
+          ')'
+      );
+    }
+
+    this.plugins[a].setWebAuth(webAuth);
+  }
+}
+
+PluginHandler.prototype.get = function(extensibilityPoint) {
+  for (var a = 0; a < this.plugins.length; a++) {
+    if (this.plugins[a].supports(extensibilityPoint)) {
+      return this.plugins[a].init();
+    }
+  }
+
+  return null;
+};
+
+module.exports = PluginHandler;
+
+
+/***/ }),
+/* 209 */
+/*!*****************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/random.js ***!
+  \*****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var windowHelper = __webpack_require__(/*! ./window */ 11);
+
+function randomString(length) {
+  // eslint-disable-next-line
+  var bytes = new Uint8Array(length);
+  var result = [];
+  var charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~';
+
+  var cryptoObj = windowHelper.getWindow().crypto || windowHelper.getWindow().msCrypto;
+  if (!cryptoObj) {
+    return null;
+  }
+
+  var random = cryptoObj.getRandomValues(bytes);
+
+  for (var a = 0; a < random.length; a++) {
+    result.push(charset[random[a] % charset.length]);
+  }
+
+  return result.join('');
+}
+
+module.exports = {
+  randomString: randomString
+};
+
+
+/***/ }),
+/* 210 */
+/*!******************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/storage.js ***!
+  \******************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var StorageHandler = __webpack_require__(/*! ./storage/handler */ 211);
+var storage;
+
+function getStorage(force) {
+  if (!storage || force) {
+    storage = new StorageHandler();
+  }
+  return storage;
+}
+
+module.exports = {
+  getItem: function(key) {
+    var value = getStorage().getItem(key);
+    return value ? JSON.parse(value) : value;
+  },
+  removeItem: function(key) {
+    return getStorage().removeItem(key);
+  },
+  setItem: function(key, value) {
+    var json = JSON.stringify(value);
+    return getStorage().setItem(key, json);
+  },
+  reload: function() {
+    getStorage(true);
+  }
+};
+
+
+/***/ }),
+/* 211 */
+/*!**************************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/storage/handler.js ***!
+  \**************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var windowHandler = __webpack_require__(/*! ../window */ 11);
+var DummyStorage = __webpack_require__(/*! ./dummy */ 212);
+var CookieStorage = __webpack_require__(/*! ./cookie */ 213);
+var Warn = __webpack_require__(/*! ../warn */ 28);
+
+function StorageHandler() {
+  this.warn = new Warn({});
+  this.storage = windowHandler.getWindow().localStorage || new CookieStorage();
+}
+
+StorageHandler.prototype.failover = function() {
+  if (this.storage instanceof DummyStorage) {
+    this.warn.warning('DummyStorage: ignore failover');
+    return;
+  } else if (this.storage instanceof CookieStorage) {
+    this.warn.warning('CookieStorage: failing over DummyStorage');
+    this.storage = new DummyStorage();
+  } else {
+    this.warn.warning('LocalStorage: failing over CookieStorage');
+    this.storage = new CookieStorage();
+  }
+};
+
+StorageHandler.prototype.getItem = function(key) {
+  try {
+    return this.storage.getItem(key);
+  } catch (e) {
+    this.warn.warning(e);
+    this.failover();
+    return this.getItem(key);
+  }
+};
+
+StorageHandler.prototype.removeItem = function(key) {
+  try {
+    return this.storage.removeItem(key);
+  } catch (e) {
+    this.warn.warning(e);
+    this.failover();
+    return this.removeItem(key);
+  }
+};
+
+StorageHandler.prototype.setItem = function(key, value) {
+  try {
+    return this.storage.setItem(key, value);
+  } catch (e) {
+    this.warn.warning(e);
+    this.failover();
+    return this.setItem(key, value);
+  }
+};
+
+module.exports = StorageHandler;
+
+
+/***/ }),
+/* 212 */
+/*!************************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/storage/dummy.js ***!
+  \************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+function DummyStorage() {}
+
+DummyStorage.prototype.getItem = function() {
+  return null;
+};
+
+DummyStorage.prototype.removeItem = function() {};
+
+DummyStorage.prototype.setItem = function() {};
+
+module.exports = DummyStorage;
+
+
+/***/ }),
+/* 213 */
+/*!*************************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/storage/cookie.js ***!
+  \*************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var cookies = __webpack_require__(/*! ../cookies */ 214);
+
+function CookieStorage() {}
+
+CookieStorage.prototype.getItem = function(key) {
+  return cookies.read(key);
+};
+
+CookieStorage.prototype.removeItem = function(key) {
+  cookies.erase(key);
+};
+
+CookieStorage.prototype.setItem = function(key, value) {
+  cookies.create(key, value, 1);
+};
+
+module.exports = CookieStorage;
+
+
+/***/ }),
+/* 214 */
+/*!******************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/cookies.js ***!
+  \******************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var windowHandler = __webpack_require__(/*! ./window */ 11);
+var base64Url = __webpack_require__(/*! ./base64_url */ 67);
+
+function create(name, value, days) {
+  var date;
+  var expires;
+
+  if (
+    windowHandler.getDocument().cookie === undefined ||
+    windowHandler.getDocument().cookie === null
+  ) {
+    throw new Error('cookie storage not available');
+  }
+
+  if (days) {
+    var timeToExpire = days * 24 * 60 * 60 * 1000;
+    date = new Date();
+    date.setTime(date.getTime() + timeToExpire);
+    expires = '; expires=' + date.toGMTString();
+  } else {
+    expires = '';
+  }
+
+  windowHandler.getDocument().cookie = name + '=' + base64Url.encode(value) + expires + '; path=/';
+}
+
+function read(name) {
+  var i;
+  var cookie;
+  var cookies;
+  var nameEQ = name + '=';
+
+  if (
+    windowHandler.getDocument().cookie === undefined ||
+    windowHandler.getDocument().cookie === null
+  ) {
+    throw new Error('cookie storage not available');
+  }
+
+  cookies = windowHandler.getDocument().cookie.split(';');
+
+  for (i = 0; i < cookies.length; i++) {
+    cookie = cookies[i];
+    while (cookie.charAt(0) === ' ') {
+      cookie = cookie.substring(1, cookie.length);
+    }
+    if (cookie.indexOf(nameEQ) === 0) {
+      return base64Url.decode(cookie.substring(nameEQ.length, cookie.length));
+    }
+  }
+
+  return null;
+}
+
+function erase(name) {
+  create(name, '', -1);
+}
+
+module.exports = {
+  create: create,
+  read: read,
+  erase: erase
+};
+
+
+/***/ }),
+/* 215 */
+/*!*********************************************************!*\
+  !*** ../node_modules/auth0-js/src/web-auth/redirect.js ***!
+  \*********************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var UsernamePassword = __webpack_require__(/*! ./username-password */ 216);
+var objectHelper = __webpack_require__(/*! ../helper/object */ 4);
+var Warn = __webpack_require__(/*! ../helper/warn */ 28);
+var assert = __webpack_require__(/*! ../helper/assert */ 10);
+
+function Redirect(client, options) {
+  this.baseOptions = options;
+  this.client = client;
+
+  this.warn = new Warn({
+    disableWarnings: !!options._disableDeprecationWarnings
+  });
+}
+
+/**
+ * @callback credentialsCallback
+ * @param {Error} [err] error returned by Auth0 with the reason of the Auth failure
+ * @param {Object} [result] result of the AuthN request
+ * @param {String} result.accessToken token that can be used with {@link userinfo}
+ * @param {String} [result.idToken] token that identifies the user
+ * @param {String} [result.refreshToken] token that can be used to get new access tokens from Auth0. Note that not all clients can request them or the resource server might not allow them.
+ */
+
+/**
+ * Performs authentication with username/email and password with a database connection
+ *
+ * This method is not compatible with API Auth so if you need to fetch API tokens with audience
+ * you should use {@link authorize} or {@link login}.
+ *
+ * @method loginWithCredentials
+ * @param {Object} options
+ * @param {String} [options.redirectUri] url that the Auth0 will redirect after Auth with the Authorization Response
+ * @param {String} [options.responseType] type of the response used. It can be any of the values `code` and `token`
+ * @param {String} [options.responseMode] how the AuthN response is encoded and redirected back to the client. Supported values are `query` and `fragment`
+ * @param {String} [options.scope] scopes to be requested during AuthN. e.g. `openid email`
+ * @param {credentialsCallback} cb
+ */
+Redirect.prototype.loginWithCredentials = function(options, cb) {
+  var usernamePassword;
+
+  var params = objectHelper
+    .merge(this.baseOptions, [
+      'clientID',
+      'redirectUri',
+      'tenant',
+      'responseType',
+      'responseMode',
+      'scope',
+      'audience',
+      '_csrf',
+      'state',
+      '_intstate',
+      'nonce'
+    ])
+    .with(options);
+
+  assert.check(
+    params,
+    { type: 'object', message: 'options parameter is not valid' },
+    {
+      responseType: { type: 'string', message: 'responseType option is required' }
+    }
+  );
+
+  usernamePassword = new UsernamePassword(this.baseOptions);
+  return usernamePassword.login(params, function(err, data) {
+    if (err) {
+      return cb(err);
+    }
+    return usernamePassword.callback(data);
+  });
+};
+
+/**
+ * Signs up a new user and automatically logs the user in after the signup.
+ *
+ * @method signupAndLogin
+ * @param {Object} options
+ * @param {String} options.email user email address
+ * @param {String} options.password user password
+ * @param {String} options.connection name of the connection where the user will be created
+ * @param {credentialsCallback} cb
+ */
+Redirect.prototype.signupAndLogin = function(options, cb) {
+  var _this = this;
+  return this.client.dbConnection.signup(options, function(err) {
+    if (err) {
+      return cb(err);
+    }
+    return _this.loginWithCredentials(options, cb);
+  });
+};
+
+module.exports = Redirect;
+
+
+/***/ }),
+/* 216 */
+/*!******************************************************************!*\
+  !*** ../node_modules/auth0-js/src/web-auth/username-password.js ***!
+  \******************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var urljoin = __webpack_require__(/*! url-join */ 9);
+
+var objectHelper = __webpack_require__(/*! ../helper/object */ 4);
+var RequestBuilder = __webpack_require__(/*! ../helper/request-builder */ 26);
+var responseHandler = __webpack_require__(/*! ../helper/response-handler */ 16);
+var windowHelper = __webpack_require__(/*! ../helper/window */ 11);
+
+function UsernamePassword(options) {
+  this.baseOptions = options;
+  this.request = new RequestBuilder(options);
+}
+
+UsernamePassword.prototype.login = function(options, cb) {
+  var url;
+  var body;
+
+  url = urljoin(this.baseOptions.rootUrl, 'usernamepassword', 'login');
+
+  options.username = options.username || options.email; // eslint-disable-line
+
+  options = objectHelper.blacklist(options, ['email']); // eslint-disable-line
+
+  body = objectHelper
+    .merge(this.baseOptions, [
+      'clientID',
+      'redirectUri',
+      'tenant',
+      'responseType',
+      'responseMode',
+      'scope',
+      'audience'
+    ])
+    .with(options);
+
+  body = objectHelper.toSnakeCase(body, ['auth0Client']);
+
+  return this.request.post(url).send(body).end(responseHandler(cb));
+};
+
+UsernamePassword.prototype.callback = function(formHtml) {
+  var div;
+  var form;
+  var _document = windowHelper.getDocument();
+
+  div = _document.createElement('div');
+  div.innerHTML = formHtml;
+  form = _document.body.appendChild(div).children[0];
+
+  form.submit();
+};
+
+module.exports = UsernamePassword;
+
+
+/***/ }),
+/* 217 */
+/*!******************************************************!*\
+  !*** ../node_modules/auth0-js/src/web-auth/popup.js ***!
+  \******************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var urljoin = __webpack_require__(/*! url-join */ 9);
+var WinChan = __webpack_require__(/*! winchan */ 73);
+
+var urlHelper = __webpack_require__(/*! ../helper/url */ 218);
+var assert = __webpack_require__(/*! ../helper/assert */ 10);
+var responseHandler = __webpack_require__(/*! ../helper/response-handler */ 16);
+var PopupHandler = __webpack_require__(/*! ../helper/popup-handler */ 219);
+var objectHelper = __webpack_require__(/*! ../helper/object */ 4);
+var Warn = __webpack_require__(/*! ../helper/warn */ 28);
+var TransactionManager = __webpack_require__(/*! ./transaction-manager */ 72);
+
+function Popup(webAuth, options) {
+  this.baseOptions = options;
+  this.client = webAuth.client;
+  this.webAuth = webAuth;
+
+  this.transactionManager = new TransactionManager(this.baseOptions.transaction);
+  this.warn = new Warn({
+    disableWarnings: !!options._disableDeprecationWarnings
+  });
+}
+
+/**
+ * Returns a new instance of the popup handler
+ *
+ * @method buildPopupHandler
+ * @private
+ */
+Popup.prototype.buildPopupHandler = function() {
+  var pluginHandler = this.baseOptions.plugins.get('popup.getPopupHandler');
+
+  if (pluginHandler) {
+    return pluginHandler.getPopupHandler();
+  }
+
+  return new PopupHandler();
+};
+
+/**
+ * Initializes the popup window and returns the instance to be used later in order to avoid being blocked by the browser.
+ *
+ * @method preload
+ * @param {Object} options receives the window height and width and any other window feature to be sent to window.open
+ */
+Popup.prototype.preload = function(options) {
+  options = options || {};
+
+  var popup = this.buildPopupHandler();
+
+  popup.preload(options);
+  return popup;
+};
+
+/**
+ * Internal use.
+ *
+ * @method getPopupHandler
+ * @private
+ */
+Popup.prototype.getPopupHandler = function(options, preload) {
+  if (options.popupHandler) {
+    return options.popupHandler;
+  }
+
+  if (preload) {
+    return this.preload(options);
+  }
+
+  return this.buildPopupHandler();
+};
+
+/**
+ * Handles the popup logic for the callback page.
+ *
+ * @method callback
+ * @param {Object} options
+ * @param {String} options.hash the url hash. If not provided it will extract from window.location.hash
+ * @param {String} [options.state] value originally sent in `state` parameter to {@link authorize} to mitigate XSRF
+ * @param {String} [options.nonce] value originally sent in `nonce` parameter to {@link authorize} to prevent replay attacks
+ * @param {String} [options._idTokenVerification] makes parseHash perform or skip `id_token` verification. We **strongly** recommend validating the `id_token` yourself if you disable the verification.
+ * @see   {@link parseHash}
+ */
+Popup.prototype.callback = function(options) {
+  var _this = this;
+  WinChan.onOpen(function(popupOrigin, r, cb) {
+    _this.webAuth.parseHash(options || {}, function(err, data) {
+      return cb(err || data);
+    });
+  });
+};
+
+/**
+ * Shows inside a new window the hosted login page (`/authorize`) in order to start a new authN/authZ transaction and post its result using `postMessage`.
+ *
+ * @method authorize
+ * @param {Object} options
+ * @param {String} [options.domain] your Auth0 domain
+ * @param {String} [options.clientID] your Auth0 client identifier obtained when creating the client in the Auth0 Dashboard
+ * @param {String} options.redirectUri url that the Auth0 will redirect after Auth with the Authorization Response
+ * @param {String} options.responseType type of the response used by OAuth 2.0 flow. It can be any space separated list of the values `code`, `token`, `id_token`. {@link https://openid.net/specs/oauth-v2-multiple-response-types-1_0}
+ * @param {String} [options.responseMode] how the Auth response is encoded and redirected back to the client. Supported values are `query`, `fragment` and `form_post`. {@link https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#ResponseModes}
+ * @param {String} [options.state] value used to mitigate XSRF attacks. {@link https://auth0.com/docs/protocols/oauth2/oauth-state}
+ * @param {String} [options.nonce] value used to mitigate replay attacks when using Implicit Grant. {@link https://auth0.com/docs/api-auth/tutorials/nonce}
+ * @param {String} [options.scope] scopes to be requested during Auth. e.g. `openid email`
+ * @param {String} [options.audience] identifier of the resource server who will consume the access token issued after Auth
+ * @param {Boolean} [options.owp] determines if Auth0 should render the relay page or not and the caller is responsible of handling the response.
+ * @param {authorizeCallback} cb
+ * @see {@link https://auth0.com/docs/api/authentication#authorize-client}
+ */
+Popup.prototype.authorize = function(options, cb) {
+  var popup;
+  var url;
+  var relayUrl;
+  var popOpts = {};
+
+  var pluginHandler = this.baseOptions.plugins.get('popup.authorize');
+
+  var params = objectHelper
+    .merge(this.baseOptions, [
+      'clientID',
+      'scope',
+      'domain',
+      'audience',
+      'tenant',
+      'responseType',
+      'redirectUri',
+      '_csrf',
+      'state',
+      '_intstate',
+      'nonce'
+    ])
+    .with(objectHelper.blacklist(options, ['popupHandler']));
+
+  assert.check(
+    params,
+    { type: 'object', message: 'options parameter is not valid' },
+    {
+      responseType: { type: 'string', message: 'responseType option is required' }
+    }
+  );
+
+  // the relay page should not be necesary as long it happens in the same domain
+  // (a redirectUri shoul be provided). It is necesary when using OWP
+  relayUrl = urljoin(this.baseOptions.rootUrl, 'relay.html');
+
+  // if a owp is enabled, it should use the owp flag
+  if (options.owp) {
+    // used by server to render the relay page instead of sending the chunk in the
+    // url to the callback
+    params.owp = true;
+  } else {
+    popOpts.origin = urlHelper.extractOrigin(params.redirectUri);
+    relayUrl = params.redirectUri;
+  }
+
+  if (options.popupOptions) {
+    popOpts.popupOptions = objectHelper.pick(options.popupOptions, ['width', 'height']);
+  }
+
+  if (pluginHandler) {
+    params = pluginHandler.processParams(params);
+  }
+
+  params = this.transactionManager.process(params);
+
+  delete params.domain;
+
+  url = this.client.buildAuthorizeUrl(params);
+
+  popup = this.getPopupHandler(options);
+
+  return popup.load(url, relayUrl, popOpts, responseHandler(cb));
+};
+
+/**
+ * Performs authentication with username/email and password with a database connection inside a new window
+ *
+ * This method is not compatible with API Auth so if you need to fetch API tokens with audience
+ * you should use {@link authorize} or {@link login}.
+ *
+ * @method loginWithCredentials
+ * @param {Object} options
+ * @param {String} [options.redirectUri] url that the Auth0 will redirect after Auth with the Authorization Response
+ * @param {String} [options.responseType] type of the response used. It can be any of the values `code` and `token`
+ * @param {String} [options.responseMode] how the AuthN response is encoded and redirected back to the client. Supported values are `query` and `fragment`
+ * @param {String} [options.scope] scopes to be requested during AuthN. e.g. `openid email`
+ * @param {credentialsCallback} cb
+ */
+Popup.prototype.loginWithCredentials = function(options, cb) {
+  var params;
+  var popup;
+  var url;
+  var relayUrl;
+
+  /* eslint-disable */
+  assert.check(
+    options,
+    { type: 'object', message: 'options parameter is not valid' },
+    {
+      clientID: { optional: true, type: 'string', message: 'clientID option is required' },
+      redirectUri: { optional: true, type: 'string', message: 'redirectUri option is required' },
+      responseType: { optional: true, type: 'string', message: 'responseType option is required' },
+      scope: { optional: true, type: 'string', message: 'scope option is required' },
+      audience: { optional: true, type: 'string', message: 'audience option is required' }
+    }
+  );
+  /* eslint-enable */
+
+  popup = this.getPopupHandler(options);
+
+  options = objectHelper
+    .merge(this.baseOptions, [
+      'clientID',
+      'scope',
+      'domain',
+      'audience',
+      '_csrf',
+      'state',
+      '_intstate',
+      'nonce'
+    ])
+    .with(objectHelper.blacklist(options, ['popupHandler']));
+
+  params = objectHelper.pick(options, ['clientID', 'domain']);
+  params.options = objectHelper.toSnakeCase(
+    objectHelper.pick(options, ['password', 'connection', 'state', 'scope', '_csrf', 'device'])
+  );
+  params.options.username = options.username || options.email;
+
+  url = urljoin(this.baseOptions.rootUrl, 'sso_dbconnection_popup', options.clientID);
+  relayUrl = urljoin(this.baseOptions.rootUrl, 'relay.html');
+
+  return popup.load(url, relayUrl, { params: params }, responseHandler(cb));
+};
+
+/**
+ * Verifies the passwordless TOTP and redirects to finish the passwordless transaction
+ *
+ * @method passwordlessVerify
+ * @param {Object} options
+ * @param {String} options.type `sms` or `email`
+ * @param {String} options.phoneNumber only if type = sms
+ * @param {String} options.email only if type = email
+ * @param {String} options.connection the connection name
+ * @param {String} options.verificationCode the TOTP code
+ * @param {Function} cb
+ */
+Popup.prototype.passwordlessVerify = function(options, cb) {
+  var _this = this;
+  return this.client.passwordless.verify(
+    objectHelper.blacklist(options, ['popupHandler']),
+    function(err) {
+      if (err) {
+        return cb(err);
+      }
+
+      options.username = options.phoneNumber || options.email;
+      options.password = options.verificationCode;
+
+      delete options.email;
+      delete options.phoneNumber;
+      delete options.verificationCode;
+      delete options.type;
+
+      _this.client.loginWithResourceOwner(options, cb);
+    }
+  );
+};
+
+/**
+ * Signs up a new user and automatically logs the user in after the signup.
+ *
+ * This method is not compatible with API Auth so if you need to fetch API tokens with audience
+ * you should use {@link authorize} or {@link signupAndAuthorize}.
+ *
+ * @method signupAndLogin
+ * @param {Object} options
+ * @param {String} options.email user email address
+ * @param {String} options.password user password
+ * @param {String} options.connection name of the connection where the user will be created
+ * @param {credentialsCallback} cb
+ */
+Popup.prototype.signupAndLogin = function(options, cb) {
+  var _this = this;
+
+  // Preload popup to avoid the browser to block it since the login happens later
+  var popupHandler = this.getPopupHandler(options, true);
+  options.popupHandler = popupHandler;
+
+  return this.client.dbConnection.signup(
+    objectHelper.blacklist(options, ['popupHandler']),
+    function(err) {
+      if (err) {
+        if (popupHandler._current_popup) {
+          popupHandler._current_popup.kill();
+        }
+        return cb(err);
+      }
+      _this.loginWithCredentials(options, cb);
+    }
+  );
+};
+
+module.exports = Popup;
+
+
+/***/ }),
+/* 218 */
+/*!**************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/url.js ***!
+  \**************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+// given a URL, extract the origin. Taken from: https://github.com/firebase/firebase-simple-login/blob/d2cb95b9f812d8488bdbfba51c3a7c153ba1a074/js/src/simple-login/transports/WinChan.js#L25-L30
+function extractOrigin(url) {
+  if (!/^https?:\/\//.test(url)) url = window.location.href;
+  var m = /^(https?:\/\/[-_a-zA-Z.0-9:]+)/.exec(url);
+  if (m) return m[1];
+  return url;
+}
+
+module.exports = {
+  extractOrigin: extractOrigin
+};
+
+
+/***/ }),
+/* 219 */
+/*!************************************************************!*\
+  !*** ../node_modules/auth0-js/src/helper/popup-handler.js ***!
+  \************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+var WinChan = __webpack_require__(/*! winchan */ 73);
+
+var windowHandler = __webpack_require__(/*! ./window */ 11);
+var objectHelper = __webpack_require__(/*! ./object */ 4);
+var qs = __webpack_require__(/*! qs */ 27);
+
+function PopupHandler() {
+  this._current_popup = null;
+}
+
+PopupHandler.prototype.calculatePosition = function(options) {
+  var width = options.width || 500;
+  var height = options.height || 600;
+  var _window = windowHandler.getWindow();
+
+  var screenX = typeof _window.screenX !== 'undefined' ? _window.screenX : _window.screenLeft;
+  var screenY = typeof _window.screenY !== 'undefined' ? _window.screenY : _window.screenTop;
+
+  var outerWidth = typeof _window.outerWidth !== 'undefined'
+    ? _window.outerWidth
+    : _window.document.body.clientWidth;
+
+  var outerHeight = typeof _window.outerHeight !== 'undefined'
+    ? _window.outerHeight
+    : _window.document.body.clientHeight;
+
+  var left = (outerWidth - width) / 2;
+  var top = (outerHeight - height) / 2;
+
+  return { width: width, height: height, left: screenX + left, top: screenY + top };
+};
+
+PopupHandler.prototype.preload = function(options) {
+  var _this = this;
+  var _window = windowHandler.getWindow();
+  var popupPosition = this.calculatePosition(options.popupOptions || {});
+  var popupOptions = objectHelper.merge(popupPosition).with(options.popupOptions);
+  var url = options.url || 'about:blank';
+  var windowFeatures = qs.stringify(popupOptions, {
+    encode: false,
+    delimiter: ','
+  });
+
+  if (this._current_popup && !this._current_popup.closed) {
+    return this._current_popup;
+  }
+
+  this._current_popup = _window.open(url, 'auth0_signup_popup', windowFeatures);
+
+  this._current_popup.kill = function() {
+    this.close();
+    _this._current_popup = null;
+  };
+
+  return this._current_popup;
+};
+
+PopupHandler.prototype.load = function(url, relayUrl, options, cb) {
+  var _this = this;
+  var popupPosition = this.calculatePosition(options.popupOptions || {});
+  var popupOptions = objectHelper.merge(popupPosition).with(options.popupOptions);
+
+  var winchanOptions = objectHelper
+    .merge({
+      url: url,
+      relay_url: relayUrl,
+      window_features: qs.stringify(popupOptions, {
+        delimiter: ',',
+        encode: false
+      }),
+      popup: this._current_popup
+    })
+    .with(options);
+
+  var popup = WinChan.open(winchanOptions, function(err, data) {
+    _this._current_popup = null;
+    return cb(err, data);
+  });
+
+  popup.focus();
+
+  return popup;
+};
+
+module.exports = PopupHandler;
+
+
+/***/ }),
+/* 220 */
+/*!******************************************************************************!*\
+  !*** ../node_modules/auth0-js/src/web-auth/silent-authentication-handler.js ***!
+  \******************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var IframeHandler = __webpack_require__(/*! ../helper/iframe-handler */ 74);
+
+function SilentAuthenticationHandler(options) {
+  this.authenticationUrl = options.authenticationUrl;
+  this.timeout = options.timeout || 60 * 1000;
+  this.handler = null;
+  this.postMessageDataType = options.postMessageDataType || false;
+}
+
+SilentAuthenticationHandler.create = function(options) {
+  return new SilentAuthenticationHandler(options);
+};
+
+SilentAuthenticationHandler.prototype.login = function(usePostMessage, callback) {
+  this.handler = new IframeHandler({
+    auth0: this.auth0,
+    url: this.authenticationUrl,
+    eventListenerType: usePostMessage ? 'message' : 'load',
+    callback: this.getCallbackHandler(callback, usePostMessage),
+    timeout: this.timeout,
+    eventValidator: this.getEventValidator(),
+    timeoutCallback: function() {
+      callback(null, '#error=timeout&error_description=Timeout+during+authentication+renew.');
+    },
+    usePostMessage: usePostMessage || false
+  });
+
+  this.handler.init();
+};
+
+SilentAuthenticationHandler.prototype.getEventValidator = function() {
+  var _this = this;
+  return {
+    isValid: function(eventData) {
+      switch (eventData.event.type) {
+        case 'message':
+          // Default behaviour, return all message events.
+          if (_this.postMessageDataType === false) {
+            return true;
+          }
+
+          return (
+            eventData.event.data.type && eventData.event.data.type === _this.postMessageDataType
+          );
+
+        case 'load': // Fall through to default
+        default:
+          return true;
+      }
+    }
+  };
+};
+
+SilentAuthenticationHandler.prototype.getCallbackHandler = function(callback, usePostMessage) {
+  return function(eventData) {
+    var callbackValue;
+    if (!usePostMessage) {
+      callbackValue = eventData.sourceObject.contentWindow.location.hash;
+    } else if (typeof eventData.event.data === 'object' && eventData.event.data.hash) {
+      callbackValue = eventData.event.data.hash;
+    } else {
+      callbackValue = eventData.event.data;
+    }
+    callback(null, callbackValue);
+  };
+};
+
+module.exports = SilentAuthenticationHandler;
+
+
+/***/ }),
+/* 221 */
+/*!****************************************************************************!*\
+  !*** ../node_modules/auth0-js/src/web-auth/cross-origin-authentication.js ***!
+  \****************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var urljoin = __webpack_require__(/*! url-join */ 9);
+
+var windowHelper = __webpack_require__(/*! ../helper/window */ 11);
+var objectHelper = __webpack_require__(/*! ../helper/object */ 4);
+var RequestBuilder = __webpack_require__(/*! ../helper/request-builder */ 26);
+
+function CrossOriginAuthentication(webAuth, options) {
+  this.webAuth = webAuth;
+  this.baseOptions = options;
+  this.request = new RequestBuilder(options);
+}
+
+function getFragment(name) {
+  var theWindow = windowHelper.getWindow();
+  var value = '&' + theWindow.location.hash.substring(1);
+  var parts = value.split('&' + name + '=');
+  if (parts.length === 2) {
+    return parts.pop().split('&').shift();
+  }
+}
+
+function createKey(origin, coId) {
+  return ['co/verifier', encodeURIComponent(origin), encodeURIComponent(coId)].join('/');
+}
+
+/**
+ * Logs in the user with username and password using the cross origin authentication (/co/authenticate) flow. You can use either `username` or `email` to identify the user, but `username` will take precedence over `email`.
+ * This only works when 3rd party cookies are enabled in the browser. After the /co/authenticate call, you'll have to use the {@link parseHash} function at the `redirectUri` specified in the constructor.
+ *
+ * @method login
+ * @param {Object} options options used in the {@link authorize} call after the login_ticket is acquired
+ * @param {String} [options.username] Username (mutually exclusive with email)
+ * @param {String} [options.email] Email  (mutually exclusive with username)
+ * @param {String} options.password Password
+ * @param {String} [options.realm] Realm used to authenticate the user, it can be a realm name or a database connection name
+ * @param {crossOriginLoginCallback} cb Callback function called only when an authentication error, like invalid username or password, occurs. For other types of errors, there will be a redirect to the `redirectUri`.
+ */
+CrossOriginAuthentication.prototype.login = function(options, cb) {
+  var _this = this;
+  var theWindow = windowHelper.getWindow();
+  var url = urljoin(this.baseOptions.rootUrl, '/co/authenticate');
+  var authenticateBody = {
+    client_id: options.clientID || this.baseOptions.clientID,
+    username: options.username || options.email
+  };
+  if (options.password) {
+    authenticateBody.password = options.password;
+  }
+  if (options.otp) {
+    authenticateBody.otp = options.otp;
+  }
+  var realm = options.realm || this.baseOptions.realm;
+
+  if (realm) {
+    var credentialType =
+      options.credentialType ||
+      this.baseOptions.credentialType ||
+      'http://auth0.com/oauth/grant-type/password-realm';
+    authenticateBody.realm = realm;
+    authenticateBody.credential_type = credentialType;
+  } else {
+    authenticateBody.credential_type = 'password';
+  }
+  this.request.post(url).withCredentials().send(authenticateBody).end(function(err, data) {
+    if (err) {
+      var errorObject = (err.response && err.response.body) || {
+        error: 'request_error',
+        error_description: JSON.stringify(err)
+      };
+      return cb(errorObject);
+    }
+    options = objectHelper.blacklist(options, ['username', 'password', 'credentialType', 'otp']);
+    var authorizeOptions = objectHelper
+      .merge(options)
+      .with({ loginTicket: data.body.login_ticket });
+    var key = createKey(_this.baseOptions.rootUrl, data.body.co_id);
+    theWindow.sessionStorage[key] = data.body.co_verifier;
+    _this.webAuth.authorize(authorizeOptions);
+  });
+};
+
+function tryGetVerifier(theWindow, key) {
+  try {
+    var verifier = theWindow.sessionStorage[key];
+    theWindow.sessionStorage.removeItem(key);
+    return verifier;
+  } catch (e) {
+    return '';
+  }
+}
+
+/**
+ * Runs the callback code for the cross origin authentication call. This method is meant to be called by the cross origin authentication callback url.
+ *
+ * @method callback
+ */
+CrossOriginAuthentication.prototype.callback = function() {
+  var targetOrigin = decodeURIComponent(getFragment('origin'));
+  var theWindow = windowHelper.getWindow();
+
+  theWindow.addEventListener('message', function(evt) {
+    if (evt.data.type !== 'co_verifier_request') {
+      return;
+    }
+    var key = createKey(evt.origin, evt.data.request.id);
+    var verifier = tryGetVerifier(theWindow, key);
+
+    evt.source.postMessage(
+      {
+        type: 'co_verifier_response',
+        response: {
+          verifier: verifier
+        }
+      },
+      evt.origin
+    );
+  });
+
+  theWindow.parent.postMessage({ type: 'ready' }, targetOrigin);
+};
+
+module.exports = CrossOriginAuthentication;
+
+
+/***/ }),
+/* 222 */
+/*!********************************************************************!*\
+  !*** ../node_modules/auth0-js/src/web-auth/web-message-handler.js ***!
+  \********************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var IframeHandler = __webpack_require__(/*! ../helper/iframe-handler */ 74);
+var objectHelper = __webpack_require__(/*! ../helper/object */ 4);
+
+function runWebMessageFlow(authorizeUrl, options, callback) {
+  var handler = new IframeHandler({
+    url: authorizeUrl,
+    eventListenerType: 'message',
+    callback: function(eventData) {
+      callback(null, eventData);
+    },
+    timeout: options.timeout,
+    eventValidator: {
+      isValid: function(eventData) {
+        return eventData.event.data.type === 'authorization_response';
+      }
+    },
+    timeoutCallback: function() {
+      callback({ error: 'timeout', error_description: 'Timeout during fetching SSO data' });
+    }
+  });
+  handler.init();
+}
+
+function WebMessageHandler(webAuth) {
+  this.webAuth = webAuth;
+}
+
+WebMessageHandler.prototype.checkSession = function(options, cb) {
+  options.responseMode = 'web_message';
+  options.prompt = 'none';
+  runWebMessageFlow(this.webAuth.client.buildAuthorizeUrl(options), options, function(
+    err,
+    eventData
+  ) {
+    var error = err || eventData.event.data.response.error;
+    if (error) {
+      return cb(error);
+    }
+    cb(null, objectHelper.toCamelCase(eventData.event.data.response));
+  });
+};
+
+module.exports = WebMessageHandler;
+
+
+/***/ }),
+/* 223 */
+/*!***********************!*\
+  !*** ./app/store.tsx ***!
+  \***********************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var BottleApi_1 = __webpack_require__(/*! ./api/BottleApi */ 224);
+var EventApi_1 = __webpack_require__(/*! ./api/EventApi */ 225);
+var LocationApi_1 = __webpack_require__(/*! ./api/LocationApi */ 226);
+var MemberApi_1 = __webpack_require__(/*! ./api/MemberApi */ 227);
+var NoteApi_1 = __webpack_require__(/*! ./api/NoteApi */ 228);
+var RootStore_1 = __webpack_require__(/*! ./stores/RootStore */ 229);
+exports.createStore = function (history, auth) {
+    return RootStore_1.RootStore.create({
+        bottleStore: { bottles: [] },
+        eventStore: { events: [] },
+        locationStore: { locations: [] },
+        memberStore: { members: [] },
+        navigation: {},
+        scotchNightStore: {}
+    }, {
+        bottleApi: new BottleApi_1.default(auth),
+        eventApi: new EventApi_1.default(auth),
+        history: history,
+        locale: "en-US",
+        locationApi: new LocationApi_1.default(auth),
+        memberApi: new MemberApi_1.default(auth),
+        noteApi: new NoteApi_1.default(auth)
+    });
+};
+
+
+/***/ }),
+/* 224 */
+/*!******************************!*\
+  !*** ./app/api/BottleApi.ts ***!
+  \******************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var BottleApi = /** @class */ (function () {
+    function BottleApi(auth) {
+        this.auth = auth;
+    }
+    BottleApi.prototype.getAll = function () {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = { Authorization: "Bearer " + getAccessToken() };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/bottles", {
+            headers: headers
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return null;
+        })
+            .then(function (bottles) {
+            if (!bottles) {
+                return;
+            }
+            return bottles;
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    BottleApi.prototype.addBottle = function (bottle) {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/bottles", {
+            method: "post",
+            headers: headers,
+            body: JSON.stringify(bottle)
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+            .then(function (newBottle) {
+            if (!newBottle) {
+                return;
+            }
+            return newBottle.id;
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    return BottleApi;
+}());
+exports.default = BottleApi;
+
+
+/***/ }),
+/* 225 */
+/*!*****************************!*\
+  !*** ./app/api/EventApi.ts ***!
+  \*****************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var EventApi = /** @class */ (function () {
+    function EventApi(auth) {
+        this.auth = auth;
+    }
+    EventApi.prototype.getAll = function () {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/events", {
+            headers: headers
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return null;
+        })
+            .then(function (events) {
+            if (!events) {
+                return null;
+            }
+            return events;
+        })
+            .catch(function (error) {
+            console.log(error);
+            return null;
+        });
+    };
+    EventApi.prototype.getAllForMember = function (member) {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/members/" + member.id + "/events", {
+            headers: headers
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return null;
+        })
+            .then(function (events) {
+            if (!events) {
+                return null;
+            }
+            return events;
+        })
+            .catch(function (error) {
+            console.log(error);
+            return null;
+        });
+    };
+    EventApi.prototype.addEvent = function (event) {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/events", {
+            method: "post",
+            headers: headers,
+            body: JSON.stringify(event)
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+            .then(function (newEvent) {
+            if (!newEvent) {
+                return;
+            }
+            return newEvent.id;
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    EventApi.prototype.updateEvent = function (event) {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/events", {
+            method: "put",
+            headers: headers,
+            body: JSON.stringify(event)
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response;
+            }
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    return EventApi;
+}());
+exports.default = EventApi;
+
+
+/***/ }),
+/* 226 */
+/*!********************************!*\
+  !*** ./app/api/LocationApi.ts ***!
+  \********************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var LocationApi = /** @class */ (function () {
+    function LocationApi(auth) {
+        this.auth = auth;
+    }
+    LocationApi.prototype.getAll = function () {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/locations", {
+            headers: headers
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return null;
+        })
+            .then(function (locations) {
+            if (!locations) {
+                return;
+            }
+            return locations;
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    LocationApi.prototype.addLocation = function (location) {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/locations", {
+            method: "post",
+            headers: headers,
+            body: JSON.stringify(location)
+        })
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+            .then(function (newLocation) {
+            if (!newLocation) {
+                return;
+            }
+            return newLocation.id;
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    return LocationApi;
+}());
+exports.default = LocationApi;
+
+
+/***/ }),
+/* 227 */
+/*!******************************!*\
+  !*** ./app/api/MemberApi.ts ***!
+  \******************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MemberApi = /** @class */ (function () {
+    function MemberApi(auth) {
+        this.auth = auth;
+    }
+    MemberApi.prototype.getAll = function () {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/members", {
+            headers: headers
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (members) {
+            if (!members) {
+                return;
+            }
+            return members;
+        })
+            .catch(function (error) {
+            console.log(error);
+            return null;
+        });
+    };
+    MemberApi.prototype.getByEmail = function (email) {
+        var getAccessToken = this.auth.getAccessToken;
+        var headers = {
+            "Authorization": "Bearer " + getAccessToken(),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+        return fetch("https://scotchnightapi.azurewebsites.net/api/members/" + email, {
+            headers: headers
+        })
+            .then(function (response) { return response.json(); })
+            .then(function (member) {
+            if (!member) {
+                return;
+            }
+            return member;
+        })
+            .catch(function (error) {
+            console.log(error);
+            return null;
+        });
+    };
+    return MemberApi;
+}());
+exports.default = MemberApi;
+
+
+/***/ }),
+/* 228 */
+/*!****************************!*\
+  !*** ./app/api/NoteApi.ts ***!
+  \****************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var NoteApi = /** @class */ (function () {
+    function NoteApi(auth) {
+        var _this = this;
+        this.getSummaryNotes = function (bottleId) {
+            var getAccessToken = _this.auth.getAccessToken;
+            var headers = {
+                "Authorization": "Bearer " + getAccessToken(),
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            };
+            return fetch("https://scotchnightapi.azurewebsites.net/api/notes/summary/" + bottleId, {
+                method: "get",
+                headers: headers
+            })
+                .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+                .then(function (summary) {
+                if (!summary) {
+                    return;
+                }
+                return summary;
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
+        };
+        this.getMemberNotes = function (memberId, bottleId) {
+            var getAccessToken = _this.auth.getAccessToken;
+            var headers = {
+                "Authorization": "Bearer " + getAccessToken(),
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            };
+            return fetch("https://scotchnightapi.azurewebsites.net/api/notes/member/" + memberId + "/bottle/" + bottleId, {
+                method: "get",
+                headers: headers
+            })
+                .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+                .then(function (note) {
+                if (!note) {
+                    return;
+                }
+                return note;
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
+        };
+        this.addReview = function (note) {
+            var getAccessToken = _this.auth.getAccessToken;
+            var headers = {
+                "Authorization": "Bearer " + getAccessToken(),
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            };
+            return fetch("https://scotchnightapi.azurewebsites.net/api/notes", {
+                method: "post",
+                headers: headers,
+                body: JSON.stringify(note)
+            })
+                .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+                .then(function (newNote) {
+                if (!newNote) {
+                    return;
+                }
+                return newNote.id;
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
+        };
+        this.auth = auth;
+    }
+    return NoteApi;
+}());
+exports.default = NoteApi;
+
+
+/***/ }),
+/* 229 */
+/*!*********************************!*\
+  !*** ./app/stores/RootStore.ts ***!
+  \*********************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var mobx_state_tree_1 = __webpack_require__(/*! mobx-state-tree */ 8);
+var BottleStore_1 = __webpack_require__(/*! ./BottleStore */ 43);
+var EventStore_1 = __webpack_require__(/*! ./EventStore */ 76);
+var LocationStore_1 = __webpack_require__(/*! ./LocationStore */ 77);
+var MemberStore_1 = __webpack_require__(/*! ./MemberStore */ 29);
+var RouterStore_1 = __webpack_require__(/*! ./RouterStore */ 78);
+var ScotchNightStore_1 = __webpack_require__(/*! ./ScotchNightStore */ 231);
+exports.RootStore = mobx_state_tree_1.types.model("RootStore", {
+    bottleStore: mobx_state_tree_1.types.optional(BottleStore_1.default, {}),
+    eventStore: mobx_state_tree_1.types.optional(EventStore_1.default, {}),
+    locationStore: mobx_state_tree_1.types.optional(LocationStore_1.default, {}),
+    memberStore: mobx_state_tree_1.types.optional(MemberStore_1.default, {}),
+    navigation: mobx_state_tree_1.types.optional(RouterStore_1.RouterStore, {}),
+    scotchNightStore: mobx_state_tree_1.types.optional(ScotchNightStore_1.default, {})
+});
+exports.default = exports.RootStore;
+
+
+/***/ }),
+/* 230 */
+/*!****************************************!*\
+  !*** ./app/stores/dependencyViews.tsx ***!
+  \****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var mobx_state_tree_1 = __webpack_require__(/*! mobx-state-tree */ 8);
+function getDependencyViews(self) {
+    return {
+        get history() {
+            return mobx_state_tree_1.getEnv(self).history;
+        },
+        get locale() {
+            return mobx_state_tree_1.getEnv(self).locale;
+        },
+        get fetch() {
+            return mobx_state_tree_1.getEnv(this).fetch;
+        },
+    };
+}
+exports.getDependencyViews = getDependencyViews;
+
+
+/***/ }),
+/* 231 */
+/*!****************************************!*\
+  !*** ./app/stores/ScotchNightStore.ts ***!
+  \****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var mobx_state_tree_1 = __webpack_require__(/*! mobx-state-tree */ 8);
+var BottleStore_1 = __webpack_require__(/*! ./BottleStore */ 43);
+var EventStore_1 = __webpack_require__(/*! ./EventStore */ 76);
+var MemberStore_1 = __webpack_require__(/*! ./MemberStore */ 29);
+exports.ScotchNightStore = mobx_state_tree_1.types
+    .model("ScotchNightStore", {
+    currentUser: mobx_state_tree_1.types.maybe(MemberStore_1.Member),
+    currentEvent: mobx_state_tree_1.types.maybe(mobx_state_tree_1.types.reference(EventStore_1.Event)),
+    currentBottle: mobx_state_tree_1.types.maybe(mobx_state_tree_1.types.reference(BottleStore_1.Bottle)),
+    summaryNotes: mobx_state_tree_1.types.maybe(BottleStore_1.BottleNote),
+    memberNotes: mobx_state_tree_1.types.maybe(BottleStore_1.BottleNote),
+})
+    .actions(function (self) {
+    var setCurrentBottle = mobx_state_tree_1.process(function setBottle(bottle) {
+        var noteApi, _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    noteApi = mobx_state_tree_1.getEnv(self).noteApi;
+                    self.currentBottle = bottle;
+                    _a = self;
+                    return [4 /*yield*/, noteApi.getSummaryNotes(bottle.id)];
+                case 1:
+                    _a.summaryNotes = _c.sent();
+                    _b = self;
+                    return [4 /*yield*/, noteApi.getMemberNotes(self.currentUser.id, bottle.id)];
+                case 2:
+                    _b.memberNotes = _c.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+    var setCurrentUser = function (member) {
+        self.currentUser = member;
+    };
+    var setCurrentEvent = function (event) {
+        self.currentEvent = event;
+    };
+    var setCurrentUserByEmail = mobx_state_tree_1.process(function setUser(email) {
+        var memberApi, member;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    memberApi = mobx_state_tree_1.getEnv(self).memberApi;
+                    if (!email || email === "") {
+                        return [2 /*return*/, null];
+                    }
+                    return [4 /*yield*/, memberApi.getByEmail(email)];
+                case 1:
+                    member = _a.sent();
+                    setCurrentUser(member);
+                    return [2 /*return*/, member];
+            }
+        });
+    });
+    return {
+        setCurrentBottle: setCurrentBottle,
+        setCurrentEvent: setCurrentEvent,
+        setCurrentUser: setCurrentUser,
+        setCurrentUserByEmail: setCurrentUserByEmail
+    };
+});
+exports.default = exports.ScotchNightStore;
+
+
+/***/ }),
+/* 232 */
+/*!**********************************************!*\
+  !*** ../node_modules/remotedev/lib/index.js ***!
+  \**********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./devTools */ 233);
+
+/***/ }),
+/* 233 */
+/*!*************************************************!*\
+  !*** ../node_modules/remotedev/lib/devTools.js ***!
+  \*************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.send = undefined;
+exports.extractState = extractState;
+exports.generateId = generateId;
+exports.start = start;
+exports.connect = connect;
+exports.connectViaExtension = connectViaExtension;
+
+var _jsan = __webpack_require__(/*! jsan */ 234);
+
+var _socketclusterClient = __webpack_require__(/*! socketcluster-client */ 237);
+
+var _socketclusterClient2 = _interopRequireDefault(_socketclusterClient);
+
+var _rnHostDetect = __webpack_require__(/*! rn-host-detect */ 255);
+
+var _rnHostDetect2 = _interopRequireDefault(_rnHostDetect);
+
+var _constants = __webpack_require__(/*! ./constants */ 256);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var socket = undefined;
+var channel = undefined;
+var listeners = {};
+
+function extractState(message) {
+  if (!message || !message.state) return undefined;
+  if (typeof message.state === 'string') return (0, _jsan.parse)(message.state);
+  return message.state;
+}
+
+function generateId() {
+  return Math.random().toString(36).substr(2);
+}
+
+function handleMessages(message) {
+  if (!message.payload) message.payload = message.action;
+  Object.keys(listeners).forEach(function (id) {
+    if (message.instanceId && id !== message.instanceId) return;
+    if (typeof listeners[id] === 'function') listeners[id](message);else listeners[id].forEach(function (fn) {
+      fn(message);
+    });
+  });
+}
+
+function watch() {
+  if (channel) return;
+  socket.emit('login', 'master', function (err, channelName) {
+    if (err) {
+      console.log(err);return;
+    }
+    channel = socket.subscribe(channelName);
+    channel.watch(handleMessages);
+    socket.on(channelName, handleMessages);
+  });
+}
+
+function connectToServer(options) {
+  if (socket) return;
+  var socketOptions = undefined;
+  if (options.port) {
+    socketOptions = {
+      port: options.port,
+      hostname: (0, _rnHostDetect2.default)(options.hostname || 'localhost'),
+      secure: !!options.secure
+    };
+  } else socketOptions = _constants.defaultSocketOptions;
+  socket = _socketclusterClient2.default.connect(socketOptions);
+  watch();
+}
+
+function start(options) {
+  if (options) {
+    if (options.port && !options.hostname) {
+      options.hostname = 'localhost';
+    }
+  }
+  connectToServer(options);
+}
+
+function transformAction(action, config) {
+  if (action.action) return action;
+  var liftedAction = { timestamp: Date.now() };
+  if (action) {
+    if (config.getActionType) liftedAction.action = config.getActionType(action);else {
+      if (typeof action === 'string') liftedAction.action = { type: action };else if (!action.type) liftedAction.action = { type: 'update' };else liftedAction.action = action;
+    }
+  } else {
+    liftedAction.action = { type: action };
+  }
+  return liftedAction;
+}
+
+function _send(action, state, options, type, instanceId) {
+  start(options);
+  setTimeout(function () {
+    var message = {
+      payload: state ? (0, _jsan.stringify)(state) : '',
+      action: type === 'ACTION' ? (0, _jsan.stringify)(transformAction(action, options)) : action,
+      type: type || 'ACTION',
+      id: socket.id,
+      instanceId: instanceId,
+      name: options.name
+    };
+    socket.emit(socket.id ? 'log' : 'log-noid', message);
+  }, 0);
+}
+
+exports.send = _send;
+function connect() {
+  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+  var id = generateId(options.instanceId);
+  start(options);
+  return {
+    init: function init(state, action) {
+      _send(action || {}, state, options, 'INIT', id);
+    },
+    subscribe: function subscribe(listener) {
+      if (!listener) return undefined;
+      if (!listeners[id]) listeners[id] = [];
+      listeners[id].push(listener);
+
+      return function unsubscribe() {
+        var index = listeners[id].indexOf(listener);
+        listeners[id].splice(index, 1);
+      };
+    },
+    unsubscribe: function unsubscribe() {
+      delete listeners[id];
+    },
+    send: function send(action, payload) {
+      if (action) {
+        _send(action, payload, options, 'ACTION', id);
+      } else {
+        _send(undefined, payload, options, 'STATE', id);
+      }
+    },
+    error: function error(payload) {
+      socket.emit({ type: 'ERROR', payload: payload, id: socket.id, instanceId: id });
+    }
+  };
+}
+
+function connectViaExtension(options) {
+  if (options && options.remote || typeof window === 'undefined' || !window.devToolsExtension) {
+    return connect(options);
+  }
+  return window.devToolsExtension.connect(options);
+}
+
+exports.default = { connect: connect, connectViaExtension: connectViaExtension, send: _send, extractState: extractState, generateId: generateId };
+
+/***/ }),
+/* 234 */
+/*!*************************************!*\
+  !*** ../node_modules/jsan/index.js ***!
+  \*************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./lib */ 79);
+
+
+/***/ }),
+/* 235 */
+/*!*****************************************!*\
+  !*** ../node_modules/jsan/lib/cycle.js ***!
+  \*****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pathGetter = __webpack_require__(/*! ./path-getter */ 80);
+var utils = __webpack_require__(/*! ./utils */ 236);
+
+var WMap = typeof WeakMap !== 'undefined'?
+  WeakMap:
+  function() {
+    var keys = [];
+    var values = [];
+    return {
+      set: function(key, value) {
+        keys.push(key);
+        values.push(value);
+      },
+      get: function(key) {
+        for (var i = 0; i < keys.length; i++) {
+          if (keys[i] === key) {
+            return values[i];
+          }
+        }
+      }
+    }
+  };
+
+// Based on https://github.com/douglascrockford/JSON-js/blob/master/cycle.js
+
+exports.decycle = function decycle(object, options, replacer) {
+  'use strict';
+
+  var map = new WMap()
+
+  var hasCircular = Object.prototype.hasOwnProperty.call(options, 'circular');
+
+  return (function derez(_value, path, key) {
+
+    // The derez recurses through the object, producing the deep copy.
+
+    var i,        // The loop counter
+      name,       // Property name
+      nu;         // The new object or array
+
+    // typeof null === 'object', so go on if this value is really an object but not
+    // one of the weird builtin objects.
+
+    var value = replacer ? replacer(key || '', _value) : _value;
+
+    if (options.date && value instanceof Date) {
+      return {$jsan: 'd' + value.getTime()};
+    }
+    if (options.regex && value instanceof RegExp) {
+      return {$jsan: 'r' + utils.getRegexFlags(value) + ',' + value.source};
+    }
+    if (options['function'] && typeof value === 'function') {
+      return {$jsan: 'f' + utils.stringifyFunction(value, options['function'])}
+    }
+    if (options['nan'] && typeof value === 'number' && isNaN(value)) {
+      return {$jsan: 'n'}
+    }
+    if (options['infinity']) {
+      if (Number.POSITIVE_INFINITY === value) return {$jsan: 'i'}
+      if (Number.NEGATIVE_INFINITY === value) return {$jsan: 'y'}
+    }
+    if (options['undefined'] && value === undefined) {
+      return {$jsan: 'u'}
+    }
+    if (options['error'] && value instanceof Error) {
+      return {$jsan: 'e' + value.message}
+    }
+    if (options['symbol'] && typeof value === 'symbol') {
+      var symbolKey = Symbol.keyFor(value)
+      if (symbolKey !== undefined) {
+        return {$jsan: 'g' + symbolKey}
+      }
+
+      // 'Symbol(foo)'.slice(7, -1) === 'foo'
+      return {$jsan: 's' + value.toString().slice(7, -1)}
+    }
+
+    if (options['map'] && typeof Map === 'function' && value instanceof Map && typeof Array.from === 'function') {
+      return {$jsan: 'm' + JSON.stringify(decycle(Array.from(value), options, replacer))}
+    }
+
+    if (options['set'] && typeof Set === 'function' && value instanceof Set && typeof Array.from === 'function') {
+      return {$jsan: 'l' + JSON.stringify(decycle(Array.from(value), options, replacer))}
+    }
+
+    if (value && typeof value.toJSON === 'function') {
+      value = value.toJSON(key);
+    }
+
+    if (typeof value === 'object' && value !== null &&
+      !(value instanceof Boolean) &&
+      !(value instanceof Date)    &&
+      !(value instanceof Number)  &&
+      !(value instanceof RegExp)  &&
+      !(value instanceof String)  &&
+      !(typeof value === 'symbol')  &&
+      !(value instanceof Error)) {
+
+        // If the value is an object or array, look to see if we have already
+        // encountered it. If so, return a $ref/path object.
+
+      if (typeof value === 'object' && value !== null) {
+        var foundPath = map.get(value);
+        if (foundPath) {
+          if (hasCircular && path.indexOf(foundPath) === 0) {
+            return typeof options.circular === 'function'?
+              options.circular(value, path, foundPath):
+              options.circular;
+          }
+          return {$jsan: foundPath};
+        }
+        map.set(value, path);
+      }
+
+
+      // If it is an array, replicate the array.
+
+      if (Object.prototype.toString.apply(value) === '[object Array]') {
+          nu = [];
+          for (i = 0; i < value.length; i += 1) {
+              nu[i] = derez(value[i], path + '[' + i + ']', i);
+          }
+      } else {
+
+        // If it is an object, replicate the object.
+
+        nu = {};
+        for (name in value) {
+          if (Object.prototype.hasOwnProperty.call(value, name)) {
+            var nextPath = /^\w+$/.test(name) ?
+              '.' + name :
+              '[' + JSON.stringify(name) + ']';
+            nu[name] = name === '$jsan' ? [derez(value[name], path + nextPath)] : derez(value[name], path + nextPath, name);
+          }
+        }
+      }
+      return nu;
+    }
+    return value;
+  }(object, '$'));
+};
+
+
+exports.retrocycle = function retrocycle($) {
+  'use strict';
+
+
+  return (function rez(value) {
+
+    // The rez function walks recursively through the object looking for $jsan
+    // properties. When it finds one that has a value that is a path, then it
+    // replaces the $jsan object with a reference to the value that is found by
+    // the path.
+
+    var i, item, name, path;
+
+    if (value && typeof value === 'object') {
+      if (Object.prototype.toString.apply(value) === '[object Array]') {
+        for (i = 0; i < value.length; i += 1) {
+          item = value[i];
+          if (item && typeof item === 'object') {
+            if (item.$jsan) {
+              value[i] = utils.restore(item.$jsan, $);
+            } else {
+              rez(item);
+            }
+          }
+        }
+      } else {
+        for (name in value) {
+          // base case passed raw object
+          if(typeof value[name] === 'string' && name === '$jsan'){
+            return utils.restore(value.$jsan, $);
+            break;
+          }
+          else {
+            if (name === '$jsan') {
+              value[name] = value[name][0];
+            }
+            if (typeof value[name] === 'object') {
+              item = value[name];
+              if (item && typeof item === 'object') {
+                if (item.$jsan) {
+                  value[name] = utils.restore(item.$jsan, $);
+                } else {
+                  rez(item);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return value;
+  }($));
+};
+
+
+/***/ }),
+/* 236 */
+/*!*****************************************!*\
+  !*** ../node_modules/jsan/lib/utils.js ***!
+  \*****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pathGetter = __webpack_require__(/*! ./path-getter */ 80);
+var jsan = __webpack_require__(/*! ./ */ 79);
+
+exports.getRegexFlags = function getRegexFlags(regex) {
+  var flags = '';
+  if (regex.ignoreCase) flags += 'i';
+  if (regex.global) flags += 'g';
+  if (regex.multiline) flags += 'm';
+  return flags;
+};
+
+exports.stringifyFunction = function stringifyFunction(fn, customToString) {
+  if (typeof customToString === 'function') {
+    return customToString(fn);
+  }
+  var str = fn.toString();
+  var match = str.match(/^[^{]*{|^[^=]*=>/);
+  var start = match ? match[0] : '<function> ';
+  var end = str[str.length - 1] === '}' ? '}' : '';
+  return start.replace(/\r\n|\n/g, ' ').replace(/\s+/g, ' ') + ' /* ... */ ' + end;
+};
+
+exports.restore = function restore(obj, root) {
+  var type = obj[0];
+  var rest = obj.slice(1);
+  switch(type) {
+    case '$':
+      return pathGetter(root, obj);
+    case 'r':
+      var comma = rest.indexOf(',');
+      var flags = rest.slice(0, comma);
+      var source = rest.slice(comma + 1);
+      return RegExp(source, flags);
+    case 'd':
+      return new Date(+rest);
+    case 'f':
+      var fn = function() { throw new Error("can't run jsan parsed function") };
+      fn.toString = function() { return rest; };
+      return fn;
+    case 'u':
+      return undefined;
+    case 'e':
+      var error = new Error(rest);
+      error.stack = 'Stack is unavailable for jsan parsed errors';
+      return error;
+    case 's':
+      return Symbol(rest);
+    case 'g':
+      return Symbol.for(rest);
+    case 'm':
+      return new Map(jsan.parse(rest));
+    case 'l':
+      return new Set(jsan.parse(rest));
+    case 'n':
+      return NaN;
+    case 'i':
+      return Infinity;
+    case 'y':
+      return -Infinity;
+    default:
+      console.warn('unknown type', obj);
+      return obj;
+  }
+}
+
+
+/***/ }),
+/* 237 */
+/*!*****************************************************!*\
+  !*** ../node_modules/socketcluster-client/index.js ***!
+  \*****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var SCSocket = __webpack_require__(/*! ./lib/scsocket */ 81);
+var SCSocketCreator = __webpack_require__(/*! ./lib/scsocketcreator */ 254);
+
+module.exports.SCSocketCreator = SCSocketCreator;
+module.exports.SCSocket = SCSocket;
+
+module.exports.SCEmitter = __webpack_require__(/*! sc-emitter */ 30).SCEmitter;
+
+module.exports.connect = function (options) {
+  return SCSocketCreator.connect(options);
+};
+
+module.exports.destroy = function (options) {
+  return SCSocketCreator.destroy(options);
+};
+
+module.exports.connections = SCSocketCreator.connections;
+
+module.exports.version = '5.5.2';
+
+
+/***/ }),
+/* 238 */
+/*!****************************************!*\
+  !*** ../node_modules/ieee754/index.js ***!
+  \****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = nBytes * 8 - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = nBytes * 8 - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = (value * c - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+
+/***/ }),
+/* 239 */
+/*!****************************************!*\
+  !*** ../node_modules/isarray/index.js ***!
+  \****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+/* 240 */
+/*!**************************************************************************!*\
+  !*** ../node_modules/sc-emitter/node_modules/component-emitter/index.js ***!
+  \**************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+
+/**
+ * Expose `Emitter`.
+ */
+
+module.exports = Emitter;
+
+/**
+ * Initialize a new `Emitter`.
+ *
+ * @api public
+ */
+
+function Emitter(obj) {
+  if (obj) return mixin(obj);
+};
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+  for (var key in Emitter.prototype) {
+    obj[key] = Emitter.prototype[key];
+  }
+  return obj;
+}
+
+/**
+ * Listen on the given `event` with `fn`.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on =
+Emitter.prototype.addEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+
+/**
+ * Adds an `event` listener that will be invoked a single
+ * time then automatically removed.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function(event, fn){
+  function on() {
+    this.off(event, on);
+    fn.apply(this, arguments);
+  }
+
+  on.fn = fn;
+  this.on(event, on);
+  return this;
+};
+
+/**
+ * Remove the given callback for `event` or all
+ * registered callbacks.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off =
+Emitter.prototype.removeListener =
+Emitter.prototype.removeAllListeners =
+Emitter.prototype.removeEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+
+  // all
+  if (0 == arguments.length) {
+    this._callbacks = {};
+    return this;
+  }
+
+  // specific event
+  var callbacks = this._callbacks['$' + event];
+  if (!callbacks) return this;
+
+  // remove all handlers
+  if (1 == arguments.length) {
+    delete this._callbacks['$' + event];
+    return this;
+  }
+
+  // remove specific handler
+  var cb;
+  for (var i = 0; i < callbacks.length; i++) {
+    cb = callbacks[i];
+    if (cb === fn || cb.fn === fn) {
+      callbacks.splice(i, 1);
+      break;
+    }
+  }
+  return this;
+};
+
+/**
+ * Emit `event` with the given args.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.emit = function(event){
+  this._callbacks = this._callbacks || {};
+  var args = [].slice.call(arguments, 1)
+    , callbacks = this._callbacks['$' + event];
+
+  if (callbacks) {
+    callbacks = callbacks.slice(0);
+    for (var i = 0, len = callbacks.length; i < len; ++i) {
+      callbacks[i].apply(this, args);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return array of callbacks for `event`.
+ *
+ * @param {String} event
+ * @return {Array}
+ * @api public
+ */
+
+Emitter.prototype.listeners = function(event){
+  this._callbacks = this._callbacks || {};
+  return this._callbacks['$' + event] || [];
+};
+
+/**
+ * Check if this emitter has `event` handlers.
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function(event){
+  return !! this.listeners(event).length;
+};
+
+
+/***/ }),
+/* 241 */
+/*!**************************************************!*\
+  !*** ../node_modules/sc-emitter/objectcreate.js ***!
+  \**************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+module.exports.create = (function () {
+  function F() {};
+
+  return function (o) {
+    if (arguments.length != 1) {
+      throw new Error('Object.create implementation only accepts one parameter.');
+    }
+    F.prototype = o;
+    return new F();
+  }
+})();
+
+/***/ }),
+/* 242 */
+/*!*******************************************!*\
+  !*** ../node_modules/sc-channel/index.js ***!
+  \*******************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var SCEmitter = __webpack_require__(/*! sc-emitter */ 30).SCEmitter;
+
+var SCChannel = function (name, client, options) {
+  var self = this;
+
+  SCEmitter.call(this);
+
+  this.PENDING = 'pending';
+  this.SUBSCRIBED = 'subscribed';
+  this.UNSUBSCRIBED = 'unsubscribed';
+
+  this.name = name;
+  this.state = this.UNSUBSCRIBED;
+  this.client = client;
+
+  this.options = options || {};
+  this.setOptions(this.options);
+};
+
+SCChannel.prototype = Object.create(SCEmitter.prototype);
+
+SCChannel.prototype.setOptions = function (options) {
+  if (!options) {
+    options = {};
+  }
+  this.waitForAuth = options.waitForAuth || false;
+  if (options.data !== undefined) {
+    this.data = options.data;
+  }
+};
+
+SCChannel.prototype.getState = function () {
+  return this.state;
+};
+
+SCChannel.prototype.subscribe = function (options) {
+  this.client.subscribe(this.name, options);
+};
+
+SCChannel.prototype.unsubscribe = function () {
+  this.client.unsubscribe(this.name);
+};
+
+SCChannel.prototype.isSubscribed = function (includePending) {
+  return this.client.isSubscribed(this.name, includePending);
+};
+
+SCChannel.prototype.publish = function (data, callback) {
+  this.client.publish(this.name, data, callback);
+};
+
+SCChannel.prototype.watch = function (handler) {
+  this.client.watch(this.name, handler);
+};
+
+SCChannel.prototype.unwatch = function (handler) {
+  this.client.unwatch(this.name, handler);
+};
+
+SCChannel.prototype.watchers = function () {
+  return this.client.watchers(this.name);
+};
+
+SCChannel.prototype.destroy = function () {
+  this.client.destroyChannel(this.name);
+};
+
+module.exports.SCChannel = SCChannel;
+
+
+/***/ }),
+/* 243 */
+/*!********************************************!*\
+  !*** ../node_modules/sc-errors/decycle.js ***!
+  \********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports) {
+
+// Based on https://github.com/dscape/cycle/blob/master/cycle.js
+
+module.exports = function decycle(object) {
+// Make a deep copy of an object or array, assuring that there is at most
+// one instance of each object or array in the resulting structure. The
+// duplicate references (which might be forming cycles) are replaced with
+// an object of the form
+//      {$ref: PATH}
+// where the PATH is a JSONPath string that locates the first occurance.
+// So,
+//      var a = [];
+//      a[0] = a;
+//      return JSON.stringify(JSON.decycle(a));
+// produces the string '[{"$ref":"$"}]'.
+
+// JSONPath is used to locate the unique object. $ indicates the top level of
+// the object or array. [NUMBER] or [STRING] indicates a child member or
+// property.
+
+    var objects = [],   // Keep a reference to each unique object or array
+        paths = [];     // Keep the path to each unique object or array
+
+    return (function derez(value, path) {
+
+// The derez recurses through the object, producing the deep copy.
+
+        var i,          // The loop counter
+            name,       // Property name
+            nu;         // The new object or array
+
+// typeof null === 'object', so go on if this value is really an object but not
+// one of the weird builtin objects.
+
+        if (typeof value === 'object' && value !== null &&
+                !(value instanceof Boolean) &&
+                !(value instanceof Date)    &&
+                !(value instanceof Number)  &&
+                !(value instanceof RegExp)  &&
+                !(value instanceof String)) {
+
+// If the value is an object or array, look to see if we have already
+// encountered it. If so, return a $ref/path object. This is a hard way,
+// linear search that will get slower as the number of unique objects grows.
+
+            for (i = 0; i < objects.length; i += 1) {
+                if (objects[i] === value) {
+                    return {$ref: paths[i]};
+                }
+            }
+
+// Otherwise, accumulate the unique value and its path.
+
+            objects.push(value);
+            paths.push(path);
+
+// If it is an array, replicate the array.
+
+            if (Object.prototype.toString.apply(value) === '[object Array]') {
+                nu = [];
+                for (i = 0; i < value.length; i += 1) {
+                    nu[i] = derez(value[i], path + '[' + i + ']');
+                }
+            } else {
+
+// If it is an object, replicate the object.
+
+                nu = {};
+                for (name in value) {
+                    if (Object.prototype.hasOwnProperty.call(value, name)) {
+                        nu[name] = derez(value[name],
+                            path + '[' + JSON.stringify(name) + ']');
+                    }
+                }
+            }
+            return nu;
+        }
+        return value;
+    }(object, '$'));
+};
+
+
+/***/ }),
+/* 244 */
+/*!********************************************************!*\
+  !*** ../node_modules/socketcluster-client/lib/auth.js ***!
+  \********************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var AuthEngine = function () {
+  this._internalStorage = {};
+};
+
+AuthEngine.prototype._isLocalStorageEnabled = function () {
+  var err;
+  try {
+    // Some browsers will throw an error here if localStorage is disabled.
+    global.localStorage;
+
+    // Safari, in Private Browsing Mode, looks like it supports localStorage but all calls to setItem
+    // throw QuotaExceededError. We're going to detect this and avoid hard to debug edge cases.
+    global.localStorage.setItem('__scLocalStorageTest', 1);
+    global.localStorage.removeItem('__scLocalStorageTest');
+  } catch (e) {
+    err = e;
+  }
+  return !err;
+};
+
+AuthEngine.prototype.saveToken = function (name, token, options, callback) {
+  if (this._isLocalStorageEnabled() && global.localStorage) {
+    global.localStorage.setItem(name, token);
+  } else {
+    this._internalStorage[name] = token;
+  }
+  callback && callback(null, token);
+};
+
+AuthEngine.prototype.removeToken = function (name, callback) {
+  var token;
+
+  this.loadToken(name, function (err, authToken) {
+    token = authToken;
+  });
+
+  if (this._isLocalStorageEnabled() && global.localStorage) {
+    global.localStorage.removeItem(name);
+  }
+  delete this._internalStorage[name];
+
+  callback && callback(null, token);
+};
+
+AuthEngine.prototype.loadToken = function (name, callback) {
+  var token;
+
+  if (this._isLocalStorageEnabled() && global.localStorage) {
+    token = global.localStorage.getItem(name);
+  } else {
+    token = this._internalStorage[name] || null;
+  }
+  callback(null, token);
+};
+
+module.exports.AuthEngine = AuthEngine;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 6)))
+
+/***/ }),
+/* 245 */
+/*!*********************************************!*\
+  !*** ../node_modules/sc-formatter/index.js ***!
+  \*********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+var arrayBufferToBase64 = function (arraybuffer) {
+  var bytes = new Uint8Array(arraybuffer);
+  var len = bytes.length;
+  var base64 = '';
+
+  for (var i = 0; i < len; i += 3) {
+    base64 += base64Chars[bytes[i] >> 2];
+    base64 += base64Chars[((bytes[i] & 3) << 4) | (bytes[i + 1] >> 4)];
+    base64 += base64Chars[((bytes[i + 1] & 15) << 2) | (bytes[i + 2] >> 6)];
+    base64 += base64Chars[bytes[i + 2] & 63];
+  }
+
+  if ((len % 3) === 2) {
+    base64 = base64.substring(0, base64.length - 1) + '=';
+  } else if (len % 3 === 1) {
+    base64 = base64.substring(0, base64.length - 2) + '==';
+  }
+
+  return base64;
+};
+
+var binaryToBase64Replacer = function (key, value) {
+  if (global.ArrayBuffer && value instanceof global.ArrayBuffer) {
+    return {
+      base64: true,
+      data: arrayBufferToBase64(value)
+    };
+  } else if (global.Buffer) {
+    if (value instanceof global.Buffer){
+      return {
+        base64: true,
+        data: value.toString('base64')
+      };
+    }
+    // Some versions of Node.js convert Buffers to Objects before they are passed to
+    // the replacer function - Because of this, we need to rehydrate Buffers
+    // before we can convert them to base64 strings.
+    if (value && value.type === 'Buffer' && Array.isArray(value.data)) {
+      var rehydratedBuffer;
+      if (global.Buffer.from) {
+        rehydratedBuffer = global.Buffer.from(value.data);
+      } else {
+        rehydratedBuffer = new global.Buffer(value.data);
+      }
+      return {
+        base64: true,
+        data: rehydratedBuffer.toString('base64')
+      };
+    }
+  }
+  return value;
+};
+
+// Decode the data which was transmitted over the wire to a JavaScript Object in a format which SC understands.
+// See encode function below for more details.
+module.exports.decode = function (input) {
+  if (input == null) {
+   return null;
+  }
+  // Leave ping or pong message as is
+  if (input === '#1' || input === '#2') {
+    return input;
+  }
+  var message = input.toString();
+
+  try {
+    return JSON.parse(message);
+  } catch (err) {}
+  return message;
+};
+
+// Encode a raw JavaScript object (which is in the SC protocol format) into a format for
+// transfering it over the wire. In this case, we just convert it into a simple JSON string.
+// If you want to create your own custom codec, you can encode the object into any format
+// (e.g. binary ArrayBuffer or string with any kind of compression) so long as your decode
+// function is able to rehydrate that object back into its original JavaScript Object format
+// (which adheres to the SC protocol).
+// See https://github.com/SocketCluster/socketcluster/blob/master/socketcluster-protocol.md
+// for details about the SC protocol.
+module.exports.encode = function (object) {
+  // Leave ping or pong message as is
+  if (object === '#1' || object === '#2') {
+    return object;
+  }
+  return JSON.stringify(object, binaryToBase64Replacer);
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 6)))
+
+/***/ }),
+/* 246 */
+/*!***************************************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/socketcluster-client/lib/sctransport.js ***!
   \***************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){(function(e){var r,o,i=n(/*! sc-emitter */33).SCEmitter,a=n(/*! ./response */91).Response,s=n(/*! querystring */92);e.WebSocket?(r=e.WebSocket,o=function(t,e){return new r(t)}):(r=n(/*! ws */270),o=function(t,e){return new r(t,null,e)});var u=n(/*! sc-errors */34),c=u.TimeoutError,l=function(t,e,n){this.state=this.CLOSED,this.auth=t,this.codec=e,this.options=n,this.connectTimeout=n.connectTimeout,this.pingTimeout=n.ackTimeout,this.callIdGenerator=n.callIdGenerator,this._pingTimeoutTicker=null,this._callbackMap={},this.open()};l.prototype=Object.create(i.prototype),l.CONNECTING=l.prototype.CONNECTING="connecting",l.OPEN=l.prototype.OPEN="open",l.CLOSED=l.prototype.CLOSED="closed",l.prototype.uri=function(){var t=this.options.query||{},e=this.options.secure?"wss":"ws";this.options.timestampRequests&&(t[this.options.timestampParam]=(new Date).getTime()),t=s.encode(t),t.length&&(t="?"+t);var n;if(this.options.host)n=this.options.host;else{var r="";this.options.port&&("wss"==e&&443!=this.options.port||"ws"==e&&80!=this.options.port)&&(r=":"+this.options.port),n=this.options.hostname+r}return e+"://"+n+this.options.path+t},l.prototype.open=function(){var t=this;this.state=this.CONNECTING;var e=this.uri(),n=o(e,this.options);n.binaryType=this.options.binaryType,this.socket=n,n.onopen=function(){t._onOpen()},n.onclose=function(e){var n;n=null==e.code?1005:e.code,t._onClose(n,e.reason)},n.onmessage=function(e,n){t._onMessage(e.data)},n.onerror=function(e){t.state===t.CONNECTING&&t._onClose(1006)},this._connectTimeoutRef=setTimeout(function(){t._onClose(4007),t.socket.close(4007)},this.connectTimeout)},l.prototype._onOpen=function(){var t=this;clearTimeout(this._connectTimeoutRef),this._resetPingTimeout(),this._handshake(function(e,n){e?(t._onError(e),t._onClose(4003),t.socket.close(4003)):(t.state=t.OPEN,i.prototype.emit.call(t,"open",n),t._resetPingTimeout())})},l.prototype._handshake=function(t){var e=this;this.auth.loadToken(this.options.authTokenName,function(n,r){if(n)t(n);else{var o={force:!0};e.emit("#handshake",{authToken:r},o,function(e,n){n&&(n.authToken=r,n.authError&&(n.authError=u.hydrateError(n.authError))),t(e,n)})}})},l.prototype._onClose=function(t,e){delete this.socket.onopen,delete this.socket.onclose,delete this.socket.onmessage,delete this.socket.onerror,clearTimeout(this._connectTimeoutRef),this.state==this.OPEN?(this.state=this.CLOSED,i.prototype.emit.call(this,"close",t,e)):this.state==this.CONNECTING&&(this.state=this.CLOSED,i.prototype.emit.call(this,"openAbort",t,e))},l.prototype._onMessage=function(t){i.prototype.emit.call(this,"event","message",t);var e=this.decode(t);if("#1"==e)this._resetPingTimeout(),this.socket.readyState==this.socket.OPEN&&this.sendObject("#2");else{var n=e.event;if(n){var r=new a(this,e.cid);i.prototype.emit.call(this,"event",n,e.data,r)}else if(null!=e.rid){var o=this._callbackMap[e.rid];if(o&&(clearTimeout(o.timeout),delete this._callbackMap[e.rid],o.callback)){var s=u.hydrateError(e.error);o.callback(s,e.data)}}else i.prototype.emit.call(this,"event","raw",e)}},l.prototype._onError=function(t){i.prototype.emit.call(this,"error",t)},l.prototype._resetPingTimeout=function(){var t=this;(new Date).getTime();clearTimeout(this._pingTimeoutTicker),this._pingTimeoutTicker=setTimeout(function(){t._onClose(4e3),t.socket.close(4e3)},this.pingTimeout)},l.prototype.getBytesReceived=function(){return this.socket.bytesReceived},l.prototype.close=function(t,e){if(t=t||1e3,this.state==this.OPEN){var n={code:t,data:e};this.emit("#disconnect",n),this._onClose(t,e),this.socket.close(t)}else this.state==this.CONNECTING&&(this._onClose(t,e),this.socket.close(t))},l.prototype.emitObject=function(t){var e={event:t.event,data:t.data};return t.callback&&(e.cid=t.cid=this.callIdGenerator(),this._callbackMap[t.cid]=t),this.sendObject(e),t.cid||null},l.prototype._handleEventAckTimeout=function(t){var e="Event response for '"+t.event+"' timed out",n=new c(e);t.cid&&delete this._callbackMap[t.cid];var r=t.callback;delete t.callback,r.call(t,n,t)},l.prototype.emit=function(t,e,n,r){var o,i,a=this;r?(i=n,o=r):n instanceof Function?(i={},o=n):i=n;var s={event:t,data:e,callback:o};o&&!i.noTimeout&&(s.timeout=setTimeout(function(){a._handleEventAckTimeout(s)},this.options.ackTimeout));var u=null;return(this.state==this.OPEN||i.force)&&(u=this.emitObject(s)),u},l.prototype.cancelPendingResponse=function(t){delete this._callbackMap[t]},l.prototype.decode=function(t){return this.codec.decode(t)},l.prototype.encode=function(t){return this.codec.encode(t)},l.prototype.send=function(t){this.socket.readyState!=this.socket.OPEN?this._onClose(1005):this.socket.send(t)},l.prototype.serializeObject=function(t){var e,n;try{e=this.encode(t)}catch(t){n=t,this._onError(n)}return n?null:e},l.prototype.sendObject=function(t){var e=this.serializeObject(t);null!=e&&this.send(e)},t.exports.SCTransport=l}).call(e,n(/*! ./../../webpack/buildin/global.js */7))},/*!*************************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var SCEmitter = __webpack_require__(/*! sc-emitter */ 30).SCEmitter;
+var Response = __webpack_require__(/*! ./response */ 83).Response;
+var querystring = __webpack_require__(/*! querystring */ 84);
+var WebSocket;
+var createWebSocket;
+
+if (global.WebSocket) {
+  WebSocket = global.WebSocket;
+  createWebSocket = function (uri, options) {
+    return new WebSocket(uri);
+  };
+} else {
+  WebSocket = __webpack_require__(/*! ws */ 249);
+  createWebSocket = function (uri, options) {
+    return new WebSocket(uri, null, options);
+  };
+}
+
+var scErrors = __webpack_require__(/*! sc-errors */ 31);
+var TimeoutError = scErrors.TimeoutError;
+
+
+var SCTransport = function (authEngine, codecEngine, options) {
+  this.state = this.CLOSED;
+  this.auth = authEngine;
+  this.codec = codecEngine;
+  this.options = options;
+  this.connectTimeout = options.connectTimeout;
+  this.pingTimeout = options.ackTimeout;
+  this.callIdGenerator = options.callIdGenerator;
+
+  this._pingTimeoutTicker = null;
+  this._callbackMap = {};
+
+  this.open();
+};
+
+SCTransport.prototype = Object.create(SCEmitter.prototype);
+
+SCTransport.CONNECTING = SCTransport.prototype.CONNECTING = 'connecting';
+SCTransport.OPEN = SCTransport.prototype.OPEN = 'open';
+SCTransport.CLOSED = SCTransport.prototype.CLOSED = 'closed';
+
+SCTransport.prototype.uri = function () {
+  var query = this.options.query || {};
+  var schema = this.options.secure ? 'wss' : 'ws';
+
+  if (this.options.timestampRequests) {
+    query[this.options.timestampParam] = (new Date()).getTime();
+  }
+
+  query = querystring.encode(query);
+
+  if (query.length) {
+    query = '?' + query;
+  }
+
+  var host;
+  if (this.options.host) {
+    host = this.options.host;
+  } else {
+    var port = '';
+
+    if (this.options.port && ((schema == 'wss' && this.options.port != 443)
+      || (schema == 'ws' && this.options.port != 80))) {
+      port = ':' + this.options.port;
+    }
+    host = this.options.hostname + port;
+  }
+
+  return schema + '://' + host + this.options.path + query;
+};
+
+SCTransport.prototype.open = function () {
+  var self = this;
+
+  this.state = this.CONNECTING;
+  var uri = this.uri();
+
+  var wsSocket = createWebSocket(uri, this.options);
+  wsSocket.binaryType = this.options.binaryType;
+  this.socket = wsSocket;
+
+  wsSocket.onopen = function () {
+    self._onOpen();
+  };
+
+  wsSocket.onclose = function (event) {
+    var code;
+    if (event.code == null) {
+      // This is to handle an edge case in React Native whereby
+      // event.code is undefined when the mobile device is locked.
+      // TODO: This is not perfect since this condition could also apply to
+      // an abnormal close (no close control frame) which would be a 1006.
+      code = 1005;
+    } else {
+      code = event.code;
+    }
+    self._onClose(code, event.reason);
+  };
+
+  wsSocket.onmessage = function (message, flags) {
+    self._onMessage(message.data);
+  };
+
+  wsSocket.onerror = function (error) {
+    // The onclose event will be called automatically after the onerror event
+    // if the socket is connected - Otherwise, if it's in the middle of
+    // connecting, we want to close it manually with a 1006 - This is necessary
+    // to prevent inconsistent behavior when running the client in Node.js
+    // vs in a browser.
+
+    if (self.state === self.CONNECTING) {
+      self._onClose(1006);
+    }
+  };
+
+  this._connectTimeoutRef = setTimeout(function () {
+    self._onClose(4007);
+    self.socket.close(4007);
+  }, this.connectTimeout);
+};
+
+SCTransport.prototype._onOpen = function () {
+  var self = this;
+
+  clearTimeout(this._connectTimeoutRef);
+  this._resetPingTimeout();
+
+  this._handshake(function (err, status) {
+    if (err) {
+      self._onError(err);
+      self._onClose(4003);
+      self.socket.close(4003);
+    } else {
+      self.state = self.OPEN;
+      SCEmitter.prototype.emit.call(self, 'open', status);
+      self._resetPingTimeout();
+    }
+  });
+};
+
+SCTransport.prototype._handshake = function (callback) {
+  var self = this;
+  this.auth.loadToken(this.options.authTokenName, function (err, token) {
+    if (err) {
+      callback(err);
+    } else {
+      // Don't wait for this.state to be 'open'.
+      // The underlying WebSocket (this.socket) is already open.
+      var options = {
+        force: true
+      };
+      self.emit('#handshake', {
+        authToken: token
+      }, options, function (err, status) {
+        if (status) {
+          // Add the token which was used as part of authentication attempt
+          // to the status object.
+          status.authToken = token;
+          if (status.authError) {
+            status.authError = scErrors.hydrateError(status.authError);
+          }
+        }
+        callback(err, status);
+      });
+    }
+  });
+};
+
+SCTransport.prototype._onClose = function (code, data) {
+  delete this.socket.onopen;
+  delete this.socket.onclose;
+  delete this.socket.onmessage;
+  delete this.socket.onerror;
+
+  clearTimeout(this._connectTimeoutRef);
+
+  if (this.state == this.OPEN) {
+    this.state = this.CLOSED;
+    SCEmitter.prototype.emit.call(this, 'close', code, data);
+
+  } else if (this.state == this.CONNECTING) {
+    this.state = this.CLOSED;
+    SCEmitter.prototype.emit.call(this, 'openAbort', code, data);
+  }
+};
+
+SCTransport.prototype._onMessage = function (message) {
+  SCEmitter.prototype.emit.call(this, 'event', 'message', message);
+
+  var obj = this.decode(message);
+
+  // If ping
+  if (obj == '#1') {
+    this._resetPingTimeout();
+    if (this.socket.readyState == this.socket.OPEN) {
+      this.sendObject('#2');
+    }
+  } else {
+    var event = obj.event;
+
+    if (event) {
+      var response = new Response(this, obj.cid);
+      SCEmitter.prototype.emit.call(this, 'event', event, obj.data, response);
+    } else if (obj.rid != null) {
+
+      var eventObject = this._callbackMap[obj.rid];
+      if (eventObject) {
+        clearTimeout(eventObject.timeout);
+        delete this._callbackMap[obj.rid];
+
+        if (eventObject.callback) {
+          var rehydratedError = scErrors.hydrateError(obj.error);
+          eventObject.callback(rehydratedError, obj.data);
+        }
+      }
+    } else {
+      SCEmitter.prototype.emit.call(this, 'event', 'raw', obj);
+    }
+  }
+};
+
+SCTransport.prototype._onError = function (err) {
+  SCEmitter.prototype.emit.call(this, 'error', err);
+};
+
+SCTransport.prototype._resetPingTimeout = function () {
+  var self = this;
+
+  var now = (new Date()).getTime();
+  clearTimeout(this._pingTimeoutTicker);
+
+  this._pingTimeoutTicker = setTimeout(function () {
+    self._onClose(4000);
+    self.socket.close(4000);
+  }, this.pingTimeout);
+};
+
+SCTransport.prototype.getBytesReceived = function () {
+  return this.socket.bytesReceived;
+};
+
+SCTransport.prototype.close = function (code, data) {
+  code = code || 1000;
+
+  if (this.state == this.OPEN) {
+    var packet = {
+      code: code,
+      data: data
+    };
+    this.emit('#disconnect', packet);
+
+    this._onClose(code, data);
+    this.socket.close(code);
+
+  } else if (this.state == this.CONNECTING) {
+    this._onClose(code, data);
+    this.socket.close(code);
+  }
+};
+
+SCTransport.prototype.emitObject = function (eventObject) {
+  var simpleEventObject = {
+    event: eventObject.event,
+    data: eventObject.data
+  };
+
+  if (eventObject.callback) {
+    simpleEventObject.cid = eventObject.cid = this.callIdGenerator();
+    this._callbackMap[eventObject.cid] = eventObject;
+  }
+
+  this.sendObject(simpleEventObject);
+  return eventObject.cid || null;
+};
+
+SCTransport.prototype._handleEventAckTimeout = function (eventObject) {
+  var errorMessage = "Event response for '" + eventObject.event + "' timed out";
+  var error = new TimeoutError(errorMessage);
+
+  if (eventObject.cid) {
+    delete this._callbackMap[eventObject.cid];
+  }
+  var callback = eventObject.callback;
+  delete eventObject.callback;
+  callback.call(eventObject, error, eventObject);
+};
+
+// The last two optional arguments (a and b) can be options and/or callback
+SCTransport.prototype.emit = function (event, data, a, b) {
+  var self = this;
+
+  var callback, options;
+
+  if (b) {
+    options = a;
+    callback = b;
+  } else {
+    if (a instanceof Function) {
+      options = {};
+      callback = a;
+    } else {
+      options = a;
+    }
+  }
+
+  var eventObject = {
+    event: event,
+    data: data,
+    callback: callback
+  };
+
+  if (callback && !options.noTimeout) {
+    eventObject.timeout = setTimeout(function () {
+      self._handleEventAckTimeout(eventObject);
+    }, this.options.ackTimeout);
+  }
+
+  var cid = null;
+  if (this.state == this.OPEN || options.force) {
+    cid = this.emitObject(eventObject);
+  }
+  return cid;
+};
+
+SCTransport.prototype.cancelPendingResponse = function (cid) {
+  delete this._callbackMap[cid];
+};
+
+SCTransport.prototype.decode = function (message) {
+  return this.codec.decode(message);
+};
+
+SCTransport.prototype.encode = function (object) {
+  return this.codec.encode(object);
+};
+
+SCTransport.prototype.send = function (data) {
+  if (this.socket.readyState != this.socket.OPEN) {
+    this._onClose(1005);
+  } else {
+    this.socket.send(data);
+  }
+};
+
+SCTransport.prototype.serializeObject = function (object) {
+  var str, formatError;
+  try {
+    str = this.encode(object);
+  } catch (err) {
+    formatError = err;
+    this._onError(formatError);
+  }
+  if (!formatError) {
+    return str;
+  }
+  return null;
+};
+
+SCTransport.prototype.sendObject = function (object) {
+  var str = this.serializeObject(object);
+  if (str != null) {
+    this.send(str);
+  }
+};
+
+module.exports.SCTransport = SCTransport;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 6)))
+
+/***/ }),
+/* 247 */
+/*!*************************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/querystring-es3/decode.js ***!
   \*************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){"use strict";function r(t,e){return Object.prototype.hasOwnProperty.call(t,e)}t.exports=function(t,e,n,i){e=e||"&",n=n||"=";var a={};if("string"!=typeof t||0===t.length)return a;var s=/\+/g;t=t.split(e);var u=1e3;i&&"number"==typeof i.maxKeys&&(u=i.maxKeys);var c=t.length;u>0&&c>u&&(c=u);for(var l=0;l<c;++l){var p,f,h,d,y=t[l].replace(s,"%20"),m=y.indexOf(n);m>=0?(p=y.substr(0,m),f=y.substr(m+1)):(p=y,f=""),h=decodeURIComponent(p),d=decodeURIComponent(f),r(a,h)?o(a[h])?a[h].push(d):a[h]=[a[h],d]:a[h]=d}return a};var o=Array.isArray||function(t){return"[object Array]"===Object.prototype.toString.call(t)}},/*!*************************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+
+/***/ }),
+/* 248 */
+/*!*************************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/querystring-es3/encode.js ***!
   \*************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){"use strict";function r(t,e){if(t.map)return t.map(e);for(var n=[],r=0;r<t.length;r++)n.push(e(t[r],r));return n}var o=function(t){switch(typeof t){case"string":return t;case"boolean":return t?"true":"false";case"number":return isFinite(t)?t:"";default:return""}};t.exports=function(t,e,n,s){return e=e||"&",n=n||"=",null===t&&(t=void 0),"object"==typeof t?r(a(t),function(a){var s=encodeURIComponent(o(a))+n;return i(t[a])?r(t[a],function(t){return s+encodeURIComponent(o(t))}).join(e):s+encodeURIComponent(o(t[a]))}).join(e):s?encodeURIComponent(o(s))+n+encodeURIComponent(o(t)):""};var i=Array.isArray||function(t){return"[object Array]"===Object.prototype.toString.call(t)},a=Object.keys||function(t){var e=[];for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&e.push(n);return e}},/*!**************************************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var stringifyPrimitive = function(v) {
+  switch (typeof v) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function(obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if (typeof obj === 'object') {
+    return map(objectKeys(obj), function(k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (isArray(obj[k])) {
+        return map(obj[k], function(v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+         encodeURIComponent(stringifyPrimitive(obj));
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+function map (xs, f) {
+  if (xs.map) return xs.map(f);
+  var res = [];
+  for (var i = 0; i < xs.length; i++) {
+    res.push(f(xs[i], i));
+  }
+  return res;
+}
+
+var objectKeys = Object.keys || function (obj) {
+  var res = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+  }
+  return res;
+};
+
+
+/***/ }),
+/* 249 */
+/*!**************************************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/socketcluster-client/lib/ws-browser.js ***!
   \**************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e){function n(t,e,n){return e?new o(t,e):new o(t)}var r;r="undefined"!=typeof WorkerGlobalScope?self:"undefined"!=typeof window&&window||function(){return this}();var o=r.WebSocket||r.MozWebSocket;o&&(n.prototype=o.prototype),t.exports=o?n:null},/*!********************************************!*\
+=======
+/***/ (function(module, exports) {
+
+var global;
+if (typeof WorkerGlobalScope !== 'undefined') {
+  global = self;
+} else {
+  global = typeof window != 'undefined' && window || (function() { return this; })();
+}
+
+var WebSocket = global.WebSocket || global.MozWebSocket;
+
+/**
+ * WebSocket constructor.
+ *
+ * The third `opts` options object gets ignored in web browsers, since it's
+ * non-standard, and throws a TypeError if passed to the constructor.
+ * See: https://github.com/einaros/ws/issues/227
+ *
+ * @param {String} uri
+ * @param {Array} protocols (optional)
+ * @param {Object} opts (optional)
+ * @api public
+ */
+
+function ws(uri, protocols, opts) {
+  var instance;
+  if (protocols) {
+    instance = new WebSocket(uri, protocols);
+  } else {
+    instance = new WebSocket(uri);
+  }
+  return instance;
+}
+
+if (WebSocket) ws.prototype = WebSocket.prototype;
+
+module.exports = WebSocket ? ws : null;
+
+
+/***/ }),
+/* 250 */
+/*!********************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/linked-list/index.js ***!
   \********************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){"use strict";t.exports=n(/*! ./_source/linked-list.js */272)},/*!**********************************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./_source/linked-list.js */ 251);
+
+
+/***/ }),
+/* 251 */
+/*!**********************************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/linked-list/_source/linked-list.js ***!
   \**********************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){"use strict";function r(){if(arguments.length)return r.from(arguments)}function o(){}var i;i="An argument without append, prepend, or detach methods was given to `List";var a;a=r.prototype,r.of=function(){return r.from.call(this,arguments)},r.from=function(t){var e,n,r,o=new this;if(t&&(e=t.length))for(n=-1;++n<e;)null!==(r=t[n])&&void 0!==r&&o.append(r);return o},a.head=null,a.tail=null,a.toArray=function(){for(var t=this.head,e=[];t;)e.push(t),t=t.next;return e},a.prepend=function(t){if(!t)return!1;if(!t.append||!t.prepend||!t.detach)throw new Error(i+"#prepend`.");var e,n;return e=this,(n=e.head)?n.prepend(t):(t.detach(),t.list=e,e.head=t,t)},a.append=function(t){if(!t)return!1;if(!t.append||!t.prepend||!t.detach)throw new Error(i+"#append`.");var e,n,r;return e=this,(r=e.tail)?r.append(t):(n=e.head)?n.append(t):(t.detach(),t.list=e,e.head=t,t)},r.Item=o;var s=o.prototype;s.next=null,s.prev=null,s.list=null,s.detach=function(){var t=this,e=t.list,n=t.prev,r=t.next;return e?(e.tail===t&&(e.tail=n),e.head===t&&(e.head=r),e.tail===e.head&&(e.tail=null),n&&(n.next=r),r&&(r.prev=n),t.prev=t.next=t.list=null,t):t},s.prepend=function(t){if(!(t&&t.append&&t.prepend&&t.detach))throw new Error(i+"Item#prepend`.");var e=this,n=e.list,r=e.prev;return!!n&&(t.detach(),r&&(t.prev=r,r.next=t),t.next=e,t.list=n,e.prev=t,e===n.head&&(n.head=t),n.tail||(n.tail=e),t)},s.append=function(t){if(!(t&&t.append&&t.prepend&&t.detach))throw new Error(i+"Item#append`.");var e=this,n=e.list,r=e.next;return!!n&&(t.detach(),r&&(t.next=r,r.prev=t),t.prev=e,t.list=n,e.next=t,e!==n.tail&&n.tail||(n.tail=t),t)},t.exports=r},/*!*****************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Constants.
+ */
+
+var errorMessage;
+
+errorMessage = 'An argument without append, prepend, ' +
+    'or detach methods was given to `List';
+
+/**
+ * Creates a new List: A linked list is a bit like an Array, but
+ * knows nothing about how many items are in it, and knows only about its
+ * first (`head`) and last (`tail`) items. Each item (e.g. `head`, `tail`,
+ * &c.) knows which item comes before or after it (its more like the
+ * implementation of the DOM in JavaScript).
+ * @global
+ * @private
+ * @constructor
+ * @class Represents an instance of List.
+ */
+
+function List(/*items...*/) {
+    if (arguments.length) {
+        return List.from(arguments);
+    }
+}
+
+var ListPrototype;
+
+ListPrototype = List.prototype;
+
+/**
+ * Creates a new list from the arguments (each a list item) passed in.
+ * @name List.of
+ * @param {...ListItem} [items] - Zero or more items to attach.
+ * @returns {list} - A new instance of List.
+ */
+
+List.of = function (/*items...*/) {
+    return List.from.call(this, arguments);
+};
+
+/**
+ * Creates a new list from the given array-like object (each a list item)
+ * passed in.
+ * @name List.from
+ * @param {ListItem[]} [items] - The items to append.
+ * @returns {list} - A new instance of List.
+ */
+List.from = function (items) {
+    var list = new this(), length, iterator, item;
+
+    if (items && (length = items.length)) {
+        iterator = -1;
+
+        while (++iterator < length) {
+            item = items[iterator];
+
+            if (item !== null && item !== undefined) {
+                list.append(item);
+            }
+        }
+    }
+
+    return list;
+};
+
+/**
+ * List#head
+ * Default to `null`.
+ */
+ListPrototype.head = null;
+
+/**
+ * List#tail
+ * Default to `null`.
+ */
+ListPrototype.tail = null;
+
+/**
+ * Returns the list's items as an array. This does *not* detach the items.
+ * @name List#toArray
+ * @returns {ListItem[]} - An array of (still attached) ListItems.
+ */
+ListPrototype.toArray = function () {
+    var item = this.head,
+        result = [];
+
+    while (item) {
+        result.push(item);
+        item = item.next;
+    }
+
+    return result;
+};
+
+/**
+ * Prepends the given item to the list: Item will be the new first item
+ * (`head`).
+ * @name List#prepend
+ * @param {ListItem} item - The item to prepend.
+ * @returns {ListItem} - An instance of ListItem (the given item).
+ */
+ListPrototype.prepend = function (item) {
+    if (!item) {
+        return false;
+    }
+
+    if (!item.append || !item.prepend || !item.detach) {
+        throw new Error(errorMessage + '#prepend`.');
+    }
+
+    var self, head;
+
+    // Cache self.
+    self = this;
+
+    // If self has a first item, defer prepend to the first items prepend
+    // method, and return the result.
+    head = self.head;
+
+    if (head) {
+        return head.prepend(item);
+    }
+
+    // ...otherwise, there is no `head` (or `tail`) item yet.
+
+    // Detach the prependee.
+    item.detach();
+
+    // Set the prependees parent list to reference self.
+    item.list = self;
+
+    // Set self's first item to the prependee, and return the item.
+    self.head = item;
+
+    return item;
+};
+
+/**
+ * Appends the given item to the list: Item will be the new last item (`tail`)
+ * if the list had a first item, and its first item (`head`) otherwise.
+ * @name List#append
+ * @param {ListItem} item - The item to append.
+ * @returns {ListItem} - An instance of ListItem (the given item).
+ */
+
+ListPrototype.append = function (item) {
+    if (!item) {
+        return false;
+    }
+
+    if (!item.append || !item.prepend || !item.detach) {
+        throw new Error(errorMessage + '#append`.');
+    }
+
+    var self, head, tail;
+
+    // Cache self.
+    self = this;
+
+    // If self has a last item, defer appending to the last items append
+    // method, and return the result.
+    tail = self.tail;
+
+    if (tail) {
+        return tail.append(item);
+    }
+
+    // If self has a first item, defer appending to the first items append
+    // method, and return the result.
+    head = self.head;
+
+    if (head) {
+        return head.append(item);
+    }
+
+    // ...otherwise, there is no `tail` or `head` item yet.
+
+    // Detach the appendee.
+    item.detach();
+
+    // Set the appendees parent list to reference self.
+    item.list = self;
+
+    // Set self's first item to the appendee, and return the item.
+    self.head = item;
+
+    return item;
+};
+
+/**
+ * Creates a new ListItem: A linked list item is a bit like DOM node:
+ * It knows only about its "parent" (`list`), the item before it (`prev`),
+ * and the item after it (`next`).
+ * @global
+ * @private
+ * @constructor
+ * @class Represents an instance of ListItem.
+ */
+
+function ListItem() {}
+
+List.Item = ListItem;
+
+var ListItemPrototype = ListItem.prototype;
+
+ListItemPrototype.next = null;
+
+ListItemPrototype.prev = null;
+
+ListItemPrototype.list = null;
+
+/**
+ * Detaches the item operated on from its parent list.
+ * @name ListItem#detach
+ * @returns {ListItem} - The item operated on.
+ */
+ListItemPrototype.detach = function () {
+    // Cache self, the parent list, and the previous and next items.
+    var self = this,
+        list = self.list,
+        prev = self.prev,
+        next = self.next;
+
+    // If the item is already detached, return self.
+    if (!list) {
+        return self;
+    }
+
+    // If self is the last item in the parent list, link the lists last item
+    // to the previous item.
+    if (list.tail === self) {
+        list.tail = prev;
+    }
+
+    // If self is the first item in the parent list, link the lists first item
+    // to the next item.
+    if (list.head === self) {
+        list.head = next;
+    }
+
+    // If both the last and first items in the parent list are the same,
+    // remove the link to the last item.
+    if (list.tail === list.head) {
+        list.tail = null;
+    }
+
+    // If a previous item exists, link its next item to selfs next item.
+    if (prev) {
+        prev.next = next;
+    }
+
+    // If a next item exists, link its previous item to selfs previous item.
+    if (next) {
+        next.prev = prev;
+    }
+
+    // Remove links from self to both the next and previous items, and to the
+    // parent list.
+    self.prev = self.next = self.list = null;
+
+    // Return self.
+    return self;
+};
+
+/**
+ * Prepends the given item *before* the item operated on.
+ * @name ListItem#prepend
+ * @param {ListItem} item - The item to prepend.
+ * @returns {ListItem} - The item operated on, or false when that item is not
+ * attached.
+ */
+ListItemPrototype.prepend = function (item) {
+    if (!item || !item.append || !item.prepend || !item.detach) {
+        throw new Error(errorMessage + 'Item#prepend`.');
+    }
+
+    // Cache self, the parent list, and the previous item.
+    var self = this,
+        list = self.list,
+        prev = self.prev;
+
+    // If self is detached, return false.
+    if (!list) {
+        return false;
+    }
+
+    // Detach the prependee.
+    item.detach();
+
+    // If self has a previous item...
+    if (prev) {
+        // ...link the prependees previous item, to selfs previous item.
+        item.prev = prev;
+
+        // ...link the previous items next item, to self.
+        prev.next = item;
+    }
+
+    // Set the prependees next item to self.
+    item.next = self;
+
+    // Set the prependees parent list to selfs parent list.
+    item.list = list;
+
+    // Set the previous item of self to the prependee.
+    self.prev = item;
+
+    // If self is the first item in the parent list, link the lists first item
+    // to the prependee.
+    if (self === list.head) {
+        list.head = item;
+    }
+
+    // If the the parent list has no last item, link the lists last item to
+    // self.
+    if (!list.tail) {
+        list.tail = self;
+    }
+
+    // Return the prependee.
+    return item;
+};
+
+/**
+ * Appends the given item *after* the item operated on.
+ * @name ListItem#append
+ * @param {ListItem} item - The item to append.
+ * @returns {ListItem} - The item operated on, or false when that item is not
+ * attached.
+ */
+ListItemPrototype.append = function (item) {
+    // If item is falsey, return false.
+    if (!item || !item.append || !item.prepend || !item.detach) {
+        throw new Error(errorMessage + 'Item#append`.');
+    }
+
+    // Cache self, the parent list, and the next item.
+    var self = this,
+        list = self.list,
+        next = self.next;
+
+    // If self is detached, return false.
+    if (!list) {
+        return false;
+    }
+
+    // Detach the appendee.
+    item.detach();
+
+    // If self has a next item...
+    if (next) {
+        // ...link the appendees next item, to selfs next item.
+        item.next = next;
+
+        // ...link the next items previous item, to the appendee.
+        next.prev = item;
+    }
+
+    // Set the appendees previous item to self.
+    item.prev = self;
+
+    // Set the appendees parent list to selfs parent list.
+    item.list = list;
+
+    // Set the next item of self to the appendee.
+    self.next = item;
+
+    // If the the parent list has no last item or if self is the parent lists
+    // last item, link the lists last item to the appendee.
+    if (self === list.tail || !list.tail) {
+        list.tail = item;
+    }
+
+    // Return the appendee.
+    return item;
+};
+
+/**
+ * Expose `List`.
+ */
+
+module.exports = List;
+
+
+/***/ }),
+/* 252 */
+/*!*****************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/base-64/base64.js ***!
   \*****************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){(function(t,r){var o;!function(i){var a="object"==typeof e&&e,s=("object"==typeof t&&t&&t.exports,"object"==typeof r&&r);var u=function(t){this.message=t};u.prototype=new Error,u.prototype.name="InvalidCharacterError";var c=function(t){throw new u(t)},l="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",p=/[\t\n\f\r ]/g,f=function(t){t=String(t).replace(p,"");var e=t.length;e%4==0&&(t=t.replace(/==?$/,""),e=t.length),(e%4==1||/[^+a-zA-Z0-9\/]/.test(t))&&c("Invalid character: the string to be decoded is not correctly encoded.");for(var n,r,o=0,i="",a=-1;++a<e;)r=l.indexOf(t.charAt(a)),n=o%4?64*n+r:r,o++%4&&(i+=String.fromCharCode(255&n>>(-2*o&6)));return i},h=function(t){t=String(t),/[^\0-\xFF]/.test(t)&&c("The string to be encoded contains characters outside of the Latin1 range.");for(var e,n,r,o,i=t.length%3,a="",s=-1,u=t.length-i;++s<u;)e=t.charCodeAt(s)<<16,n=t.charCodeAt(++s)<<8,r=t.charCodeAt(++s),o=e+n+r,a+=l.charAt(o>>18&63)+l.charAt(o>>12&63)+l.charAt(o>>6&63)+l.charAt(63&o);return 2==i?(e=t.charCodeAt(s)<<8,n=t.charCodeAt(++s),o=e+n,a+=l.charAt(o>>10)+l.charAt(o>>4&63)+l.charAt(o<<2&63)+"="):1==i&&(o=t.charCodeAt(s),a+=l.charAt(o>>2)+l.charAt(o<<4&63)+"=="),a},d={encode:h,decode:f,version:"0.1.0"};void 0!==(o=function(){return d}.call(e,n,e,t))&&(t.exports=o)}()}).call(e,n(/*! ./../webpack/buildin/module.js */83)(t),n(/*! ./../webpack/buildin/global.js */7))},/*!**************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! http://mths.be/base64 v0.1.0 by @mathias | MIT license */
+;(function(root) {
+
+	// Detect free variables `exports`.
+	var freeExports = typeof exports == 'object' && exports;
+
+	// Detect free variable `module`.
+	var freeModule = typeof module == 'object' && module &&
+		module.exports == freeExports && module;
+
+	// Detect free variable `global`, from Node.js or Browserified code, and use
+	// it as `root`.
+	var freeGlobal = typeof global == 'object' && global;
+	if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {
+		root = freeGlobal;
+	}
+
+	/*--------------------------------------------------------------------------*/
+
+	var InvalidCharacterError = function(message) {
+		this.message = message;
+	};
+	InvalidCharacterError.prototype = new Error;
+	InvalidCharacterError.prototype.name = 'InvalidCharacterError';
+
+	var error = function(message) {
+		// Note: the error messages used throughout this file match those used by
+		// the native `atob`/`btoa` implementation in Chromium.
+		throw new InvalidCharacterError(message);
+	};
+
+	var TABLE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	// http://whatwg.org/html/common-microsyntaxes.html#space-character
+	var REGEX_SPACE_CHARACTERS = /[\t\n\f\r ]/g;
+
+	// `decode` is designed to be fully compatible with `atob` as described in the
+	// HTML Standard. http://whatwg.org/html/webappapis.html#dom-windowbase64-atob
+	// The optimized base64-decoding algorithm used is based on @atk’s excellent
+	// implementation. https://gist.github.com/atk/1020396
+	var decode = function(input) {
+		input = String(input)
+			.replace(REGEX_SPACE_CHARACTERS, '');
+		var length = input.length;
+		if (length % 4 == 0) {
+			input = input.replace(/==?$/, '');
+			length = input.length;
+		}
+		if (
+			length % 4 == 1 ||
+			// http://whatwg.org/C#alphanumeric-ascii-characters
+			/[^+a-zA-Z0-9/]/.test(input)
+		) {
+			error(
+				'Invalid character: the string to be decoded is not correctly encoded.'
+			);
+		}
+		var bitCounter = 0;
+		var bitStorage;
+		var buffer;
+		var output = '';
+		var position = -1;
+		while (++position < length) {
+			buffer = TABLE.indexOf(input.charAt(position));
+			bitStorage = bitCounter % 4 ? bitStorage * 64 + buffer : buffer;
+			// Unless this is the first of a group of 4 characters…
+			if (bitCounter++ % 4) {
+				// …convert the first 8 bits to a single ASCII character.
+				output += String.fromCharCode(
+					0xFF & bitStorage >> (-2 * bitCounter & 6)
+				);
+			}
+		}
+		return output;
+	};
+
+	// `encode` is designed to be fully compatible with `btoa` as described in the
+	// HTML Standard: http://whatwg.org/html/webappapis.html#dom-windowbase64-btoa
+	var encode = function(input) {
+		input = String(input);
+		if (/[^\0-\xFF]/.test(input)) {
+			// Note: no need to special-case astral symbols here, as surrogates are
+			// matched, and the input is supposed to only contain ASCII anyway.
+			error(
+				'The string to be encoded contains characters outside of the ' +
+				'Latin1 range.'
+			);
+		}
+		var padding = input.length % 3;
+		var output = '';
+		var position = -1;
+		var a;
+		var b;
+		var c;
+		var d;
+		var buffer;
+		// Make sure any padding is handled outside of the loop.
+		var length = input.length - padding;
+
+		while (++position < length) {
+			// Read three bytes, i.e. 24 bits.
+			a = input.charCodeAt(position) << 16;
+			b = input.charCodeAt(++position) << 8;
+			c = input.charCodeAt(++position);
+			buffer = a + b + c;
+			// Turn the 24 bits into four chunks of 6 bits each, and append the
+			// matching character for each of them to the output.
+			output += (
+				TABLE.charAt(buffer >> 18 & 0x3F) +
+				TABLE.charAt(buffer >> 12 & 0x3F) +
+				TABLE.charAt(buffer >> 6 & 0x3F) +
+				TABLE.charAt(buffer & 0x3F)
+			);
+		}
+
+		if (padding == 2) {
+			a = input.charCodeAt(position) << 8;
+			b = input.charCodeAt(++position);
+			buffer = a + b;
+			output += (
+				TABLE.charAt(buffer >> 10) +
+				TABLE.charAt((buffer >> 4) & 0x3F) +
+				TABLE.charAt((buffer << 2) & 0x3F) +
+				'='
+			);
+		} else if (padding == 1) {
+			buffer = input.charCodeAt(position);
+			output += (
+				TABLE.charAt(buffer >> 2) +
+				TABLE.charAt((buffer << 4) & 0x3F) +
+				'=='
+			);
+		}
+
+		return output;
+	};
+
+	var base64 = {
+		'encode': encode,
+		'decode': decode,
+		'version': '0.1.0'
+	};
+
+	// Some AMD build optimizers, like r.js, check for specific condition patterns
+	// like the following:
+	if (
+		true
+	) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+			return base64;
+		}.call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}	else if (freeExports && !freeExports.nodeType) {
+		if (freeModule) { // in Node.js or RingoJS v0.8.0+
+			freeModule.exports = base64;
+		} else { // in Narwhal or RingoJS v0.7.0-
+			for (var key in base64) {
+				base64.hasOwnProperty(key) && (freeExports[key] = base64[key]);
+			}
+		}
+	} else { // in Rhino or a web browser
+		root.base64 = base64;
+	}
+
+}(this));
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/module.js */ 75)(module), __webpack_require__(/*! ./../webpack/buildin/global.js */ 6)))
+
+/***/ }),
+/* 253 */
+/*!**************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/clone/clone.js ***!
   \**************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){(function(e){var n=function(){"use strict";function t(t,e){return null!=e&&t instanceof e}function n(r,o,i,a,p){function f(r,i){if(null===r)return null;if(0===i)return r;var m,v;if("object"!=typeof r)return r;if(t(r,u))m=new u;else if(t(r,c))m=new c;else if(t(r,l))m=new l(function(t,e){r.then(function(e){t(f(e,i-1))},function(t){e(f(t,i-1))})});else if(n.__isArray(r))m=[];else if(n.__isRegExp(r))m=new RegExp(r.source,s(r)),r.lastIndex&&(m.lastIndex=r.lastIndex);else if(n.__isDate(r))m=new Date(r.getTime());else{if(y&&e.isBuffer(r))return m=new e(r.length),r.copy(m),m;t(r,Error)?m=Object.create(r):void 0===a?(v=Object.getPrototypeOf(r),m=Object.create(v)):(m=Object.create(a),v=a)}if(o){var g=h.indexOf(r);if(-1!=g)return d[g];h.push(r),d.push(m)}t(r,u)&&r.forEach(function(t,e){var n=f(e,i-1),r=f(t,i-1);m.set(n,r)}),t(r,c)&&r.forEach(function(t){var e=f(t,i-1);m.add(e)});for(var b in r){var w;v&&(w=Object.getOwnPropertyDescriptor(v,b)),w&&null==w.set||(m[b]=f(r[b],i-1))}if(Object.getOwnPropertySymbols)for(var _=Object.getOwnPropertySymbols(r),b=0;b<_.length;b++){var E=_[b],T=Object.getOwnPropertyDescriptor(r,E);(!T||T.enumerable||p)&&(m[E]=f(r[E],i-1),T.enumerable||Object.defineProperty(m,E,{enumerable:!1}))}if(p)for(var O=Object.getOwnPropertyNames(r),b=0;b<O.length;b++){var x=O[b],T=Object.getOwnPropertyDescriptor(r,x);T&&T.enumerable||(m[x]=f(r[x],i-1),Object.defineProperty(m,x,{enumerable:!1}))}return m}"object"==typeof o&&(i=o.depth,a=o.prototype,p=o.includeNonEnumerable,o=o.circular);var h=[],d=[],y=void 0!==e;return void 0===o&&(o=!0),void 0===i&&(i=1/0),f(r,i)}function r(t){return Object.prototype.toString.call(t)}function o(t){return"object"==typeof t&&"[object Date]"===r(t)}function i(t){return"object"==typeof t&&"[object Array]"===r(t)}function a(t){return"object"==typeof t&&"[object RegExp]"===r(t)}function s(t){var e="";return t.global&&(e+="g"),t.ignoreCase&&(e+="i"),t.multiline&&(e+="m"),e}var u;try{u=Map}catch(t){u=function(){}}var c;try{c=Set}catch(t){c=function(){}}var l;try{l=Promise}catch(t){l=function(){}}return n.clonePrototype=function(t){if(null===t)return null;var e=function(){};return e.prototype=t,new e},n.__objToStr=r,n.__isDate=o,n.__isArray=i,n.__isRegExp=a,n.__getRegExpFlags=s,n}();"object"==typeof t&&t.exports&&(t.exports=n)}).call(e,n(/*! ./../buffer/index.js */90).Buffer)},/*!*******************************************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Buffer) {var clone = (function() {
+'use strict';
+
+function _instanceof(obj, type) {
+  return type != null && obj instanceof type;
+}
+
+var nativeMap;
+try {
+  nativeMap = Map;
+} catch(_) {
+  // maybe a reference error because no `Map`. Give it a dummy value that no
+  // value will ever be an instanceof.
+  nativeMap = function() {};
+}
+
+var nativeSet;
+try {
+  nativeSet = Set;
+} catch(_) {
+  nativeSet = function() {};
+}
+
+var nativePromise;
+try {
+  nativePromise = Promise;
+} catch(_) {
+  nativePromise = function() {};
+}
+
+/**
+ * Clones (copies) an Object using deep copying.
+ *
+ * This function supports circular references by default, but if you are certain
+ * there are no circular references in your object, you can save some CPU time
+ * by calling clone(obj, false).
+ *
+ * Caution: if `circular` is false and `parent` contains circular references,
+ * your program may enter an infinite loop and crash.
+ *
+ * @param `parent` - the object to be cloned
+ * @param `circular` - set to true if the object to be cloned may contain
+ *    circular references. (optional - true by default)
+ * @param `depth` - set to a number if the object is only to be cloned to
+ *    a particular depth. (optional - defaults to Infinity)
+ * @param `prototype` - sets the prototype to be used when cloning an object.
+ *    (optional - defaults to parent prototype).
+ * @param `includeNonEnumerable` - set to true if the non-enumerable properties
+ *    should be cloned as well. Non-enumerable properties on the prototype
+ *    chain will be ignored. (optional - false by default)
+*/
+function clone(parent, circular, depth, prototype, includeNonEnumerable) {
+  if (typeof circular === 'object') {
+    depth = circular.depth;
+    prototype = circular.prototype;
+    includeNonEnumerable = circular.includeNonEnumerable;
+    circular = circular.circular;
+  }
+  // maintain two arrays for circular references, where corresponding parents
+  // and children have the same index
+  var allParents = [];
+  var allChildren = [];
+
+  var useBuffer = typeof Buffer != 'undefined';
+
+  if (typeof circular == 'undefined')
+    circular = true;
+
+  if (typeof depth == 'undefined')
+    depth = Infinity;
+
+  // recurse this function so we don't reset allParents and allChildren
+  function _clone(parent, depth) {
+    // cloning null always returns null
+    if (parent === null)
+      return null;
+
+    if (depth === 0)
+      return parent;
+
+    var child;
+    var proto;
+    if (typeof parent != 'object') {
+      return parent;
+    }
+
+    if (_instanceof(parent, nativeMap)) {
+      child = new nativeMap();
+    } else if (_instanceof(parent, nativeSet)) {
+      child = new nativeSet();
+    } else if (_instanceof(parent, nativePromise)) {
+      child = new nativePromise(function (resolve, reject) {
+        parent.then(function(value) {
+          resolve(_clone(value, depth - 1));
+        }, function(err) {
+          reject(_clone(err, depth - 1));
+        });
+      });
+    } else if (clone.__isArray(parent)) {
+      child = [];
+    } else if (clone.__isRegExp(parent)) {
+      child = new RegExp(parent.source, __getRegExpFlags(parent));
+      if (parent.lastIndex) child.lastIndex = parent.lastIndex;
+    } else if (clone.__isDate(parent)) {
+      child = new Date(parent.getTime());
+    } else if (useBuffer && Buffer.isBuffer(parent)) {
+      child = new Buffer(parent.length);
+      parent.copy(child);
+      return child;
+    } else if (_instanceof(parent, Error)) {
+      child = Object.create(parent);
+    } else {
+      if (typeof prototype == 'undefined') {
+        proto = Object.getPrototypeOf(parent);
+        child = Object.create(proto);
+      }
+      else {
+        child = Object.create(prototype);
+        proto = prototype;
+      }
+    }
+
+    if (circular) {
+      var index = allParents.indexOf(parent);
+
+      if (index != -1) {
+        return allChildren[index];
+      }
+      allParents.push(parent);
+      allChildren.push(child);
+    }
+
+    if (_instanceof(parent, nativeMap)) {
+      parent.forEach(function(value, key) {
+        var keyChild = _clone(key, depth - 1);
+        var valueChild = _clone(value, depth - 1);
+        child.set(keyChild, valueChild);
+      });
+    }
+    if (_instanceof(parent, nativeSet)) {
+      parent.forEach(function(value) {
+        var entryChild = _clone(value, depth - 1);
+        child.add(entryChild);
+      });
+    }
+
+    for (var i in parent) {
+      var attrs;
+      if (proto) {
+        attrs = Object.getOwnPropertyDescriptor(proto, i);
+      }
+
+      if (attrs && attrs.set == null) {
+        continue;
+      }
+      child[i] = _clone(parent[i], depth - 1);
+    }
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(parent);
+      for (var i = 0; i < symbols.length; i++) {
+        // Don't need to worry about cloning a symbol because it is a primitive,
+        // like a number or string.
+        var symbol = symbols[i];
+        var descriptor = Object.getOwnPropertyDescriptor(parent, symbol);
+        if (descriptor && !descriptor.enumerable && !includeNonEnumerable) {
+          continue;
+        }
+        child[symbol] = _clone(parent[symbol], depth - 1);
+        if (!descriptor.enumerable) {
+          Object.defineProperty(child, symbol, {
+            enumerable: false
+          });
+        }
+      }
+    }
+
+    if (includeNonEnumerable) {
+      var allPropertyNames = Object.getOwnPropertyNames(parent);
+      for (var i = 0; i < allPropertyNames.length; i++) {
+        var propertyName = allPropertyNames[i];
+        var descriptor = Object.getOwnPropertyDescriptor(parent, propertyName);
+        if (descriptor && descriptor.enumerable) {
+          continue;
+        }
+        child[propertyName] = _clone(parent[propertyName], depth - 1);
+        Object.defineProperty(child, propertyName, {
+          enumerable: false
+        });
+      }
+    }
+
+    return child;
+  }
+
+  return _clone(parent, depth);
+}
+
+/**
+ * Simple flat clone using prototype, accepts only objects, usefull for property
+ * override on FLAT configuration object (no nested props).
+ *
+ * USE WITH CAUTION! This may not behave as you wish if you do not know how this
+ * works.
+ */
+clone.clonePrototype = function clonePrototype(parent) {
+  if (parent === null)
+    return null;
+
+  var c = function () {};
+  c.prototype = parent;
+  return new c();
+};
+
+// private utility functions
+
+function __objToStr(o) {
+  return Object.prototype.toString.call(o);
+}
+clone.__objToStr = __objToStr;
+
+function __isDate(o) {
+  return typeof o === 'object' && __objToStr(o) === '[object Date]';
+}
+clone.__isDate = __isDate;
+
+function __isArray(o) {
+  return typeof o === 'object' && __objToStr(o) === '[object Array]';
+}
+clone.__isArray = __isArray;
+
+function __isRegExp(o) {
+  return typeof o === 'object' && __objToStr(o) === '[object RegExp]';
+}
+clone.__isRegExp = __isRegExp;
+
+function __getRegExpFlags(re) {
+  var flags = '';
+  if (re.global) flags += 'g';
+  if (re.ignoreCase) flags += 'i';
+  if (re.multiline) flags += 'm';
+  return flags;
+}
+clone.__getRegExpFlags = __getRegExpFlags;
+
+return clone;
+})();
+
+if (typeof module === 'object' && module.exports) {
+  module.exports = clone;
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../buffer/index.js */ 82).Buffer))
+
+/***/ }),
+/* 254 */
+/*!*******************************************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/socketcluster-client/lib/scsocketcreator.js ***!
   \*******************************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){(function(e){function r(t){var e=t.secure?"https://":"http://",n="";if(t.query)if("string"==typeof t.query)n=t.query;else{var r=[],o=t.query;for(var i in o)o.hasOwnProperty(i)&&r.push(i+"="+o[i]);r.length&&(n="?"+r.join("&"))}var a;return a=t.host?t.host:t.hostname+":"+t.port,e+a+t.path+n}function o(){return e.location&&"https:"==location.protocol}function i(t,n){var r=null==t.secure?n:t.secure;return t.port||(e.location&&location.port?location.port:r?443:80)}function a(t){if(t=t||{},t.host&&t.port)throw new l("The host option should already include the port number in the format hostname:port - Because of this, the host and port options cannot be specified together; use the hostname option instead");var n=o(),a={port:i(t,n),hostname:e.location&&location.hostname,path:"/socketcluster/",secure:n,autoConnect:!0,autoReconnect:!0,autoProcessSubscriptions:!0,connectTimeout:2e4,ackTimeout:1e4,timestampRequests:!1,timestampParam:"t",authEngine:null,authTokenName:"socketCluster.authToken",binaryType:"arraybuffer",multiplex:!0,cloneData:!1};for(var s in t)t.hasOwnProperty(s)&&(a[s]=t[s]);var c=r(a);return!1===a.multiplex?new u(a):(p[c]?p[c].connect():p[c]=new u(a),p[c])}function s(t){t=t||{};var n=o(),a={port:i(t,n),hostname:e.location&&location.hostname,path:"/socketcluster/",secure:n};for(var s in t)t.hasOwnProperty(s)&&(a[s]=t[s]);var u=r(a),c=p[u];c&&c.disconnect(),delete p[u]}var u=n(/*! ./scsocket */89),c=n(/*! sc-errors */34),l=c.InvalidArgumentsError,p={};t.exports={connect:a,destroy:s,connections:p}}).call(e,n(/*! ./../../webpack/buildin/global.js */7))},/*!***********************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var SCSocket = __webpack_require__(/*! ./scsocket */ 81);
+var scErrors = __webpack_require__(/*! sc-errors */ 31);
+var InvalidArgumentsError = scErrors.InvalidArgumentsError;
+
+var _connections = {};
+
+function getMultiplexId(options) {
+  var protocolPrefix = options.secure ? 'https://' : 'http://';
+  var queryString = '';
+  if (options.query) {
+    if (typeof options.query == 'string') {
+      queryString = options.query;
+    } else {
+      var queryArray = [];
+      var queryMap = options.query;
+      for (var key in queryMap) {
+        if (queryMap.hasOwnProperty(key)) {
+          queryArray.push(key + '=' + queryMap[key]);
+        }
+      }
+      if (queryArray.length) {
+        queryString = '?' + queryArray.join('&');
+      }
+    }
+  }
+  var host;
+  if (options.host) {
+    host = options.host;
+  } else {
+    host = options.hostname + ':' + options.port;
+  }
+  return protocolPrefix + host + options.path + queryString;
+}
+
+function isUrlSecure() {
+  return global.location && location.protocol == 'https:';
+}
+
+function getPort(options, isSecureDefault) {
+  var isSecure = options.secure == null ? isSecureDefault : options.secure;
+  return options.port || (global.location && location.port ? location.port : isSecure ? 443 : 80);
+}
+
+function connect(options) {
+  var self = this;
+
+  options = options || {};
+
+  if (options.host && options.port) {
+    throw new InvalidArgumentsError('The host option should already include the' +
+      ' port number in the format hostname:port - Because of this, the host and port options' +
+      ' cannot be specified together; use the hostname option instead');
+  }
+
+  var isSecureDefault = isUrlSecure();
+
+  var opts = {
+    port: getPort(options, isSecureDefault),
+    hostname: global.location && location.hostname,
+    path: '/socketcluster/',
+    secure: isSecureDefault,
+    autoConnect: true,
+    autoReconnect: true,
+    autoProcessSubscriptions: true,
+    connectTimeout: 20000,
+    ackTimeout: 10000,
+    timestampRequests: false,
+    timestampParam: 't',
+    authEngine: null,
+    authTokenName: 'socketCluster.authToken',
+    binaryType: 'arraybuffer',
+    multiplex: true,
+    cloneData: false
+  };
+  for (var i in options) {
+    if (options.hasOwnProperty(i)) {
+      opts[i] = options[i];
+    }
+  }
+  var multiplexId = getMultiplexId(opts);
+  if (opts.multiplex === false) {
+    return new SCSocket(opts);
+  }
+  if (_connections[multiplexId]) {
+    _connections[multiplexId].connect();
+  } else {
+    _connections[multiplexId] = new SCSocket(opts);
+  }
+  return _connections[multiplexId];
+}
+
+function destroy(options) {
+  var self = this;
+
+  options = options || {};
+  var isSecureDefault = isUrlSecure();
+
+  var opts = {
+    port: getPort(options, isSecureDefault),
+    hostname: global.location && location.hostname,
+    path: '/socketcluster/',
+    secure: isSecureDefault
+  };
+  for (var i in options) {
+    if (options.hasOwnProperty(i)) {
+      opts[i] = options[i];
+    }
+  }
+  var multiplexId = getMultiplexId(opts);
+  var socket = _connections[multiplexId];
+  if (socket) {
+    socket.disconnect();
+  }
+  delete _connections[multiplexId];
+}
+
+module.exports = {
+  connect: connect,
+  destroy: destroy,
+  connections: _connections
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 6)))
+
+/***/ }),
+/* 255 */
+/*!***********************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/rn-host-detect/index.js ***!
   \***********************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){"use strict";function r(t){var e="undefined"!=typeof window&&window.__fbBatchedBridgeConfig&&window.__fbBatchedBridgeConfig.remoteModuleConfig;if(!Array.isArray(e)||"localhost"!==t&&"127.0.0.1"!==t)return t;var n=(e.find(o)||[])[1];if(n){return(n.ServerHost||t).split(":")[0]}return t}function o(t){return t&&("AndroidConstants"===t[0]||"PlatformConstants"===t[0])}t.exports=function(t){if("object"!=typeof __fbBatchedBridge||"localhost"!==t&&"127.0.0.1"!==t)return t;t=r(t);var e=console.warn;console.warn=function(){if(!(arguments[0]&&arguments[0].indexOf("Requiring module 'NativeModules' by name")>-1))return e.apply(console,arguments)};var n,o,i;return"undefined"!=typeof window&&window.__DEV__&&"function"==typeof window.require?(n=window.require("NativeModules"),console.warn=e,n&&(n.PlatformConstants||n.AndroidConstants)?(o=n.PlatformConstants,i=n.AndroidConstants,((o?o.ServerHost:i.ServerHost)||t).split(":")[0]):t):t}},/*!**************************************************!*\
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+ * It only for Debug Remotely mode for Android
+ * When __DEV__ === false, we can't use window.require('NativeModules')
+ */
+function getByRemoteConfig(hostname) {
+  var remoteModuleConfig = typeof window !== 'undefined' &&
+    window.__fbBatchedBridgeConfig &&
+    window.__fbBatchedBridgeConfig.remoteModuleConfig
+  if (
+    !Array.isArray(remoteModuleConfig) ||
+    hostname !== 'localhost' && hostname !== '127.0.0.1'
+  ) return hostname
+
+  var constants = (
+    remoteModuleConfig.find(getConstants) || []
+  )[1]
+  if (constants) {
+    var serverHost = constants.ServerHost || hostname
+    return serverHost.split(':')[0]
+  }
+  return hostname
+}
+
+function getConstants(config) {
+  return config && (config[0] === 'AndroidConstants' || config[0] === 'PlatformConstants')
+}
+
+/*
+ * Get React Native server IP if hostname is `localhost`
+ * On Android emulator, the IP of host is `10.0.2.2` (Genymotion: 10.0.3.2)
+ */
+module.exports = function (hostname) {
+  if (
+    typeof __fbBatchedBridge !== 'object' ||  // Not on react-native
+    hostname !== 'localhost' && hostname !== '127.0.0.1'
+  ) {
+    return hostname
+  }
+  hostname = getByRemoteConfig(hostname)
+  var originalWarn = console.warn
+  console.warn = function() {
+    if (arguments[0] && arguments[0].indexOf('Requiring module \'NativeModules\' by name') > -1) return
+    return originalWarn.apply(console, arguments)
+  }
+
+  var NativeModules
+  var PlatformConstants
+  var AndroidConstants
+  if (typeof window === 'undefined' || !window.__DEV__ || typeof window.require !== 'function') {
+    return hostname
+  }
+  NativeModules = window.require('NativeModules')
+  console.warn = originalWarn
+  if (
+    !NativeModules ||
+    (!NativeModules.PlatformConstants && !NativeModules.AndroidConstants)
+  ) {
+    return hostname
+  }
+  PlatformConstants = NativeModules.PlatformConstants
+  AndroidConstants = NativeModules.AndroidConstants
+
+  var serverHost = (PlatformConstants ?
+    PlatformConstants.ServerHost :
+    AndroidConstants.ServerHost
+  ) || hostname
+  return serverHost.split(':')[0]
+}
+
+
+/***/ }),
+/* 256 */
+/*!**************************************************!*\
+>>>>>>> Stashed changes
   !*** ../node_modules/remotedev/lib/constants.js ***!
   \**************************************************/
 /*! dynamic exports provided */
 /*! all exports used */
+<<<<<<< Updated upstream
 function(t,e,n){"use strict";e.__esModule=!0;e.defaultSocketOptions={secure:!0,hostname:"remotedev.io",port:443,autoReconnect:!0,autoReconnectOptions:{randomness:6e4}}}]);
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+var defaultSocketOptions = exports.defaultSocketOptions = {
+  secure: true,
+  hostname: 'remotedev.io',
+  port: 443,
+  autoReconnect: true,
+  autoReconnectOptions: {
+    randomness: 60000
+  }
+};
+
+/***/ })
+/******/ ]);
+>>>>>>> Stashed changes
 //# sourceMappingURL=bundle.js.map

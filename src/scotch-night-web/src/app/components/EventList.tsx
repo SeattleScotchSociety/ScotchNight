@@ -5,6 +5,8 @@ import { Button } from "reactstrap";
 import { IEvent } from "../stores/EventStore";
 import { IRootStore } from "../stores/RootStore";
 
+import * as format from "date-fns/format";
+
 interface IEventListProps { store: IRootStore; }
 
 @inject("store")
@@ -14,26 +16,36 @@ export class EventList extends React.Component<IEventListProps> {
         super(props);
     }
 
-    public render() {
-        const { events } = this.props.store.eventStore;
-        const eventElements = events.map((event) => {
-            return (<Button key={event.id} onClick={() => this.onEventSelected(event)}>{event.title}</Button>);
-        });
-
-        return (
-            <div>
-                <h3>My Events</h3>
-                {eventElements}
-            </div>
-        );
-    }
-
     private onEventSelected(event: IEvent) {
         const { scotchNightStore, navigation } = this.props.store;
 
         scotchNightStore.setCurrentEvent(event);
 
         navigation.push(`/events/${event.id}`);
+    }
+
+    public render() {
+        const { events } = this.props.store.eventStore;
+        const eventElements = events.map((event) => {
+            const { date, description, location, title, id } = event;
+
+            return (
+                <div className="box" key={id.toString()} onClick={() => this.onEventSelected(event)}>
+                    <h3>{format(date, "MMMM D, YYYY")}</h3>
+                    <p className="event__title">{title}</p>
+                    <p className="event__desc">{description}</p>
+                </div>
+            );
+        });
+
+        return (
+            <div className="container">
+                <h1 className="page-header">My Events</h1>
+                <div className="events">
+                    {eventElements}
+                </div>
+            </div>
+        );
     }
 }
 

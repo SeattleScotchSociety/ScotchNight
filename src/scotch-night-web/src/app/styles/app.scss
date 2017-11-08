@@ -1,5 +1,13 @@
 @import "variables";
+@import "normalize";
 @import "default";
+@import "header";
+@import "button";
+
+@import "events";
+@import "menu";
+@import "bottle";
+@import "rating";
 
 @media only screen and (min-width: 560px) {
     @import "medium";

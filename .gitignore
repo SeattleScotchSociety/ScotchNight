@@ -264,3 +264,4 @@ flow-typed/
 */.expo/
 
 .DS_Store
+dist

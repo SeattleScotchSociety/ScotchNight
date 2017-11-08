@@ -14,7 +14,15 @@ export class TastingMenu extends React.Component<ITastingMenuProps> {
     constructor(props: ITastingMenuProps) {
         super(props);
 
-        this.handleOnPress = this.handleOnPress.bind(this);
+        this._handleOnClick = this._handleOnClick.bind(this);
+    }
+
+    private _handleOnClick(bottle) {
+        const { navigation, scotchNightStore } = this.props.store;
+
+        scotchNightStore.setCurrentBottle(bottle);
+
+        navigation.push(`/bottles/${bottle.id}`);
     }
 
     public render() {
@@ -27,21 +35,19 @@ export class TastingMenu extends React.Component<ITastingMenuProps> {
 
         const menuList = bottles.map((item, index) => {
             return (
-                <li key={index} onClick={() => this.handleOnPress(item)}>{item.distillery} {item.name}</li>
+                <div className="bottle" key={index} onClick={() => this._handleOnClick(item)}>
+                    <p className="bottle__distillery">{item.distillery}</p>
+                    <p className="bottle__name">{item.name}</p>
+                </div>
             );
         });
 
         return (
-            <ul>{menuList}</ul>
+            <div className="menu">
+                <h2>Tasting Menu</h2>
+                {menuList}
+            </div>
         );
-    }
-
-    private handleOnPress(bottle) {
-        const { navigation, scotchNightStore } = this.props.store;
-
-        scotchNightStore.setCurrentBottle(bottle);
-
-        navigation.push(`/bottles/${bottle.id}`);
     }
 }
 

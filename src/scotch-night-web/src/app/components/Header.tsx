@@ -6,47 +6,62 @@ import Auth from "../services/Auth";
 import { IScotchNightStore } from "../stores/ScotchNightStore";
 
 interface IHeaderProps { scotchNightStore: IScotchNightStore; auth: any; }
+interface IHeaderState { menuIsOpen: boolean; }
 
-export const Header = observer((props: IHeaderProps) => {
-    const { auth, scotchNightStore } = props;
-    const { currentUser } = scotchNightStore;
+@observer
+export class Header extends React.Component<IHeaderProps, IHeaderState> {
+    constructor(props) {
+        super(props);
 
-    let logInLink = (<a
-        className="nav-link"
-        href="/"
-        onClick={(e) => {
-            e.preventDefault();
-            auth.login();
-        }}
-    >
-        Log In
-    </a>);
+        this.onClickMenu = this.onClickMenu.bind(this);
+        this.onClickLink = this.onClickLink.bind(this);
 
-    if (currentUser) {
-        logInLink = (<Link
-            className="nav-link"
-            to="/login"
-            onClick={(e) => {
-                auth.logout();
-                scotchNightStore.setCurrentUser(null);
-            }}
-        >
-            Log Out
-        </Link>);
+        this.state = {
+            menuIsOpen: false
+        }
     }
 
-    return (<header className="navbar navbar-expand-sm">
-        <a className="navbar-brand" href="/">Scotch Night</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon" />
-        </button>
+    onClickMenu() {
+        const { menuIsOpen } = this.state;
+        this.setState({ menuIsOpen: !menuIsOpen });
+    }
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                    {logInLink}
-                </li>
-            </ul>
-        </div>
-    </header>);
-});
+    onClickLink() {
+        this.setState({ menuIsOpen: false });
+    }
+
+    render() {
+        const { auth } = this.props;
+        const { menuIsOpen } = this.state;
+        const { currentUser } = this.props.scotchNightStore;
+
+        return (
+            <nav>
+                <div className="header">
+                    <span>Scotch Night</span>
+                    { currentUser ?
+                        <div className={`hamburger hamburger--squeeze ${menuIsOpen ? 'is-active' : ''}`} onClick={this.onClickMenu}>
+                          <div className="hamburger-box">
+                            <div className="hamburger-inner"></div>
+                          </div>
+                        </div> : null }
+                </div>
+                <ul className={`header-menu ${menuIsOpen ? 'is-active' : ''}`}>
+                    <li>
+                        <ul>
+                            <li><Link to="/events" onClick={this.onClickLink}>Upcoming Events</Link></li>
+                            <li><Link to="/events" onClick={this.onClickLink}>Past Events</Link></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><Link to="/bottles" onClick={this.onClickLink}>Your Favorites</Link></li>
+                            <li><Link to="/bottles" onClick={this.onClickLink}>Scotch Library</Link></li>
+                        </ul>
+                    </li>
+                    <li><Link to="/login" onClick={(e) => { auth.logout(); }}>Logout</Link></li>
+                </ul>
+            </nav>
+        );
+    }
+}

@@ -1,6 +1,5 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import { Button } from "reactstrap";
 
 import { IRootStore } from "../stores/RootStore";
 import { TastingMenu } from "./TastingMenu";
@@ -14,9 +13,13 @@ interface IEventDetailProps { store: IRootStore; }
 export class EventDetail extends React.Component<IEventDetailProps> {
     constructor(props: IEventDetailProps) {
         super(props);
-
-        this.handleOnPress = this.handleOnPress.bind(this);
         this.handleOnAddBottle = this.handleOnAddBottle.bind(this);
+    }
+
+    private handleOnAddBottle() {
+        const { scotchNightStore } = this.props.store;
+        const { navigation } = this.props.store;
+        navigation.push(`${scotchNightStore.currentEvent.id}/add-bottle`);
     }
 
     public render() {
@@ -24,39 +27,16 @@ export class EventDetail extends React.Component<IEventDetailProps> {
         const { date, description, location, title } = scotchNightStore.currentEvent;
 
         return (
-            <div className="container">
-                <div className="eventContainer">
-                    <div className="eventTitle">{title}</div>
-                    <div style={{ flexDirection: "row", marginLeft: 15, marginBottom: 5 }}>
-                        {
-                            location ?
-                                <div style={{ flexDirection: "row", marginRight: 10 }}>
-                                    <div id="location-pin" />
-                                    <div className="eventDetail">{location.name}</div>
-                                </div> : null
-                        }
-                        <div style={{ flexDirection: "row" }}>
-                            <div id="calendar" style={{ color: "#80807f", size: 16 }} />
-                            <div className="eventDetail">{format(date, "dddd, MMMM, YYYY, h:mm")}</div>
-                        </div>
-                    </div>
-                    <div className="event-description">{description}</div>
-                </div>
-                <div className="menuHeader">Tasting Menu</div>
+            <div className="event">
+                <h1 className="event__title">{title}</h1>
+                <p className="event__desc">{description}</p>
+                <p className="event__detail"><i className="fa fa-fw fa-calendar-o"/>&nbsp;{format(date, 'MMMM D, YYYY')}</p>
+                <p className="event__detail"><i className="fa fa-fw fa-clock-o"/>&nbsp;{format(date, 'h:mm aa')}</p>
+                <p className="event__detail"><i className="fa fa-fw fa-map-marker"/>&nbsp;{location.name}</p>
                 <TastingMenu store={this.props.store} />
-                <Button style={{ marginTop: 20, backgroundColor: "#00817d" }} onClick={this.handleOnAddBottle}>Add Bottle</Button>
+                <button className="btn btn--primary btn--block" onClick={this.handleOnAddBottle}>Add Bottle</button>
             </div>
         );
-    }
-
-    private handleOnPress(bottle) {
-        console.log(bottle);
-    }
-
-    private handleOnAddBottle() {
-        const { scotchNightStore } = this.props.store;
-        const { navigation } = this.props.store;
-        navigation.push(`${scotchNightStore.currentEvent.id}/add-bottle`);
     }
 }
 
