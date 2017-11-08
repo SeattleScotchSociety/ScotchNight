@@ -64,7 +64,7 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
                         <Button>Overview></Button>
                         <Button>My Notes</Button>
                     </ButtonGroup>
-                    <NotesOverview view={view} notes={summaryNotes} thoughts={memberNotes ? memberNotes.thoughts : ""} />
+                    <NotesOverview view={view} notes={summaryNotes} thoughts={memberNotes ? memberNotes.thoughts : ""} tags={memberNotes ? memberNotes.tags : ""} />
                     <MyNotes resetCount={resetCount} notes={memberNotes} view={view} onPressRating={this.handleOnPressRating} reset={this.handleOnResetNotes} save={this.handleOnSaveNotes} onChange={this.handleOnChange} />
                 </div>
             </div>

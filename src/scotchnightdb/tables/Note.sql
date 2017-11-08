@@ -5,7 +5,7 @@ CREATE TABLE dbo.Note
 (
     BottleId UNIQUEIDENTIFIER NOT NULL,
     MemberId UNIQUEIDENTIFIER NOT NULL,
-    Thoughts [NVARCHAR](2000) NULL,
+    Thoughts [NVARCHAR](MAX) NULL,
     Rating [FLOAT] NULL,
     Finish [FLOAT] NULL,
     Fruity [FLOAT] NULL,
@@ -14,6 +14,7 @@ CREATE TABLE dbo.Note
     Citrus [FLOAT] NULL,
     Oily [FLOAT] NULL,
     Peppery [FLOAT] NULL,
+    Tags [NVARCHAR](MAX) NULL,
     PRIMARY KEY (BottleId, MemberId),
     FOREIGN KEY (BottleId) REFERENCES Bottle(Id),
     FOREIGN KEY (MemberId) REFERENCES Member(Id)

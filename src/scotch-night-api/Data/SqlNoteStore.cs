@@ -25,8 +25,8 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Note (BottleId, MemberId, Rating, Finish, Fruity, Vanilla, Smokey, Citrus, Oily, Peppery, Thoughts)"
-                                + " VALUES(@BottleId, @MemberId, @Rating, @Finish, @Fruity, @Vanilla, @Smokey, @Citrus, @Oily, @Peppery, @Thoughts)";
+                string query = "INSERT INTO Note (BottleId, MemberId, Rating, Finish, Fruity, Vanilla, Smokey, Citrus, Oily, Peppery, Thoughts, Tags)"
+                                + " VALUES(@BottleId, @MemberId, @Rating, @Finish, @Fruity, @Vanilla, @Smokey, @Citrus, @Oily, @Peppery, @Thoughts, @Tags)";
                 connection.Open();
 
                 await connection.ExecuteAsync(query, note);
@@ -38,7 +38,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 string query = "UPDATE Note "
-                                + " SET Rating = @Rating, Finish = @Finish, Fruity = @Fruity, Vanilla = @Vanilla, Smokey = @Smokey, Citrus = @Citrus, Oily = @Oily, Peppery = @Peppery, Thoughts = @Thoughts)"
+                                + " SET Rating = @Rating, Finish = @Finish, Fruity = @Fruity, Vanilla = @Vanilla, Smokey = @Smokey, Citrus = @Citrus, Oily = @Oily, Peppery = @Peppery, Thoughts = @Thoughts, Tags = @Tags"
                                 + " WHERE BottleId = @BottleId AND MemberId = @MemberId";
                 connection.Open();
 

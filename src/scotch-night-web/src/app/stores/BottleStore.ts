@@ -21,6 +21,7 @@ export const BottleNote = types.model("BottleNote", {
     oily: types.maybe(types.number),
     peppery: types.maybe(types.number),
     thoughts: types.maybe(types.string),
+    tags: types.maybe(types.string),
 });
 
 export const BottleRating = types.model("BottleRating", {

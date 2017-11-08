@@ -49,6 +49,10 @@ export class MyNotes extends React.Component<IMyNotesProps> {
                 <NoteEditor resetCount={resetCount} noteTitle="Citrus" rating={notes.citrus} onChange={onChange.bind(null, "citrus")} />
                 <NoteEditor resetCount={resetCount} noteTitle="Oily" rating={notes.oily} onChange={onChange.bind(null, "oily")} />
                 <NoteEditor resetCount={resetCount} noteTitle="Peppery" rating={notes.peppery} onChange={onChange.bind(null, "peppery")} />
+                <div>
+                    <h3>My Tags</h3>
+                    {notes.tags}
+                </div>
                 <div style={{ "flex-direction": "column" }}>
                     <h3>My Thoughts</h3>
                     <textarea

@@ -60,7 +60,7 @@ namespace SeattleScotchSociety.ScotchNight.Api
 
             app.UseAuthentication();
             app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:8080")
+                builder.WithOrigins("http://localhost:8080", "https://scotchnightweb.azurewebsites.net/")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
             );

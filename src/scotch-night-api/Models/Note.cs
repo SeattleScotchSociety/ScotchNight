@@ -36,5 +36,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Models
         public float? Peppery { get; set; }
 
         public string Thoughts { get; set; }
+
+        public string Tags { get; set; }
     }
 }
