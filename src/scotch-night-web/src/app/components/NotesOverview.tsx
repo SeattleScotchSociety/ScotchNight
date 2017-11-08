@@ -7,7 +7,7 @@ import { IRootStore } from "../stores/RootStore";
 import { NoteDisplay } from "./NoteDisplay";
 import { StarRating } from './StarRating';
 
-interface INotesOverviewProps { view: number; notes: IBottleNote; tags: string; thoughts: string; }
+interface INotesOverviewProps { view: number; notes: IBottleNote; thoughts: string; }
 
 @observer
 export class NotesOverview extends React.Component<INotesOverviewProps> {
@@ -16,7 +16,7 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
     }
 
     public render() {
-        const { view, notes, tags, thoughts } = this.props;
+        const { view, notes, thoughts } = this.props;
 
         if (view !== 0) {
             return null;
