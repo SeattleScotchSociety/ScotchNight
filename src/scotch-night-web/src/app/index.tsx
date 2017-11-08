@@ -2,7 +2,7 @@ import createBrowserHistory from "history/createBrowserHistory";
 import { observable } from "mobx";
 import { Provider } from "mobx-react";
 import { applySnapshot, getSnapshot, onPatch, types } from "mobx-state-tree";
-import { asReduxStore, connectReduxDevtools } from "mobx-state-tree/middleware/redux";
+import { asReduxStore, connectReduxDevtools } from "mst-middlewares";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
