@@ -25,7 +25,7 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
         return (
             <div className="bottle-overview">
                 <div className="bottle-overview__rating">
-                    <StarRating rating={notes ? notes.rating : 0} />
+                    <StarRating rating={notes ? notes.rating : 0} onChangeRating={null} />
                 </div>
                 <h3>My Thoughts</h3>
                 <div style={{ marginTop: 10 }}>{thoughts ? thoughts : "No additional notes"}</div>

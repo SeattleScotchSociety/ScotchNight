@@ -27,10 +27,10 @@ export class EventList extends React.Component<IEventListProps> {
     public render() {
         const { events } = this.props.store.eventStore;
         const eventElements = events.map((event) => {
-            const { date, description, location, title } = event;
+            const { date, description, location, title, id } = event;
 
             return (
-                <div className="box box-action" key={event.id} onClick={() => this.onEventSelected(event)}>
+                <div className="box" key={id.toString()} onClick={() => this.onEventSelected(event)}>
                     <h3>{format(date, "MMMM D, YYYY")}</h3>
                     <p className="event__title">{title}</p>
                     <p className="event__desc">{description}</p>
