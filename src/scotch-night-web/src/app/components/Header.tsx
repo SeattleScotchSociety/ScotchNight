@@ -64,4 +64,4 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
             </nav>
         );
     }
-});
+}

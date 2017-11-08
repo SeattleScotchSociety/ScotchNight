@@ -1,0 +1,33 @@
+.bottle-detail {
+    padding: 1rem;
+
+    .bottle-detail__distillery {
+        margin-bottom: .25rem;
+    }
+
+    .bottle-detail__name {
+        font-weight: 400;
+        margin-bottom: 1rem;
+    }
+
+    .btn-group {
+        margin-bottom: 1rem;
+    }
+}
+
+.notes__thoughts {
+    width: 100%;
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: .25rem;
+    margin-top: .25rem;
+    padding: .5rem;
+}
+
+.notes__save {
+    margin: 1rem 0 .5rem 0;
+}
+
+.notes__reset {
+    margin-bottom: 1rem;
+}

@@ -33,11 +33,8 @@ export class EventDetail extends React.Component<IEventDetailProps> {
                 <p className="event__detail"><i className="fa fa-fw fa-calendar-o"/>&nbsp;{format(date, 'MMMM D, YYYY')}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-clock-o"/>&nbsp;{format(date, 'h:mm aa')}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-map-marker"/>&nbsp;{location.name}</p>
-                <div className="event__menu">
-                    <h2>Tasting Menu</h2>
-                    <TastingMenu store={this.props.store} />
-                </div>
-                <button className="btn btn-block" onClick={this.handleOnAddBottle}>Add Bottle</button>
+                <TastingMenu store={this.props.store} />
+                <button className="btn btn--primary btn--block" onClick={this.handleOnAddBottle}>Add Bottle</button>
             </div>
         );
     }

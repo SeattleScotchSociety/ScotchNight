@@ -1,17 +1,44 @@
 .btn {
-    color: #fff;
-    background-color: #00817d;
+    display: inline-block;
+    color: #333;
     padding: .5rem 1rem;
     margin: 0;
-    border: none;
+    border: 1px solid #00817d;
     border-radius: .25rem;
     cursor: pointer;
+    background-color: #fff;
+}
+
+.btn--primary {
+    background-color: #00817d;
+    color: #fff;
 
     &:hover {
         background-color: darken(#00817d, 2);
     }
 }
 
-.btn-block {
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    .btn {
+        flex: 1;
+    }
+
+    .btn:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .btn:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+.btn--block {
+    display: block;
     width: 100%;
 }

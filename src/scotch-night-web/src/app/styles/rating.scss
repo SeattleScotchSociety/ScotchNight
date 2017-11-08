@@ -1,0 +1,18 @@
+.star-rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    .fa {
+        font-size: 3rem;
+        margin: .5rem;
+    }
+
+    .star--filled {
+        color: #ffcf40;
+    }
+
+    .star--empty {
+        color: #ccc;
+    }
+}

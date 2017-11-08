@@ -1,6 +1,5 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import { Button, ButtonGroup } from "reactstrap";
 
 import { IBottleNote } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
@@ -50,27 +49,6 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
         });
     }
 
-    public render() {
-        const { view, resetCount } = this.state;
-        const { currentBottle, summaryNotes, memberNotes } = this.props.store.scotchNightStore;
-
-        return (
-            <div className="container">
-                <div style={{ marginBottom: 100 }}>
-                    <h2>{currentBottle.distillery} {currentBottle.name}</h2>
-                    <ButtonGroup
-                        style={{ height: 30, marginTop: 20 }}
-                    >
-                        <Button>Overview></Button>
-                        <Button>My Notes</Button>
-                    </ButtonGroup>
-                    <NotesOverview view={view} notes={summaryNotes} thoughts={memberNotes ? memberNotes.thoughts : ""} tags={memberNotes ? memberNotes.tags : ""} />
-                    <MyNotes resetCount={resetCount} notes={memberNotes} view={view} onPressRating={this.handleOnPressRating} reset={this.handleOnResetNotes} save={this.handleOnSaveNotes} onChange={this.handleOnChange} />
-                </div>
-            </div>
-        );
-    }
-
     private handleSelectView(index) {
         this.setState({ view: index });
     }
@@ -85,6 +63,23 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
         this.setState({ notes: update });
     }
 
+    public render() {
+        const { view, resetCount } = this.state;
+        const { currentBottle, summaryNotes, memberNotes } = this.props.store.scotchNightStore;
+
+        return (
+            <div className="bottle-detail">
+                <h1 className="bottle-detail__distillery">{currentBottle.distillery}</h1>
+                <h2 className="bottle-detail__name">{currentBottle.name}</h2>
+                <div className="btn-group">
+                    <button onClick={() => this.handleSelectView(0)} className={`btn ${view === 0 ? 'btn--primary' : ''}`}>Overview</button>
+                    <button onClick={() => this.handleSelectView(1)} className={`btn ${view === 1 ? 'btn--primary' : ''}`}>My Notes</button>
+                </div>
+                <NotesOverview view={view} notes={summaryNotes} thoughts={memberNotes ? memberNotes.thoughts : ""} />
+                <MyNotes resetCount={resetCount} notes={memberNotes} view={view} onPressRating={this.handleOnPressRating} reset={this.handleOnResetNotes} save={this.handleOnSaveNotes} onChange={this.handleOnChange} />
+            </div>
+        );
+    }
     private handleOnSaveNotes() {
         // let { addReview } = this.props.actions;
 
