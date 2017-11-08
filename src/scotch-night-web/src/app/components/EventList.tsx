@@ -31,16 +31,16 @@ export class EventList extends React.Component<IEventListProps> {
 
             return (
                 <div className="box box-action" key={event.id} onClick={() => this.onEventSelected(event)}>
-                    <h2>{title}</h2>
-                    <p>{description}</p>
-                    <p><i className="fa fa-calendar"/>&nbsp;{format(date, "dddd, MMM D, YYYY")}</p>
+                    <h3>{format(date, "MMMM D, YYYY")}</h3>
+                    <p className="event__title">{title}</p>
+                    <p className="event__desc">{description}</p>
                 </div>
             );
         });
 
         return (
             <div className="container">
-                <h1>My Events</h1>
+                <h1 className="page-header">My Events</h1>
                 <div className="events">
                     {eventElements}
                 </div>

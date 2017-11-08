@@ -21,6 +21,10 @@ a {
     }
 }
 
+p {
+    margin: 0;
+}
+
 /* ------------------- Body ---------------- */
 body {
     /* Text settings */
@@ -49,16 +53,27 @@ body {
 }
 
 /* ------------------- Header ---------------- */
+
+.page-header {
+    margin-bottom: 1rem;
+}
+
 h1 {
     font-size: 2rem;
     font-weight: $boldWeight;
-    margin: 0 0 15px 0;
+    margin: 0;
 }
 
 h2 {
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+    margin: 0;
+}
+
+h3 {
     font-size: 1.2rem;
     font-weight: $boldWeight;
-    margin: 0 0 15px 0;
+    margin: 0;
 }
 
 // Boxes
@@ -72,12 +87,4 @@ h2 {
     border-radius: 3px;
     padding: 15px;
     margin-bottom: 20px;
-}
-
-.box-action {
-    cursor: pointer;
-
-    &:hover {
-
-    }
 }
