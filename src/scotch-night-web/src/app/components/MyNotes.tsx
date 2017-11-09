@@ -31,7 +31,7 @@ export class MyNotes extends React.Component<IMyNotesProps> {
             return null;
         }
 
-        const rating = notes.rating ? notes.rating : 0;
+        const rating = notes && notes.rating ? notes.rating : 0;
 
         return (
             <div className="notes">
@@ -41,7 +41,7 @@ export class MyNotes extends React.Component<IMyNotesProps> {
                     className="notes__thoughts"
                     rows={5}
                     onChange={onChange.bind(null, "thoughts")}
-                    value={notes.thoughts} />
+                    value={notes && notes.thoughts ? notes.thoughts : ''} />
                 <button className="notes__save btn btn--block btn--primary" onClick={save}>Save</button>
                 <button className="notes__reset btn btn--block" onClick={reset}>Reset</button>
             </div>

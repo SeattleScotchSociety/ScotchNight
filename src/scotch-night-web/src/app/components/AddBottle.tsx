@@ -55,7 +55,7 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
 
         return (
             <Modal className="add-bottle" ref={(modal) => { this.modal = modal; }}>
-                <h2>Add a New Bottle</h2>
+                <h2 className="margin-bottom-md">Add a New Bottle</h2>
                 <Input
                     type="text"
                     value={bottle.distillery}

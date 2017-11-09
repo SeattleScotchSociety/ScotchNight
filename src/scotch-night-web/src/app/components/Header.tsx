@@ -50,11 +50,6 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
                     <li>
                         <ul>
                             <li><Link to="/events" onClick={this.onClickLink}>Events</Link></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <ul>
-                            <li><Link to="/bottles" onClick={this.onClickLink}>Your Favorites</Link></li>
                             <li><Link to="/bottles" onClick={this.onClickLink}>Scotch Library</Link></li>
                         </ul>
                     </li>

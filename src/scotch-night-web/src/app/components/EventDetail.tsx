@@ -24,7 +24,7 @@ export class EventDetail extends React.Component<IEventDetailProps> {
         const { scotchNightStore } = this.props.store;
         const { navigation } = this.props.store;
 
-        this.add.wrappedInstance.open();
+        this.add.open();
     }
 
     public render() {
@@ -33,9 +33,9 @@ export class EventDetail extends React.Component<IEventDetailProps> {
         const { date, description, location, title } = scotchNightStore.currentEvent;
 
         return (
-            <div className="event">
-                <h1 className="event__title">{title}</h1>
-                <p className="event__desc">{description}</p>
+            <div className="container">
+                <h1>{title}</h1>
+                <p className="margin-vertical-md"><em>{description}</em></p>
                 <p className="event__detail"><i className="fa fa-fw fa-calendar-o"/>&nbsp;{format(date, 'MMMM D, YYYY')}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-clock-o"/>&nbsp;{format(date, 'h:mm aa')}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-map-marker"/>&nbsp;{location.name}</p>
