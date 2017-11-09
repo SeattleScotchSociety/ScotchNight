@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import { orderBy } from 'lodash';
+import * as _ from 'lodash';
 
 import { IEvent } from "../stores/EventStore";
 import { IRootStore } from "../stores/RootStore";
