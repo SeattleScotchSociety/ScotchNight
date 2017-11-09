@@ -40,7 +40,7 @@ export class EventList extends React.Component<IEventListProps> {
 
         return (
             <div className="container">
-                <h1 className="page-header">My Events</h1>
+                <h1 className="page-header">Events</h1>
                 <div className="events">
                     {eventElements}
                 </div>

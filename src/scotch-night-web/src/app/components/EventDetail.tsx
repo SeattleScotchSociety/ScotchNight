@@ -3,6 +3,8 @@ import * as React from "react";
 
 import { IRootStore } from "../stores/RootStore";
 import { TastingMenu } from "./TastingMenu";
+import { AddBottle } from "./AddBottle";
+import { Modal } from './Modal';
 
 import * as format from "date-fns/format";
 
@@ -11,6 +13,8 @@ interface IEventDetailProps { store: IRootStore; }
 @inject("store")
 @observer
 export class EventDetail extends React.Component<IEventDetailProps> {
+    add: AddBottle;
+
     constructor(props: IEventDetailProps) {
         super(props);
         this.handleOnAddBottle = this.handleOnAddBottle.bind(this);
@@ -19,11 +23,13 @@ export class EventDetail extends React.Component<IEventDetailProps> {
     private handleOnAddBottle() {
         const { scotchNightStore } = this.props.store;
         const { navigation } = this.props.store;
-        navigation.push(`${scotchNightStore.currentEvent.id}/add-bottle`);
+
+        this.add.wrappedInstance.open();
     }
 
     public render() {
-        const { scotchNightStore } = this.props.store;
+        const { store } = this.props;
+        const { scotchNightStore } = store;
         const { date, description, location, title } = scotchNightStore.currentEvent;
 
         return (
@@ -35,6 +41,7 @@ export class EventDetail extends React.Component<IEventDetailProps> {
                 <p className="event__detail"><i className="fa fa-fw fa-map-marker"/>&nbsp;{location.name}</p>
                 <TastingMenu store={this.props.store} />
                 <button className="btn btn--primary btn--block" onClick={this.handleOnAddBottle}>Add Bottle</button>
+                <AddBottle ref={(add) => { this.add = add; }} store={store} />
             </div>
         );
     }

@@ -1,94 +1,35 @@
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
 import * as React from "react";
-import { Button, ButtonGroup } from "reactstrap";
 
 import { Bottle, IBottle } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
-import { MyNotes } from "./MyNotes";
-import { NotesOverview } from "./NotesOverview";
+import { Modal } from "./Modal";
+import { Input } from "./Input";
 
 interface IAddBottleProps { store: IRootStore; }
-interface IAddBottleState {
-    bottle: IBottle;
-}
+interface IAddBottleState { bottle: IBottle; }
 
-@inject("store")
 @observer
 export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState> {
-    private distillery: any;
-    private name: any;
-    private age: any;
-    private descriptionInput: any;
+    modal: Modal;
+    wrappedInstance: AddBottle;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            bottle: { id: undefined, distillery: "", age: 0, description: "", name: "" }
+            bottle: { id: undefined, distillery: "", age: undefined, description: "", name: "" }
         };
 
-        this.handleOnAddPress = this.handleOnAddPress.bind(this);
+        this.handleOnClick = this.handleOnClick.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.open = this.open.bind(this);
+
     }
 
-    public render() {
-        const { bottle } = this.state;
-
-        return (
-            <div>
-                <div style={{ paddingVertical: 20 }}>
-                    <div className="">
-                        <input
-                            ref={(view) => {
-                                this.distillery = view;
-                            }}
-                            value={bottle.distillery}
-                            placeholder="Distillery"
-                            onChange={this.handleOnChange.bind(this, "distillery")}
-                            className="textInput"
-                        />
-                    </div>
-                    <div className="">
-                        <input
-                            ref={(view) => {
-                                this.name = view;
-                            }}
-                            value={bottle.name}
-                            placeholder="Name"
-                            onChange={this.handleOnChange.bind(this, "name")}
-                            className="textInput"
-                        />
-                    </div>
-                    <div className="">
-                        <input
-                            ref={(view) => {
-                                this.age = view;
-                            }}
-                            value={bottle.age}
-                            placeholder="Age"
-                            onChange={this.handleOnChange.bind(this, "age")}
-                            className="textInput"
-                        />
-                    </div>
-                </div>
-                <div style={{ paddingVertical: 20 }}>
-                    <div className="">
-                        <textarea
-                            placeholder="Description"
-                            ref={(view) => { this.descriptionInput = view; }}
-                            value={bottle.description}
-                            onChange={this.handleOnChange.bind(this, "description")}
-                            style={{ minHeight: 60 }}
-                            className="textInput"
-                        />
-                    </div>
-                </div>
-                <div style={{ paddingVertical: 20 }}>
-                    <Button onClick={this.handleOnAddPress} color="#009688">Add Bottle</Button>
-                </div>
-            </div>
-        );
+    public open() {
+        this.modal.open();
     }
 
     private handleOnChange = (property, event) => {
@@ -98,16 +39,46 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
         this.setState({ bottle });
     }
 
-    private handleOnAddPress = () => {
-        const { bottleStore, eventStore, navigation, scotchNightStore } = this.props.store;
+    private handleOnClick = () => {
+        const { bottleStore, eventStore, scotchNightStore } = this.props.store;
         const { bottle } = this.state;
         const { currentEvent } = scotchNightStore;
 
         bottleStore.addBottle(bottle).then((newBottle: IBottle) => {
             eventStore.addBottle(currentEvent, newBottle);
-
-            navigation.goBack();
+            this.modal.close();
         });
+    }
+
+    public render() {
+        const { bottle } = this.state;
+
+        return (
+            <Modal className="add-bottle" ref={(modal) => { this.modal = modal; }}>
+                <h2>Add a New Bottle</h2>
+                <Input
+                    type="text"
+                    value={bottle.distillery}
+                    placeholder="Distillery"
+                    onChange={this.handleOnChange.bind(this, "distillery")}/>
+                <Input
+                    type="text"
+                    value={bottle.name}
+                    placeholder="Name"
+                    onChange={this.handleOnChange.bind(this, "name")}/>
+                <Input
+                    type="text"
+                    value={bottle.age ? bottle.age : ''}
+                    placeholder="Age"
+                    onChange={this.handleOnChange.bind(this, "age")}/>
+                <Input
+                    type="text"
+                    placeholder="Description"
+                    value={bottle.description}
+                    onChange={this.handleOnChange.bind(this, "description")}/>
+                <button className="btn btn--primary btn--block" onClick={this.handleOnClick}>Add Bottle</button>
+            </Modal>
+        );
     }
 }
 

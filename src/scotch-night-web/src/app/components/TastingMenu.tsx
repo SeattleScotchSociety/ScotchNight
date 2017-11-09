@@ -29,10 +29,6 @@ export class TastingMenu extends React.Component<ITastingMenuProps> {
         const { scotchNightStore } = this.props.store;
         const { bottles } = scotchNightStore.currentEvent;
 
-        if (!bottles || bottles.length === 0) {
-            return (<div className="noBottles">No Bottles</div>);
-        }
-
         const menuList = bottles.map((item, index) => {
             return (
                 <div className="bottle" key={index} onClick={() => this._handleOnClick(item)}>
@@ -45,6 +41,9 @@ export class TastingMenu extends React.Component<ITastingMenuProps> {
         return (
             <div className="menu">
                 <h2>Tasting Menu</h2>
+                {
+                    !bottles || bottles.length === 0 ? <div className="noBottles">No Bottles</div> : null
+                }
                 {menuList}
             </div>
         );

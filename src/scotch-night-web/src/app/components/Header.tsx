@@ -49,8 +49,7 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
                 <ul className={`header-menu ${menuIsOpen ? 'is-active' : ''}`}>
                     <li>
                         <ul>
-                            <li><Link to="/events" onClick={this.onClickLink}>Upcoming Events</Link></li>
-                            <li><Link to="/events" onClick={this.onClickLink}>Past Events</Link></li>
+                            <li><Link to="/events" onClick={this.onClickLink}>Events</Link></li>
                         </ul>
                     </li>
                     <li>

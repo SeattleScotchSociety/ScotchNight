@@ -4,9 +4,7 @@
 
 .events {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
 
     i {
         color: #00817d;
