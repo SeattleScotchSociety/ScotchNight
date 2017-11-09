@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { observable } from "mobx";
-import { getEnv, getParent, process, types } from "mobx-state-tree";
+import { flow, getEnv, getParent, types } from "mobx-state-tree";
 
 import LocationApi from "../api/LocationApi";
 import { Bottle } from "./BottleStore";
@@ -35,8 +35,13 @@ export const LocationStore = types
             self.isLoading = loading;
         }
 
-        function updateLocations(json: ILocation[]): void {
-            json.forEach((location: ILocation) => {
+        function updateLocations(locations: ILocation[]): void {
+            if (!locations) {
+                console.log("locations don't exist");
+                return;
+            }
+
+            locations.forEach((location: ILocation) => {
                 const index = _.findIndex(self.locations, ["id", location.id]);
 
                 if (index > 0) {
@@ -47,7 +52,7 @@ export const LocationStore = types
             });
         }
 
-        const loadLocations = process(function* loadAllLocations() {
+        const loadLocations = flow(function* loadAllLocations() {
             const { locationApi }: { locationApi: LocationApi } = getEnv(self);
 
             const locations = yield locationApi.getAll();

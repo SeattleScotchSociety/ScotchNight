@@ -80,13 +80,15 @@ export class App extends React.Component<IRouteProps> {
 
     private async initializeUserCallback(err, profile) {
         const { store } = this.props;
-        const { eventStore, scotchNightStore } = store;
+        const { bottleStore, eventStore, locationStore, scotchNightStore } = store;
 
         if (err) {
             console.log(err);
             return;
         }
 
+        await bottleStore.loadBottles();
+        await locationStore.loadLocations();
         const member = await scotchNightStore.setCurrentUserByEmail(profile.email);
         eventStore.loadEventsForMember(member);
     }

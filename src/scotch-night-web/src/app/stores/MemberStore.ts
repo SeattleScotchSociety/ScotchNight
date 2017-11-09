@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { observable } from "mobx";
-import { getEnv, getParent, process, types } from "mobx-state-tree";
+import { flow, getEnv, getParent, types } from "mobx-state-tree";
 
 import MemberApi from "../api/MemberApi";
 
@@ -23,7 +23,7 @@ export const MemberStore = types
             self.isLoading = loading;
         }
 
-        const loadMembers = process(function* loadAllMembers() {
+        const loadMembers = flow(function* loadAllMembers() {
             const { memberApi }: { memberApi: MemberApi } = getEnv(self);
 
             self.members = yield memberApi.getAll();

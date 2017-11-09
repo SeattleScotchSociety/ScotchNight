@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { observable } from "mobx";
-import { getEnv, getParent, process, types } from "mobx-state-tree";
+import { flow, getEnv, getParent, types } from "mobx-state-tree";
 
 import BottleApi from "../api/BottleApi";
 import EventApi from "../api/EventApi";
@@ -55,7 +55,7 @@ export const BottleStore = types
             self.isLoading = loading;
         }
 
-        const addBottle = process(function* addNewBottle(bottle: IBottle) {
+        const addBottle = flow(function* addNewBottle(bottle: IBottle) {
             const { bottleApi, eventApi }: { bottleApi: BottleApi, eventApi: EventApi } = getEnv(self);
 
             const bottleId = yield bottleApi.addBottle(bottle);
@@ -86,7 +86,7 @@ export const BottleStore = types
             });
         }
 
-        const loadBottles = process(function* loadAllBottles() {
+        const loadBottles = flow(function* loadAllBottles() {
             const { bottleApi }: { bottleApi: BottleApi } = getEnv(self);
 
             const bottles = yield bottleApi.getAll();
