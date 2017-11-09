@@ -35,13 +35,19 @@ function renderApp(root: JSX.Element) {
 }
 
 const initializeUserCallback = async (err, profile) => {
-    const { eventStore, scotchNightStore } = rootStore;
+    const { bottleStore, eventStore, locationStore, scotchNightStore } = rootStore;
 
     if (err) {
         console.log(err);
         return;
     }
 
+    if (!profile.email) {
+        return;
+    }
+
+    await bottleStore.loadBottles();
+    await locationStore.loadLocations();
     const member = await scotchNightStore.setCurrentUserByEmail(profile.email);
     eventStore.loadEventsForMember(member);
 };
@@ -50,7 +56,4 @@ auth.getProfile(initializeUserCallback);
 
 renderApp(<App auth={auth} />);
 
-rootStore.bottleStore.loadBottles();
-rootStore.memberStore.loadMembers();
-rootStore.locationStore.loadLocations();
 syncHistoryWithStore(browserHistory, rootStore.navigation).subscribe();

@@ -5,7 +5,7 @@ import { IBottleNote } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
 import { NoteDisplay } from "./NoteDisplay";
-import { StarRating } from './StarRating';
+import { StarRating } from "./StarRating";
 
 interface INotesOverviewProps { view: number; notes: IBottleNote; tags: string; thoughts: string; }
 

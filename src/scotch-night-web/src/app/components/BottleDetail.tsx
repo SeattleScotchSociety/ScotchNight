@@ -49,6 +49,24 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
         });
     }
 
+    public render() {
+        const { view, resetCount } = this.state;
+        const { currentBottle, summaryNotes, memberNotes } = this.props.store.scotchNightStore;
+
+        return (
+            <div className="bottle-detail">
+                <h1 className="bottle-detail__distillery">{currentBottle.distillery}</h1>
+                <h2 className="bottle-detail__name">{currentBottle.name}</h2>
+                <div className="btn-group">
+                    <button onClick={() => this.handleSelectView(0)} className={`btn ${view === 0 ? "btn--primary" : ""}`}>Overview</button>
+                    <button onClick={() => this.handleSelectView(1)} className={`btn ${view === 1 ? "btn--primary" : ""}`}>My Notes</button>
+                </div>
+                <NotesOverview view={view} notes={summaryNotes} thoughts={memberNotes ? memberNotes.thoughts : ""} tags={memberNotes ? memberNotes.tags : ""} />
+                <MyNotes resetCount={resetCount} notes={memberNotes} view={view} onPressRating={this.handleOnPressRating} reset={this.handleOnResetNotes} save={this.handleOnSaveNotes} onChange={this.handleOnChange} />
+            </div>
+        );
+    }
+
     private handleSelectView(index) {
         this.setState({ view: index });
     }
@@ -63,23 +81,6 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
         this.setState({ notes: update });
     }
 
-    public render() {
-        const { view, resetCount } = this.state;
-        const { currentBottle, summaryNotes, memberNotes } = this.props.store.scotchNightStore;
-
-        return (
-            <div className="bottle-detail">
-                <h1 className="bottle-detail__distillery">{currentBottle.distillery}</h1>
-                <h2 className="bottle-detail__name">{currentBottle.name}</h2>
-                <div className="btn-group">
-                    <button onClick={() => this.handleSelectView(0)} className={`btn ${view === 0 ? 'btn--primary' : ''}`}>Overview</button>
-                    <button onClick={() => this.handleSelectView(1)} className={`btn ${view === 1 ? 'btn--primary' : ''}`}>My Notes</button>
-                </div>
-                <NotesOverview view={view} notes={summaryNotes} thoughts={memberNotes ? memberNotes.thoughts : ""} />
-                <MyNotes resetCount={resetCount} notes={memberNotes} view={view} onPressRating={this.handleOnPressRating} reset={this.handleOnResetNotes} save={this.handleOnSaveNotes} onChange={this.handleOnChange} />
-            </div>
-        );
-    }
     private handleOnSaveNotes() {
         // let { addReview } = this.props.actions;
 
