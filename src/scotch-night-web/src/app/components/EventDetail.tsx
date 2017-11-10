@@ -39,7 +39,7 @@ export class EventDetail extends React.Component<IEventDetailProps> {
                 <p className="event__detail"><i className="fa fa-fw fa-map-marker"/>&nbsp;{location.name}</p>
                 <TastingMenu store={this.props.store} />
                 <button className="btn btn--primary btn--block" onClick={this.handleOnAddBottle}>Add Bottle</button>
-                <AddBottle ref={(add) => { this.add = add; }} store={store} />
+                <AddBottle ref={(add) => { this.add = add; }} store={this.props.store} />
             </div>
         );
     }
