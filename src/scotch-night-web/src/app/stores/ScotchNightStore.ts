@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { observable } from "mobx";
-import { getEnv, getParent, process, types } from "mobx-state-tree";
+import { flow, getEnv, getParent, types } from "mobx-state-tree";
 
 import MemberApi from "../api/MemberApi";
 import NoteApi from "../api/NoteApi";
@@ -19,7 +19,7 @@ export const ScotchNightStore = types
         memberNotes: types.maybe(BottleNote),
     })
     .actions((self) => {
-        const setCurrentBottle = process(function* setBottle(bottle: IBottle) {
+        const setCurrentBottle = flow(function* setBottle(bottle: IBottle) {
             const { noteApi }: { noteApi: NoteApi } = getEnv(self);
 
             self.currentBottle = bottle;
@@ -36,7 +36,7 @@ export const ScotchNightStore = types
             self.currentEvent = event;
         };
 
-        const setCurrentUserByEmail = process(function* setUser(email: string) {
+        const setCurrentUserByEmail = flow(function* setUser(email: string) {
             const { memberApi }: { memberApi: MemberApi } = getEnv(self);
 
             if (!email || email === "") {

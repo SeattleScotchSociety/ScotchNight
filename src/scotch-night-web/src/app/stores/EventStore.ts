@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { observable } from "mobx";
-import { getEnv, getParent, process, types } from "mobx-state-tree";
+import { flow, getEnv, getParent, types } from "mobx-state-tree";
 
 import EventApi from "../api/EventApi";
 import { Bottle, IBottle } from "./BottleStore";
@@ -45,7 +45,7 @@ export const EventStore = types
             });
         }
 
-        const loadEvents = process(function* loadAllEvents() {
+        const loadEvents = flow(function* loadAllEvents() {
             const { eventApi }: { eventApi: EventApi } = getEnv(self);
 
             const events = yield eventApi.getAll();
@@ -53,7 +53,7 @@ export const EventStore = types
             markLoading(false);
         });
 
-        const loadEventsForMember = process(function* loadAllEvents(member: IMember) {
+        const loadEventsForMember = flow(function* loadAllEvents(member: IMember) {
             const { eventApi }: { eventApi: EventApi } = getEnv(self);
 
             let events: IEvent[] = [];
@@ -66,7 +66,7 @@ export const EventStore = types
             markLoading(false);
         });
 
-        const addBottle = process(function* addBottleToEvent(event: IEvent, bottle: IBottle) {
+        const addBottle = flow(function* addBottleToEvent(event: IEvent, bottle: IBottle) {
             const { eventApi }: { eventApi: EventApi } = getEnv(self);
 
             if (!bottle) {

@@ -20,13 +20,6 @@ export class EventDetail extends React.Component<IEventDetailProps> {
         this.handleOnAddBottle = this.handleOnAddBottle.bind(this);
     }
 
-    private handleOnAddBottle() {
-        const { scotchNightStore } = this.props.store;
-        const { navigation } = this.props.store;
-
-        this.add.open();
-    }
-
     public render() {
         const { store } = this.props;
         const { scotchNightStore } = store;
@@ -44,6 +37,12 @@ export class EventDetail extends React.Component<IEventDetailProps> {
                 <AddBottle ref={(add) => { this.add = add; }} store={store} />
             </div>
         );
+    }
+
+    private handleOnAddBottle() {
+        const { scotchNightStore } = this.props.store;
+        const { navigation } = this.props.store;
+        navigation.push(`${scotchNightStore.currentEvent.id}/add-bottle`);
     }
 }
 

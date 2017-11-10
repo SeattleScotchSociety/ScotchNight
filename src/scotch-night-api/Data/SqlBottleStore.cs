@@ -47,8 +47,14 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = "DELETE Bottle "
-                                + " WHERE Id = @Id";
+                string query = @"DELETE Note
+                                  WHERE BottleId = @Id;
+                                  
+                                 DELETE EventBottle
+                                  WHERE BottleId = @Id;
+
+                                 DELETE Bottle
+                                  WHERE Id = @Id;";
                 connection.Open();
 
                 await connection.ExecuteAsync(query, location);

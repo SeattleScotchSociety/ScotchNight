@@ -39,14 +39,14 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
             <nav>
                 <div className="header">
                     <span>Scotch Night</span>
-                    { currentUser ?
-                        <div className={`hamburger hamburger--squeeze ${menuIsOpen ? 'is-active' : ''}`} onClick={this.onClickMenu}>
-                          <div className="hamburger-box">
-                            <div className="hamburger-inner"></div>
-                          </div>
-                        </div> : null }
+                    {currentUser ?
+                        <div className={`hamburger hamburger--squeeze ${menuIsOpen ? "is-active" : ""}`} onClick={this.onClickMenu}>
+                            <div className="hamburger-box">
+                                <div className="hamburger-inner"></div>
+                            </div>
+                        </div> : null}
                 </div>
-                <ul className={`header-menu ${menuIsOpen ? 'is-active' : ''}`}>
+                <ul className={`header-menu ${menuIsOpen ? "is-active" : ""}`}>
                     <li>
                         <ul>
                             <li><Link to="/events" onClick={this.onClickLink}>Events</Link></li>

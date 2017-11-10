@@ -4,7 +4,7 @@ import * as React from "react";
 import { IBottleNote } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
-import { StarRating } from './StarRating';
+import { StarRating } from "./StarRating";
 
 import * as format from "date-fns/format";
 
