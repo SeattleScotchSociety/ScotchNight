@@ -18,7 +18,13 @@ export class EventDetail extends React.Component<IEventDetailProps> {
 
     public render() {
         const { scotchNightStore } = this.props.store;
-        const { date, description, location, title } = scotchNightStore.currentEvent;
+        const { currentEvent } = scotchNightStore;
+
+        if (!currentEvent) {
+            return null;
+        }
+
+        const { date, description, location, title } = currentEvent;
 
         return (
             <div className="event">

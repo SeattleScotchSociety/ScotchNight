@@ -16,6 +16,7 @@ export const createStore: (history: any, auth: Auth) => IRootStore = (history, a
         scotchNightStore: {}
     },
         {
+            auth,
             bottleApi: new BottleApi(auth),
             eventApi: new EventApi(auth),
             history,

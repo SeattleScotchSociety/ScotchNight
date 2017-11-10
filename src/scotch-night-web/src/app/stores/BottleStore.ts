@@ -78,7 +78,7 @@ export const BottleStore = types
             json.forEach((bottle: IBottle) => {
                 const index = _.findIndex(self.bottles, ["id", bottle.id]);
 
-                if (index > 0) {
+                if (index >= 0) {
                     self.bottles.splice(index, 1, bottle);
                 } else {
                     self.bottles.push(bottle);
