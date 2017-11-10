@@ -1,18 +1,74 @@
 @import "variables";
-@import "normalize";
 @import "default";
+@import "normalize";
 @import "header";
 @import "button";
-
-@import "events";
-@import "menu";
+@import "modal";
+@import "input";
 @import "bottle";
 @import "rating";
+@import "helpers";
 
-@media only screen and (min-width: 560px) {
-    @import "medium";
+.container {
+    padding: 1rem;
 }
 
-@media only screen and (min-width: 1140px) {
-    @import "large";
+i {
+    color: #00817d;
+}
+
+.card {
+    border: 1px solid #333;
+    border-radius: .25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    .card__head {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #00817d;
+        font-weight: 500;
+    }
+
+    .card__subhead {
+        font-size: 1rem;
+        margin-top: -1rem;
+        font-weight: 400;
+    }
+
+    .card__title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: .3rem;
+    }
+
+    .card__description {
+        font-size: .8rem;
+        font-style: italic;
+    }
+}
+
+.event__detail {
+    font-size: 1.1rem;
+
+    i {
+        color: #00817d;
+    }
+}
+
+.event__sep {
+    font-weight: 300;
+    font-size: .75rem;
+    text-transform: uppercase;
+    margin-bottom: .25rem;
+}
+
+.notes {
+    .input {
+        margin-top: .25rem;
+    }
+
+    .input__field {
+        width: 100%;
+    }
 }

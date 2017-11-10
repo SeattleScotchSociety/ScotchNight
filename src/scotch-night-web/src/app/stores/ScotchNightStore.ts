@@ -4,7 +4,7 @@ import { flow, getEnv, getParent, types } from "mobx-state-tree";
 
 import MemberApi from "../api/MemberApi";
 import NoteApi from "../api/NoteApi";
-import { Bottle, BottleNote, IBottle } from "./BottleStore";
+import { Bottle, BottleNote, IBottle, BottleRating, IBottleRating } from "./BottleStore";
 import { Event, IEvent } from "./EventStore";
 import { IMember, Member } from "./MemberStore";
 
@@ -16,7 +16,7 @@ export const ScotchNightStore = types
         currentEvent: types.maybe(types.reference(Event)),
         currentBottle: types.maybe(types.reference(Bottle)),
         summaryNotes: types.maybe(BottleNote),
-        memberNotes: types.maybe(BottleNote),
+        memberNotes: types.maybe(BottleRating),
     })
     .actions((self) => {
         const setCurrentBottle = flow(function* setBottle(bottle: IBottle) {
@@ -50,11 +50,16 @@ export const ScotchNightStore = types
             return member;
         });
 
+        const setMemberNotes = (notes) => {
+            self.memberNotes = notes;
+        }
+
         return {
             setCurrentBottle,
             setCurrentEvent,
             setCurrentUser,
-            setCurrentUserByEmail
+            setCurrentUserByEmail,
+            setMemberNotes
         };
     });
 

@@ -3,7 +3,7 @@ nav {
 }
 
 .header {
-    padding: 10px;
+    padding: 10px 15px;
     height: 70px;
     border-bottom: 1px solid #ccc;
     font-size: 24px;
@@ -41,7 +41,8 @@ nav {
         display: none;
 
         a {
-            padding: 10px;
+            display: block;
+            margin-bottom: 3px;
             color: #fff;
 
             &:hover {
@@ -69,7 +70,6 @@ nav {
  * @link https://github.com/jonsuh/hamburgers
  */
 .hamburger {
-    padding: 15px;
     display: inline-block;
     cursor: pointer;
     transition-property: opacity, filter;

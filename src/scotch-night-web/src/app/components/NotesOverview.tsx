@@ -7,7 +7,7 @@ import { IRootStore } from "../stores/RootStore";
 import { NoteDisplay } from "./NoteDisplay";
 import { StarRating } from "./StarRating";
 
-interface INotesOverviewProps { view: number; notes: IBottleNote; tags: string; thoughts: string; }
+interface INotesOverviewProps { view: number; notes: IBottleNote; thoughts: string; }
 
 @observer
 export class NotesOverview extends React.Component<INotesOverviewProps> {
@@ -16,7 +16,7 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
     }
 
     public render() {
-        const { view, notes, tags, thoughts } = this.props;
+        const { view, notes, thoughts } = this.props;
 
         if (view !== 0) {
             return null;
@@ -27,7 +27,7 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
                 <div className="bottle-overview__rating">
                     <StarRating rating={notes ? notes.rating : 0} onChangeRating={null} />
                 </div>
-                <h3>My Thoughts</h3>
+                <h4>My Thoughts</h4>
                 <div style={{ marginTop: 10 }}>{thoughts ? thoughts : "No additional notes"}</div>
             </div>
         );

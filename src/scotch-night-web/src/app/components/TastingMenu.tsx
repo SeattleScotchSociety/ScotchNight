@@ -21,7 +21,6 @@ export class TastingMenu extends React.Component<ITastingMenuProps> {
         const { navigation, scotchNightStore } = this.props.store;
 
         scotchNightStore.setCurrentBottle(bottle);
-
         navigation.push(`/bottles/${bottle.id}`);
     }
 
@@ -29,22 +28,21 @@ export class TastingMenu extends React.Component<ITastingMenuProps> {
         const { scotchNightStore } = this.props.store;
         const { bottles } = scotchNightStore.currentEvent;
 
-        if (!bottles || bottles.length === 0) {
-            return (<div className="noBottles">No Bottles</div>);
-        }
-
         const menuList = bottles.map((item, index) => {
             return (
-                <div className="bottle" key={index} onClick={() => this._handleOnClick(item)}>
-                    <p className="bottle__distillery">{item.distillery}</p>
-                    <p className="bottle__name">{item.name}</p>
+                <div className="card" key={index} onClick={() => this._handleOnClick(item)}>
+                    <h3 className="card__head">{item.distillery}</h3>
+                    <h4 className="card__subhead">{item.name}</h4>
                 </div>
             );
         });
 
         return (
-            <div className="menu">
-                <h2>Tasting Menu</h2>
+            <div>
+                <h2 className="margin-vertical-md">Tasting Menu</h2>
+                {
+                    !bottles || bottles.length === 0 ? <div className="noBottles">No Bottles</div> : null
+                }
                 {menuList}
             </div>
         );

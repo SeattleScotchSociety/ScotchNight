@@ -21,14 +21,22 @@ export const BottleNote = types.model("BottleNote", {
     oily: types.maybe(types.number),
     peppery: types.maybe(types.number),
     thoughts: types.maybe(types.string),
-    tags: types.maybe(types.string),
+    tags: types.maybe(types.string)
 });
 
 export const BottleRating = types.model("BottleRating", {
-    id: types.identifier(),
-    member: types.reference(Member),
-    rating: types.number,
-    thoughts: types.string
+    bottleId: types.maybe(types.string),
+    memberId: types.maybe(types.string),
+    rating: types.maybe(types.number),
+    thoughts: types.maybe(types.string),
+    tags: types.maybe(types.string),
+    finish: types.maybe(types.number),
+    fruity: types.maybe(types.number),
+    vanilla: types.maybe(types.number),
+    smokey: types.maybe(types.number),
+    citrus: types.maybe(types.number),
+    oily: types.maybe(types.number),
+    peppery: types.maybe(types.number)
 });
 
 export const Bottle = types.model("Bottle", {

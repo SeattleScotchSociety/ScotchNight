@@ -1,19 +1,19 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 
-interface IHeaderProps {
+interface IStarRatingProps {
     rating: number;
     onChangeRating: (rating: number) => void;
 };
 
 @observer
-export class StarRating extends React.Component<IHeaderProps> {
+export class StarRating extends React.Component<IStarRatingProps> {
     constructor(props) {
         super(props);
         this._handleOnClick = this._handleOnClick.bind(this);
     }
 
-    _handleOnClick(index) {
+    private _handleOnClick(index) {
         const { onChangeRating } = this.props;
 
         if(onChangeRating) {
@@ -21,7 +21,7 @@ export class StarRating extends React.Component<IHeaderProps> {
         }
     }
 
-    render() {
+    public render() {
         const { rating } = this.props;
         let stars = [];
 
