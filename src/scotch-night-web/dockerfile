@@ -1,0 +1,11 @@
+FROM nginx
+
+ENV NODE_ENV=Production
+
+COPY src /bar
+
+RUN npm install
+
+RUN yarn compile
+
+CMD yarn start
