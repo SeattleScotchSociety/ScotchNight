@@ -53,6 +53,10 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
         const { view, resetCount } = this.state;
         const { currentBottle, summaryNotes, memberNotes } = this.props.store.scotchNightStore;
 
+        if (!currentBottle) {
+            return null;
+        }
+
         return (
             <div className="bottle-detail">
                 <h1 className="bottle-detail__distillery">{currentBottle.distillery}</h1>

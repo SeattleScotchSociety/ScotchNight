@@ -1,4 +1,5 @@
 import createBrowserHistory from "history/createBrowserHistory";
+import * as storage from "localforage";
 import { observable } from "mobx";
 import { Provider } from "mobx-react";
 import { applySnapshot, getSnapshot, onPatch, types } from "mobx-state-tree";
@@ -11,6 +12,7 @@ import { Router } from "react-router-dom";
 import "./styles/app.scss";
 
 import App from "./App";
+import { persist } from "./persist";
 import Auth from "./services/Auth";
 import { createStore } from "./store";
 import { IRootStore, RootStore } from "./stores/RootStore";
@@ -34,25 +36,10 @@ function renderApp(root: JSX.Element) {
     );
 }
 
-const initializeUserCallback = async (err, profile) => {
-    const { bottleStore, eventStore, locationStore, scotchNightStore } = rootStore;
-
-    if (err) {
-        console.log(err);
-        return;
-    }
-
-    if (!profile.email) {
-        return;
-    }
-
-    await bottleStore.loadBottles();
-    await locationStore.loadLocations();
-    const member = await scotchNightStore.setCurrentUserByEmail(profile.email);
-    eventStore.loadEventsForMember(member);
-};
-
-auth.getProfile(initializeUserCallback);
+persist("scotchnight-state", rootStore, {
+    storage,
+    jsonify: true
+});
 
 renderApp(<App auth={auth} />);
 

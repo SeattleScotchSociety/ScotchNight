@@ -44,7 +44,7 @@ export const LocationStore = types
             locations.forEach((location: ILocation) => {
                 const index = _.findIndex(self.locations, ["id", location.id]);
 
-                if (index > 0) {
+                if (index >= 0) {
                     self.locations.splice(index, 1, location);
                 } else {
                     self.locations.push(location);

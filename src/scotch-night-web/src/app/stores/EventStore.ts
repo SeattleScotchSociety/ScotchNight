@@ -28,7 +28,7 @@ export const EventStore = types
             self.isLoading = loading;
         }
 
-        function updateEvents(events: IEvent[]): void {
+        const updateEvents = (events: IEvent[]): void => {
             if (!events) {
                 console.log("no events");
                 return;
@@ -37,13 +37,13 @@ export const EventStore = types
             events.forEach((event: IEvent) => {
                 const index = _.findIndex(self.events, ["id", event.id]);
 
-                if (index > 0) {
+                if (index >= 0) {
                     self.events.splice(index, 1, event);
                 } else {
                     self.events.push(event);
                 }
             });
-        }
+        };
 
         const loadEvents = flow(function* loadAllEvents() {
             const { eventApi }: { eventApi: EventApi } = getEnv(self);
