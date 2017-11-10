@@ -15,7 +15,7 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
     modal: Modal;
     wrappedInstance: AddBottle;
 
-    constructor(props) {
+    constructor(props: IAddBottleProps) {
         super(props);
 
         this.state = {

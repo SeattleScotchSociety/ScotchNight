@@ -1,49 +1,74 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 
-import { IBottleNote } from "../stores/BottleStore";
+import { IBottleNote, IBottleRating } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
-import { StarRating } from "./StarRating";
+import { Input } from './Input';
+import { StarRating } from './StarRating';
 
 import * as format from "date-fns/format";
 
 interface IMyNotesProps {
-    onPressRating: (rating: number) => void;
     view: number;
-    notes: IBottleNote;
-    save: () => void;
-    reset: () => void;
-    resetCount: number;
-    onChange: (noteTitle: string, value: number) => void;
+    notes: IBottleRating;
+    onChange: (noteTitle: string, value: any) => void;
 }
 
 @observer
 export class MyNotes extends React.Component<IMyNotesProps> {
+    flavors: string[];
+
     constructor(props: IMyNotesProps) {
         super(props);
+
+        this._handleFlavorOnClick = this._handleFlavorOnClick.bind(this);
+
+        this.flavors = ["Body", "Boozy", "Chocolate", "Citrus", "Fire", "Floral", "Fruit", "Heavy", "Honey", "Light", "Malty", "Medicinal", "Nutty", "Oily", "Peaty", "Rich", "Smooth", "Spicy", "Sweet", "Tobacco", "Vanilla", "Woody"];
+    }
+
+    _handleFlavorOnClick(flavor) {
+        const { notes, onChange } = this.props;
+        let updatedTags = [];
+
+        if(notes && notes.tags) {
+            updatedTags = notes.tags.split(',')
+        }
+
+        const index = updatedTags.indexOf(flavor);
+
+        if(index < 0) {
+            updatedTags.push(flavor);
+        }
+        else {
+            updatedTags.splice(index, 1);
+        }
+
+        onChange('tags', updatedTags.join(','));
     }
 
     public render() {
-        const { onPressRating, view, notes, save, reset, resetCount, onChange } = this.props;
+        const { view, notes, onChange } = this.props;
 
         if (view !== 1) {
             return null;
         }
 
+        const tags = this.flavors.map((flavor) => { return (<div key={flavor} onClick={this._handleFlavorOnClick.bind(null, flavor)} className={`tag ${notes && notes.tags && notes.tags.indexOf(flavor) > -1 ? 'selected' : ''}`}>{flavor}</div>); });
         const rating = notes && notes.rating ? notes.rating : 0;
 
         return (
             <div className="notes">
-                <StarRating rating={rating} onChangeRating={onPressRating} />
-                <h3>My Thoughts</h3>
-                <textarea
-                    className="notes__thoughts"
-                    rows={5}
-                    onChange={onChange.bind(null, "thoughts")}
+                <StarRating rating={rating} onChangeRating={onChange.bind(null, 'rating')} />
+                <h4>Flavor Profile&nbsp;&nbsp;<span className="text-xs text-300"><em>select all that apply</em></span></h4>
+                <div className="text-center margin-vertical-md">
+                    {tags}
+                </div>
+                <Input
+                    type="text"
+                    placeholder="Other Thoughts"
+                    onChange={(e) => onChange("thoughts", e.target.value)}
                     value={notes && notes.thoughts ? notes.thoughts : ''} />
-                <button className="notes__save btn btn--block btn--primary" onClick={save}>Save</button>
-                <button className="notes__reset btn btn--block" onClick={reset}>Reset</button>
             </div>
         );
     }

@@ -8,5 +8,26 @@
     .input__field {
         border: 0;
         border-bottom: 2px solid #00817d;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.tag {
+    padding: .4rem .8rem;
+    border: 1px solid #00817d;
+    border-radius: 1rem;
+    color: #00817d;
+    display: inline-block;
+    margin: 3px 3px 3px 0;
+    font-size: 13px;
+    cursor: pointer;
+
+    &.selected,
+    &:hover {
+        background-color: #00817d;
+        color: #fff;
     }
 }
