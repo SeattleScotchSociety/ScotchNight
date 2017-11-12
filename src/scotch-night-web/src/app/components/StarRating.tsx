@@ -4,7 +4,7 @@ import * as React from "react";
 interface IStarRatingProps {
     rating: number;
     onChangeRating: (rating: number) => void;
-};
+}
 
 @observer
 export class StarRating extends React.Component<IStarRatingProps> {
@@ -16,20 +16,19 @@ export class StarRating extends React.Component<IStarRatingProps> {
     private _handleOnClick(index) {
         const { onChangeRating } = this.props;
 
-        if(onChangeRating) {
-            onChangeRating(index+1);
+        if (onChangeRating) {
+            onChangeRating(index + 1);
         }
     }
 
     public render() {
         const { rating } = this.props;
-        let stars = [];
+        const stars = [];
 
-        for(let i = 0; i < 5; i++) {
-            if(i < rating) {
+        for (let i = 0; i < 5; i++) {
+            if (i < rating) {
                 stars.push(<i key={`star${i}`} className="fa fa-star star--filled" onClick={() => this._handleOnClick(i)} />);
-            }
-            else {
+            } else {
                 stars.push(<i key={`star${i}`} className="fa fa-star star--empty" onClick={() => this._handleOnClick(i)} />);
             }
         }

@@ -4,8 +4,8 @@ import * as React from "react";
 import { IBottleNote, IBottleRating } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
-import { Input } from './Input';
-import { StarRating } from './StarRating';
+import { Input } from "./Input";
+import { StarRating } from "./StarRating";
 
 import * as format from "date-fns/format";
 
@@ -17,7 +17,7 @@ interface IMyNotesProps {
 
 @observer
 export class MyNotes extends React.Component<IMyNotesProps> {
-    flavors: string[];
+    private flavors: string[];
 
     constructor(props: IMyNotesProps) {
         super(props);
@@ -27,24 +27,23 @@ export class MyNotes extends React.Component<IMyNotesProps> {
         this.flavors = ["Body", "Boozy", "Chocolate", "Citrus", "Fire", "Floral", "Fruit", "Heavy", "Honey", "Light", "Malty", "Medicinal", "Nutty", "Oily", "Peaty", "Rich", "Smooth", "Spicy", "Sweet", "Tobacco", "Vanilla", "Woody"];
     }
 
-    _handleFlavorOnClick(flavor) {
+    private _handleFlavorOnClick(flavor) {
         const { notes, onChange } = this.props;
         let updatedTags = [];
 
-        if(notes && notes.tags) {
-            updatedTags = notes.tags.split(',')
+        if (notes && notes.tags) {
+            updatedTags = notes.tags.split(",");
         }
 
         const index = updatedTags.indexOf(flavor);
 
-        if(index < 0) {
+        if (index < 0) {
             updatedTags.push(flavor);
-        }
-        else {
+        } else {
             updatedTags.splice(index, 1);
         }
 
-        onChange('tags', updatedTags.join(','));
+        onChange("tags", updatedTags.join(","));
     }
 
     public render() {
@@ -54,12 +53,12 @@ export class MyNotes extends React.Component<IMyNotesProps> {
             return null;
         }
 
-        const tags = this.flavors.map((flavor) => { return (<div key={flavor} onClick={this._handleFlavorOnClick.bind(null, flavor)} className={`tag ${notes && notes.tags && notes.tags.indexOf(flavor) > -1 ? 'selected' : ''}`}>{flavor}</div>); });
+        const tags = this.flavors.map((flavor) => (<div key={flavor} onClick={this._handleFlavorOnClick.bind(null, flavor)} className={`tag ${notes && notes.tags && notes.tags.indexOf(flavor) > -1 ? "selected" : ""}`}>{flavor}</div>));
         const rating = notes && notes.rating ? notes.rating : 0;
 
         return (
             <div className="notes">
-                <StarRating rating={rating} onChangeRating={onChange.bind(null, 'rating')} />
+                <StarRating rating={rating} onChangeRating={onChange.bind(null, "rating")} />
                 <h4>Flavor Profile&nbsp;&nbsp;<span className="text-xs text-300"><em>select all that apply</em></span></h4>
                 <div className="text-center margin-vertical-md">
                     {tags}
@@ -68,7 +67,7 @@ export class MyNotes extends React.Component<IMyNotesProps> {
                     type="text"
                     placeholder="Other Thoughts"
                     onChange={(e) => onChange("thoughts", e.target.value)}
-                    value={notes && notes.thoughts ? notes.thoughts : ''} />
+                    value={notes && notes.thoughts ? notes.thoughts : ""} />
             </div>
         );
     }

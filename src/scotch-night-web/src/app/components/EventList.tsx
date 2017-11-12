@@ -1,12 +1,12 @@
+import * as _ from "lodash";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import * as _ from 'lodash';
 
 import { IEvent } from "../stores/EventStore";
 import { IRootStore } from "../stores/RootStore";
 
+import * as compareAsc from "date-fns/compare_asc";
 import * as format from "date-fns/format";
-import * as compareAsc from 'date-fns/compare_asc'
 
 interface IEventListProps { store: IRootStore; }
 
@@ -27,18 +27,19 @@ export class EventList extends React.Component<IEventListProps> {
 
     public render() {
         const { events } = this.props.store.eventStore;
-        let eventElements = [];
-        let future, past = false;
+        const eventElements = [];
+        let future = false;
+        let past = false;
 
-        _.orderBy(events, ['date'], ['desc']).forEach((event) => {
+        _.orderBy(events, ["date"], ["desc"]).forEach((event) => {
             const { date, description, location, title, id } = event;
 
-            if(!future && compareAsc(new Date(date), new Date()) > 0) {
+            if (!future && compareAsc(new Date(date), new Date()) > 0) {
                 future = true;
                 eventElements.push(<h4 key="future-head" className="event__sep">upcoming</h4>);
             }
 
-            if(!past && compareAsc(new Date(date), new Date()) < 1) {
+            if (!past && compareAsc(new Date(date), new Date()) < 1) {
                 past = true;
                 eventElements.push(<h4 key="past-head" className="event__sep">past</h4>);
             }

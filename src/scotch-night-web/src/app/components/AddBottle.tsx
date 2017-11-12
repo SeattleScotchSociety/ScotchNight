@@ -4,16 +4,16 @@ import * as React from "react";
 import { Bottle, IBottle } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
-import { Modal } from "./Modal";
 import { Input } from "./Input";
+import { Modal } from "./Modal";
 
 interface IAddBottleProps { store: IRootStore; }
 interface IAddBottleState { bottle: IBottle; }
 
 @observer
 export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState> {
-    modal: Modal;
-    wrappedInstance: AddBottle;
+    private modal: Modal;
+    private wrappedInstance: AddBottle;
 
     constructor(props: IAddBottleProps) {
         super(props);
@@ -26,10 +26,6 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
         this.handleOnChange = this.handleOnChange.bind(this);
         this.open = this.open.bind(this);
 
-    }
-
-    public open() {
-        this.modal.open();
     }
 
     private handleOnChange = (property, event) => {
@@ -50,6 +46,10 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
         });
     }
 
+    public open() {
+        this.modal.open();
+    }
+
     public render() {
         const { bottle } = this.state;
 
@@ -60,22 +60,22 @@ export class AddBottle extends React.Component<IAddBottleProps, IAddBottleState>
                     type="text"
                     value={bottle.distillery}
                     placeholder="Distillery"
-                    onChange={this.handleOnChange.bind(this, "distillery")}/>
+                    onChange={this.handleOnChange.bind(this, "distillery")} />
                 <Input
                     type="text"
                     value={bottle.name}
                     placeholder="Name"
-                    onChange={this.handleOnChange.bind(this, "name")}/>
+                    onChange={this.handleOnChange.bind(this, "name")} />
                 <Input
                     type="text"
-                    value={bottle.age ? bottle.age : ''}
+                    value={bottle.age ? bottle.age : ""}
                     placeholder="Age"
-                    onChange={this.handleOnChange.bind(this, "age")}/>
+                    onChange={this.handleOnChange.bind(this, "age")} />
                 <Input
                     type="text"
                     placeholder="Description"
                     value={bottle.description}
-                    onChange={this.handleOnChange.bind(this, "description")}/>
+                    onChange={this.handleOnChange.bind(this, "description")} />
                 <button className="btn btn--primary btn--block" onClick={this.handleOnClick}>Add Bottle</button>
             </Modal>
         );

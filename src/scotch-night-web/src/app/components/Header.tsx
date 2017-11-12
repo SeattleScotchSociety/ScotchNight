@@ -18,19 +18,19 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
 
         this.state = {
             menuIsOpen: false
-        }
+        };
     }
 
-    onClickMenu() {
+    private onClickMenu() {
         const { menuIsOpen } = this.state;
         this.setState({ menuIsOpen: !menuIsOpen });
     }
 
-    onClickLink() {
+    private onClickLink() {
         this.setState({ menuIsOpen: false });
     }
 
-    render() {
+    public render() {
         const { auth } = this.props;
         const { menuIsOpen } = this.state;
         const { currentUser } = this.props.scotchNightStore;
@@ -42,7 +42,7 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
                     {currentUser ?
                         <div className={`hamburger hamburger--squeeze ${menuIsOpen ? "is-active" : ""}`} onClick={this.onClickMenu}>
                             <div className="hamburger-box">
-                                <div className="hamburger-inner"></div>
+                                <div className="hamburger-inner" />
                             </div>
                         </div> : null}
                 </div>

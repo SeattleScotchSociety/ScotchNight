@@ -6,7 +6,7 @@ interface IInputProps {
     placeholder: string;
     type: string;
     onChange: any;
-};
+}
 
 @observer
 export class Input extends React.Component<IInputProps> {
@@ -19,7 +19,7 @@ export class Input extends React.Component<IInputProps> {
 
         return (
             <div className={`input`}>
-                <div className="input__placeholder">{value ? placeholder : ' '}</div>
+                <div className="input__placeholder">{value ? placeholder : " "}</div>
                 <input placeholder={placeholder} type={type} value={value} className="input__field" onChange={onChange} />
             </div>
         );

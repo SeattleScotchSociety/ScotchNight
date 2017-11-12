@@ -34,7 +34,7 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
         const { scotchNightStore } = this.props.store;
         const { memberNotes, currentBottle, currentUser } = scotchNightStore;
 
-        let notes = memberNotes ? { ...memberNotes } : {};
+        const notes = memberNotes ? { ...memberNotes } : {};
         notes[noteTitle] = value;
 
         scotchNightStore.setMemberNotes(notes);
@@ -50,8 +50,8 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
 
         return (
             <div className="bottle-detail">
-                <h1 className="bottle-detail__distillery">{currentBottle ? currentBottle.distillery : ''}</h1>
-                <h2 className="bottle-detail__name">{currentBottle ? currentBottle.name : ''}</h2>
+                <h1 className="bottle-detail__distillery">{currentBottle ? currentBottle.distillery : ""}</h1>
+                <h2 className="bottle-detail__name">{currentBottle ? currentBottle.name : ""}</h2>
                 <div className="btn-group">
                     <button onClick={() => this.handleSelectView(0)} className={`btn ${view === 0 ? "btn--primary" : ""}`}>Overview</button>
                     <button onClick={() => this.handleSelectView(1)} className={`btn ${view === 1 ? "btn--primary" : ""}`}>My Notes</button>

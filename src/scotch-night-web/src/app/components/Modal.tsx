@@ -4,7 +4,7 @@ import * as React from "react";
 interface IModalProps {
     children: any;
     className: string;
-};
+}
 
 interface IModalState {
     isOpen: boolean;
@@ -27,16 +27,16 @@ export class Modal extends React.Component<IModalProps, IModalState> {
     public open() {
         this.setState({ isOpen: true });
 
-        if(document && document.body) {
-            document.body.classList.add('modal__body');
+        if (document && document.body) {
+            document.body.classList.add("modal__body");
         }
     }
 
     public close() {
         this.setState({ isOpen: false });
 
-        if(document && document.body) {
-            document.body.classList.remove('modal__body');
+        if (document && document.body) {
+            document.body.classList.remove("modal__body");
         }
     }
 
@@ -49,7 +49,7 @@ export class Modal extends React.Component<IModalProps, IModalState> {
         const { isOpen } = this.state;
 
         return (
-            <div className={`modal ${className} ${isOpen ? 'open' : ''}`} onClick={this.close}>
+            <div className={`modal ${className} ${isOpen ? "open" : ""}`} onClick={this.close}>
                 <div className="modal__content" onClick={this.ignore}>
                     {children}
                 </div>
