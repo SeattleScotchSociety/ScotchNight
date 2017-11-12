@@ -1,3 +1,4 @@
+import * as storage from "localforage";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
@@ -83,7 +84,7 @@ export class App extends React.Component<IRouteProps> {
         const { bottleStore, eventStore, locationStore, scotchNightStore } = store;
 
         if (err) {
-            console.log(err);
+            storage.removeItem("scotchnight-state");
             return;
         }
 

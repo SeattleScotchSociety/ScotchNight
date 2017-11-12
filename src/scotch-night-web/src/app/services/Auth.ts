@@ -1,5 +1,6 @@
 import { WebAuth } from "auth0-js";
 import createBrowserHistory from "history/createBrowserHistory";
+import * as storage from "localforage";
 import { IEventStore } from "../stores/EventStore";
 import { IScotchNightStore } from "../stores/ScotchNightStore";
 
@@ -24,6 +25,7 @@ export class Auth {
     }
 
     public login() {
+        storage.removeItem("scotchnight-state");
         this.auth0.authorize();
     }
 

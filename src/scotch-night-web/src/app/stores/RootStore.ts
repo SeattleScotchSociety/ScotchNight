@@ -1,3 +1,4 @@
+import * as storage from "localforage";
 import { getEnv, types } from "mobx-state-tree";
 
 import { getDependencyViews } from "./dependencyViews";
@@ -33,7 +34,7 @@ export const RootStore = types
             const { bottleStore, eventStore, locationStore, scotchNightStore } = self;
 
             if (err) {
-                console.log(err);
+                storage.removeItem("scotchnight-state");
                 return;
             }
 
