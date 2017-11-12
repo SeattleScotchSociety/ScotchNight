@@ -36,7 +36,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 string query = "UPDATE Location "
-                                + " SET Name = @Name, Address1 = @Address1, Address2 = @Address2, City = @City, State = @State, ZipCode = @ZipCode)"
+                                + " SET Name = @Name, Address1 = @Address1, Address2 = @Address2, City = @City, State = @State, ZipCode = @ZipCode"
                                 + " WHERE Id = @Id";
                 connection.Open();
 

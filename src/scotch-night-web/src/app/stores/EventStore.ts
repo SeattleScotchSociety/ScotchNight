@@ -3,6 +3,8 @@ import { observable } from "mobx";
 import { flow, getEnv, getParent, types } from "mobx-state-tree";
 
 import EventApi from "../api/EventApi";
+import LocationApi from "../api/LocationApi";
+
 import { Bottle, IBottle } from "./BottleStore";
 import { Location } from "./LocationStore";
 import { IMember, Member } from "./MemberStore";
@@ -28,13 +30,14 @@ export const EventStore = types
             self.isLoading = loading;
         }
 
-        const updateEvents = (events: IEvent[]): void => {
+        const updateEvents = async (events: IEvent[]) => {
             if (!events) {
                 console.log("no events");
                 return;
             }
 
-            events.forEach((event: IEvent) => {
+            events.forEach(async (event: IEvent) => {
+                const { locationApi }: { locationApi: LocationApi } = getEnv(self);
                 const index = _.findIndex(self.events, ["id", event.id]);
 
                 if (index >= 0) {
@@ -49,7 +52,7 @@ export const EventStore = types
             const { eventApi }: { eventApi: EventApi } = getEnv(self);
 
             const events = yield eventApi.getAll();
-            updateEvents(events);
+            yield updateEvents(events);
             markLoading(false);
         });
 
