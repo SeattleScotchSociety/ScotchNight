@@ -9,6 +9,11 @@
 @import "rating";
 @import "helpers";
 
+.VictoryContainer,
+.VictoryContainer svg {
+    height: inherit !important;
+}
+
 .container {
     padding: 1rem;
 }

@@ -50,9 +50,15 @@ export const ScotchNightStore = types
             return member;
         });
 
-        const setMemberNotes = (notes) => {
+        const setMemberNotes = flow(function* setNotes(notes) {
+            const { noteApi }: { noteApi: NoteApi } = getEnv(self);
+
+            notes.memberId = self.currentUser.id;
+            notes.bottleId = self.currentBottle.id;
             self.memberNotes = notes;
-        };
+
+            yield noteApi.addReview(notes);
+        });
 
         return {
             setCurrentBottle,
