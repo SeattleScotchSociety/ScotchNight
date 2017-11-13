@@ -15,7 +15,7 @@ export default class NoteApi {
             "Content-Type": "application/json"
         };
 
-        return fetch(`http://localhost:5000/api/notes/summary/${bottleId}`, {
+        return fetch(`https://scotchnightapi.azurewebsites.net/api/notes/summary/${bottleId}`, {
             method: "get",
             headers
         })
