@@ -69,7 +69,6 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
 
     private clearCurrentEvent() {
         const { scotchNightStore } = this.props.store;
-        console.log('hi')
         scotchNightStore.setCurrentEvent(null);
     }
 
