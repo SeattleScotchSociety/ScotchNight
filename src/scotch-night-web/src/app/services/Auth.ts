@@ -10,7 +10,7 @@ export class Auth {
     private auth0 = new WebAuth({
         domain: "seattle-scotch-society.auth0.com",
         clientID: "ZjCMnx9zuX7umATd69Oyv5jpyk9d80zU",
-        redirectUri: "https://scotchnightweb.azurewebsites.net/callback",
+        redirectUri: "http://localhost:8080/callback",
         audience: "https://scotchnightapi.azurewebsites.net/api/",
         responseType: "token id_token",
         scope: "openid email scotchnight:access"
@@ -75,8 +75,10 @@ export class Auth {
         localStorage.removeItem("access_token");
         localStorage.removeItem("id_token");
         localStorage.removeItem("expires_at");
-        // navigate to the home route
-        this.history.push("/bottles");
+        storage.removeItem("scotchnight-state").then(() => {
+            // navigate to the home route
+            this.history.push("/login");
+        });
     }
 
     public isAuthenticated() {

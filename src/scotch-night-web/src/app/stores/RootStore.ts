@@ -30,6 +30,10 @@ export const RootStore = types
             auth.getProfile(initializeUserCallback);
         }
 
+        function clear() {
+            self.scotchNightStore.clear();
+        }
+
         const initializeUserCallback = async (err, profile) => {
             const { bottleStore, eventStore, locationStore, scotchNightStore } = self;
 
@@ -49,7 +53,8 @@ export const RootStore = types
         };
 
         return {
-            afterHydration
+            afterHydration,
+            clear
         };
     });
 

@@ -19,12 +19,18 @@ export const ScotchNightStore = types
         memberNotes: types.maybe(BottleRating),
     })
     .actions((self) => {
+        function clear() {
+            self.currentUser = null;
+            self.currentBottle = null;
+            self.currentEvent = null;
+        }
+
         const setCurrentBottle = flow(function* setBottle(bottle: IBottle) {
             const { noteApi }: { noteApi: NoteApi } = getEnv(self);
 
             self.currentBottle = bottle;
 
-            if(bottle) {
+            if (bottle) {
                 self.summaryNotes = yield noteApi.getSummaryNotes(bottle.id);
                 self.memberNotes = yield noteApi.getMemberNotes(self.currentUser.id, bottle.id);
             }
@@ -63,6 +69,7 @@ export const ScotchNightStore = types
         });
 
         return {
+            clear,
             setCurrentBottle,
             setCurrentEvent,
             setCurrentUser,

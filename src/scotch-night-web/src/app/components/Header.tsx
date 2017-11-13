@@ -55,7 +55,11 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
                             <li><Link to="/bottles" onClick={this.onClickLink}>Scotch Library</Link></li>
                         </ul>
                     </li>
-                    <li><Link to="/login" onClick={(e) => { auth.logout(); }}>Logout</Link></li>
+                    <li><Link to="/login" onClick={(e) => {
+                        this.props.scotchNightStore.clear();
+                        auth.logout();
+                        this.onClickMenu();
+                    }}>Logout</Link></li>
                 </ul>
             </nav>
         );
