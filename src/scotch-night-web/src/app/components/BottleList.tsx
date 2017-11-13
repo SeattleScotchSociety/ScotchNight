@@ -2,6 +2,7 @@ import * as _ from "lodash";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 
+import { IBottle } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
 interface IBottleListProps { store: IRootStore; }
@@ -15,7 +16,7 @@ export class BottleList extends React.Component<IBottleListProps> {
         this._handleOnClick = this._handleOnClick.bind(this);
     }
 
-    private _handleOnClick(bottle) {
+    private _handleOnClick(bottle: IBottle) {
         const { navigation, scotchNightStore } = this.props.store;
 
         scotchNightStore.setCurrentBottle(bottle);

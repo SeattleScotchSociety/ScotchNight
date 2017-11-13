@@ -10,7 +10,7 @@ export class Auth {
     private auth0 = new WebAuth({
         domain: "seattle-scotch-society.auth0.com",
         clientID: "ZjCMnx9zuX7umATd69Oyv5jpyk9d80zU",
-        redirectUri: "http://localhost:8080/callback",
+        redirectUri: "https://scotchnightweb.azurewebsites.net/callback",
         audience: "https://scotchnightapi.azurewebsites.net/api/",
         responseType: "token id_token",
         scope: "openid email scotchnight:access"

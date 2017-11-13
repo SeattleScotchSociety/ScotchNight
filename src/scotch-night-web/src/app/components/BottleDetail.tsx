@@ -2,9 +2,10 @@ import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import * as React from "react";
 
-import { IBottleNote } from "../stores/BottleStore";
+import { IBottle, IBottleNote } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
+import { EditBottle } from "./EditBottle";
 import { MyNotes } from "./MyNotes";
 import { NotesOverview } from "./NotesOverview";
 
@@ -16,16 +17,26 @@ interface IBottleDetailState {
 @inject("store")
 @observer
 export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDetailState> {
+    private edit: EditBottle;
+
     constructor(props) {
         super(props);
 
         this.handleSelectView = this.handleSelectView.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+<<<<<<< HEAD
         this.clearCurrentBottle = this.clearCurrentBottle.bind(this);
+=======
+        this.handleOnEditBottle = this.handleOnEditBottle.bind(this);
+>>>>>>> 83526650c15cafc0692472f5cb5a307934d803f9
 
         this.state = {
             view: 0
         };
+    }
+
+    private handleOnEditBottle() {
+        this.edit.open();
     }
 
     private handleSelectView(index) {
@@ -67,6 +78,8 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
                     <button onClick={() => this.handleSelectView(0)} className={`btn ${view === 0 ? "btn--primary" : ""}`}>Overview</button>
                     <button onClick={() => this.handleSelectView(1)} className={`btn ${view === 1 ? "btn--primary" : ""}`}>My Notes</button>
                 </div>
+                <button className="btn btn--primary btn--block" onClick={this.handleOnEditBottle}>Edit Bottle</button>
+                <EditBottle ref={(edit) => { this.edit = edit; }} store={this.props.store} bottle={currentBottle} />
                 <NotesOverview view={view} notes={summaryNotes} thoughts={memberNotes ? memberNotes.thoughts : ""} />
                 <MyNotes notes={memberNotes} view={view} onChange={this.handleOnChange} />
             </div>

@@ -62,4 +62,29 @@ export default class BottleApi {
                 console.log(error);
             });
     }
+
+    public updateBottle(bottle) {
+        const { getAccessToken } = this.auth;
+        const headers = {
+            "Authorization": `Bearer ${getAccessToken()}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        };
+
+        return fetch("https://scotchnightapi.azurewebsites.net/api/bottles", {
+            method: "put",
+            headers,
+            body: JSON.stringify(bottle)
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return true;
+                }
+
+                return false;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 }
