@@ -24,11 +24,8 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
 
         this.handleSelectView = this.handleSelectView.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
-<<<<<<< HEAD
         this.clearCurrentBottle = this.clearCurrentBottle.bind(this);
-=======
         this.handleOnEditBottle = this.handleOnEditBottle.bind(this);
->>>>>>> 83526650c15cafc0692472f5cb5a307934d803f9
 
         this.state = {
             view: 0
