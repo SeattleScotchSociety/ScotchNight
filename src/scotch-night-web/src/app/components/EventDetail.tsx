@@ -30,9 +30,7 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
     }
 
     private handleOnAddBottle() {
-        const { scotchNightStore } = this.props.store;
-        const { navigation } = this.props.store;
-        navigation.push(`${scotchNightStore.currentEvent.id}/add-bottle`);
+        this.add.open();
     }
 
     private buildEventMap(position: any) {
@@ -86,7 +84,9 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
                 <p className="event__detail"><i className="fa fa-fw fa-calendar-o" />&nbsp;{format(date, "MMMM D, YYYY")}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-clock-o" />&nbsp;{format(date, "h:mm aa")}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-map-marker" />&nbsp;{location.name}</p>
-                {eventMap}
+                <div className="event__map">
+                    {eventMap}
+                </div>
                 <TastingMenu store={this.props.store} />
                 <button className="btn btn--primary btn--block" onClick={this.handleOnAddBottle}>Add Bottle</button>
                 <AddBottle ref={(add) => { this.add = add; }} store={this.props.store} />

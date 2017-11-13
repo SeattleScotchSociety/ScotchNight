@@ -77,21 +77,39 @@ export const BottleStore = types
             return newBottle;
         });
 
-        function updateBottles(json: IBottle[]): void {
-            if (!json) {
+        const editBottle = flow(function* editExistingBottle(bottle: IBottle) {
+            const { bottleApi, eventApi }: { bottleApi: BottleApi, eventApi: EventApi } = getEnv(self);
+
+            const bottleId = bottle.id;
+
+            yield bottleApi.updateBottle(bottle);
+
+            yield loadBottles();
+
+            const index = _.findIndex(self.bottles, ["id", bottleId]);
+
+            const editedBottle = self.bottles[index];
+
+            return editedBottle;
+        });
+
+        function updateBottle(bottle: IBottle) {
+            const index = _.findIndex(self.bottles, ["id", bottle.id]);
+
+            if (index >= 0) {
+                self.bottles.splice(index, 1, bottle);
+            } else {
+                self.bottles.push(bottle);
+            }
+        }
+
+        function updateBottles(bottles: IBottle[]) {
+            if (!bottles) {
                 console.log("no bottles to update");
                 return;
             }
 
-            json.forEach((bottle: IBottle) => {
-                const index = _.findIndex(self.bottles, ["id", bottle.id]);
-
-                if (index >= 0) {
-                    self.bottles.splice(index, 1, bottle);
-                } else {
-                    self.bottles.push(bottle);
-                }
-            });
+            bottles.forEach(updateBottle);
         }
 
         const loadBottles = flow(function* loadAllBottles() {
@@ -105,6 +123,7 @@ export const BottleStore = types
 
         return {
             addBottle,
+            editBottle,
             loadBottles,
             updateBottles
         };

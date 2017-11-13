@@ -1,9 +1,10 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 
-import { IBottleNote } from "../stores/BottleStore";
+import { IBottle, IBottleNote } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
 
+import { EditBottle } from "./EditBottle";
 import { MyNotes } from "./MyNotes";
 import { NotesOverview } from "./NotesOverview";
 
@@ -15,15 +16,22 @@ interface IBottleDetailState {
 @inject("store")
 @observer
 export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDetailState> {
+    private edit: EditBottle;
+
     constructor(props) {
         super(props);
 
         this.handleSelectView = this.handleSelectView.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.handleOnEditBottle = this.handleOnEditBottle.bind(this);
 
         this.state = {
             view: 0
         };
+    }
+
+    private handleOnEditBottle() {
+        this.edit.open();
     }
 
     private handleSelectView(index) {
@@ -50,6 +58,8 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
 
         return (
             <div className="bottle-detail">
+                <button className="btn btn--primary btn--block" onClick={this.handleOnEditBottle}>Edit Bottle</button>
+                <EditBottle ref={(edit) => { this.edit = edit; }} store={this.props.store} bottle={currentBottle} />
                 <h1 className="bottle-detail__distillery">{currentBottle ? currentBottle.distillery : ""}</h1>
                 <h2 className="bottle-detail__name">{currentBottle ? currentBottle.name : ""}</h2>
                 <div className="btn-group">
