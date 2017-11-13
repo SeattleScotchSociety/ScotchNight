@@ -1,4 +1,5 @@
 import { inject, observer } from "mobx-react";
+import { Link } from "react-router-dom";
 import * as React from "react";
 
 import { IBottleNote } from "../stores/BottleStore";
@@ -20,6 +21,7 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
 
         this.handleSelectView = this.handleSelectView.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.clearCurrentBottle = this.clearCurrentBottle.bind(this);
 
         this.state = {
             view: 0
@@ -40,9 +42,13 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
         scotchNightStore.setMemberNotes(notes);
     }
 
+    private clearCurrentBottle() {
+        this.props.store.scotchNightStore.setCurrentBottle(null);
+    }
+
     public render() {
         const { view } = this.state;
-        const { currentBottle, summaryNotes, memberNotes } = this.props.store.scotchNightStore;
+        const { currentBottle, summaryNotes, memberNotes, currentEvent } = this.props.store.scotchNightStore;
 
         if (!currentBottle) {
             return null;
@@ -50,7 +56,12 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
 
         return (
             <div className="bottle-detail">
-                <h1 className="bottle-detail__distillery">{currentBottle ? currentBottle.distillery : ""}</h1>
+                {
+                    currentEvent ?
+                        <Link to={`/events/${currentEvent.id}`} onClick={this.clearCurrentBottle}>{`< Back to Event`}</Link> :
+                        <Link to="/bottles" onClick={this.clearCurrentBottle}>{`< Back to Library`}</Link>
+                }
+                <h1 className="margin-top-md bottle-detail__distillery">{currentBottle ? currentBottle.distillery : ""}</h1>
                 <h2 className="bottle-detail__name">{currentBottle ? currentBottle.name : ""}</h2>
                 <div className="btn-group">
                     <button onClick={() => this.handleSelectView(0)} className={`btn ${view === 0 ? "btn--primary" : ""}`}>Overview</button>

@@ -45,6 +45,22 @@ interface INotesOverviewProps { view: number; notes: IBottleNote; thoughts: stri
 export class NotesOverview extends React.Component<INotesOverviewProps> {
     constructor(props: INotesOverviewProps) {
         super(props);
+
+        this.getTagCount = this.getTagCount.bind(this);
+    }
+
+    getTagCount(tag) {
+        const { notes } = this.props;
+
+        if(notes && notes.tags) {
+            let count = notes.tags.get(tag);
+
+            if(count) {
+                return count;
+            }
+        }
+
+        return 0;
     }
 
     public render() {
@@ -53,26 +69,26 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
         if (view !== 0) {
             return null;
         }
-
+        
         let profile = [
-            { flavor: "Boozy", count: 1 },
-            { flavor: "Heavy", count: 10 },
-            { flavor: "Medicinal", count: 10 },
-            { flavor: "Spicy", count: 20 },
-            { flavor: "Fire", count: 1},
-            { flavor: "Peaty", count: 4 },
-            { flavor: "Tobacco", count: 0 },
-            { flavor: "Nutty", count: 0 },
-            { flavor: "Rich", count: 0 },
-            { flavor: "Citrus", count: 1 },
-            { flavor: "Fruit", count: 20 },
-            { flavor: "Floral", count: 0 },
-            { flavor: "Woody", count: 0 },
-            { flavor: "Honey", count: 40 },
-            { flavor: "Sweet", count: 0 },
-            { flavor: "Vanilla", count: 0 },
-            { flavor: "Light", count: 1 },
-            { flavor: "Oily", count: 10 },
+            { flavor: "Boozy", count: this.getTagCount("Boozy") },
+            { flavor: "Heavy", count: this.getTagCount('Heavy') },
+            { flavor: "Medicinal", count: this.getTagCount('Medicinal') },
+            { flavor: "Spicy", count: this.getTagCount('Spicy') },
+            { flavor: "Fire", count: this.getTagCount('Fire') },
+            { flavor: "Smokey", count: this.getTagCount('Peaty') },
+            { flavor: "Tobacco", count: this.getTagCount('Tobacco') },
+            { flavor: "Woody", count: this.getTagCount('Woody') },
+            { flavor: "Nutty", count: this.getTagCount('Nutty') },
+            { flavor: "Rich", count: this.getTagCount('Rich') },
+            { flavor: "Citrus", count: this.getTagCount('Citrus') },
+            { flavor: "Fruit", count: this.getTagCount('Fruit') },
+            { flavor: "Floral", count: this.getTagCount('Floral') },
+            { flavor: "Honey", count: this.getTagCount('Honey') },
+            { flavor: "Sweet", count: this.getTagCount('Sweet') },
+            { flavor: "Vanilla", count: this.getTagCount('Vanilla') },
+            { flavor: "Light", count: this.getTagCount('Light') },
+            { flavor: "Oily", count: this.getTagCount('Oily') }
         ];
 
         return (

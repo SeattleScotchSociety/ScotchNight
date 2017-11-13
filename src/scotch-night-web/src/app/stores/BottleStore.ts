@@ -11,17 +11,9 @@ import { Member } from "./MemberStore";
 
 export const BottleNote = types.model("BottleNote", {
     bottleId: types.string,
-    memberId: types.string,
     rating: types.maybe(types.number),
-    finish: types.maybe(types.number),
-    fruity: types.maybe(types.number),
-    vanilla: types.maybe(types.number),
-    smokey: types.maybe(types.number),
-    citrus: types.maybe(types.number),
-    oily: types.maybe(types.number),
-    peppery: types.maybe(types.number),
     thoughts: types.maybe(types.string),
-    tags: types.maybe(types.string)
+    tags: types.maybe(types.map(types.number))
 });
 
 export const BottleRating = types.model("BottleRating", {

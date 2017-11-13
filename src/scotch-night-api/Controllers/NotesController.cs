@@ -29,15 +29,13 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         }
 
         [HttpGet("summary/{bottleId}")]
-        public async Task<Note> Get(Guid bottleId)
+        public async Task<SummaryNote> Get(Guid bottleId)
         {
             var allNotes = await _noteStore.GetByBottle(bottleId);
 
-            var summaryNote = new Note
+            var summaryNote = new SummaryNote
             {
-                BottleId = bottleId,
-                MemberId = Guid.Empty,
-                Thoughts = string.Empty,
+                BottleId = bottleId
             };
 
             float? SummarizeRating(IEnumerable<float?> allRatings)
@@ -52,14 +50,27 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
                 return summarizedValue;
             }
 
-            summaryNote.Citrus = SummarizeRating(allNotes.Where(note => note.Citrus != null).Select(note => note.Citrus));
-            summaryNote.Finish = SummarizeRating(allNotes.Where(note => note.Finish != null).Select(note => note.Finish));
-            summaryNote.Fruity = SummarizeRating(allNotes.Where(note => note.Fruity != null).Select(note => note.Fruity));
-            summaryNote.Oily = SummarizeRating(allNotes.Where(note => note.Oily != null).Select(note => note.Oily));
-            summaryNote.Peppery = SummarizeRating(allNotes.Where(note => note.Peppery != null).Select(note => note.Peppery));
             summaryNote.Rating = SummarizeRating(allNotes.Where(note => note.Rating != null).Select(note => note.Rating));
-            summaryNote.Smokey = SummarizeRating(allNotes.Where(note => note.Smokey != null).Select(note => note.Smokey));
-            summaryNote.Vanilla = SummarizeRating(allNotes.Where(note => note.Vanilla != null).Select(note => note.Vanilla));
+
+             Dictionary<string, int> SummarizeTags(IEnumerable<string> allTags) {
+                var summary = new Dictionary<string, int>();
+
+                foreach(string tags in allTags) {
+                    string[] tagArr = tags.Split(',');
+
+                    foreach(string tag in tagArr) {
+                        if(!summary.ContainsKey(tag)) {
+                            summary.Add(tag, 0);
+                        }
+
+                        summary[tag] = summary[tag] + 1;
+                    }
+                }
+
+                return summary;
+            }
+
+            summaryNote.Tags = SummarizeTags(allNotes.Where(note => note.Tags != null).Select(note => note.Tags));
 
             return summaryNote;
         }

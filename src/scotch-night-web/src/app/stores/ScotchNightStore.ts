@@ -24,8 +24,10 @@ export const ScotchNightStore = types
 
             self.currentBottle = bottle;
 
-            self.summaryNotes = yield noteApi.getSummaryNotes(bottle.id);
-            self.memberNotes = yield noteApi.getMemberNotes(self.currentUser.id, bottle.id);
+            if(bottle) {
+                self.summaryNotes = yield noteApi.getSummaryNotes(bottle.id);
+                self.memberNotes = yield noteApi.getMemberNotes(self.currentUser.id, bottle.id);
+            }
         });
 
         const setCurrentUser = (member: IMember) => {

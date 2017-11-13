@@ -24,7 +24,7 @@ export class MyNotes extends React.Component<IMyNotesProps> {
 
         this._handleFlavorOnClick = this._handleFlavorOnClick.bind(this);
 
-        this.flavors = ["Boozy", "Citrus", "Fire", "Floral", "Fruit", "Heavy", "Honey", "Light", "Medicinal", "Nutty", "Oily", "Peaty", "Rich", "Spicy", "Sweet", "Tobacco", "Vanilla", "Woody"];
+        this.flavors = ["Boozy", "Citrus", "Fire", "Floral", "Fruit", "Heavy", "Honey", "Light", "Medicinal", "Nutty", "Oily", "Rich", "Smokey", "Spicy", "Sweet", "Tobacco", "Vanilla", "Woody"];
     }
 
     private _handleFlavorOnClick(flavor) {

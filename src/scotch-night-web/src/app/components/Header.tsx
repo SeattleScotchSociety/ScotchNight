@@ -27,6 +27,8 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
     }
 
     private onClickLink() {
+        this.props.scotchNightStore.setCurrentBottle(null);
+        this.props.scotchNightStore.setCurrentEvent(null);
         this.setState({ menuIsOpen: false });
     }
 

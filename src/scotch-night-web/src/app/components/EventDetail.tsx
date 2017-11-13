@@ -1,4 +1,5 @@
 import { inject, observer } from "mobx-react";
+import { Link } from "react-router-dom";
 import * as React from "react";
 
 import { IRootStore } from "../stores/RootStore";
@@ -27,6 +28,7 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
 
         this.buildEventMap = this.buildEventMap.bind(this);
         this.handleOnAddBottle = this.handleOnAddBottle.bind(this);
+        this.clearCurrentEvent = this.clearCurrentEvent.bind(this);
     }
 
     private handleOnAddBottle() {
@@ -53,10 +55,10 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
         return (
             <GenericMap
                 containerElement={
-                    <div style={{ height: `100%` }} />
+                    <div className="map-container" />
                 }
                 mapElement={
-                    <div style={{ height: `100%` }} />
+                    <div className="map" />
                 }
                 ref={() => null}
                 defaultZoom={13}
@@ -65,6 +67,12 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
                 markers={markers}
             />
         );
+    }
+
+    private clearCurrentEvent() {
+        const { scotchNightStore } = this.props.store;
+        console.log('hi')
+        scotchNightStore.setCurrentEvent(null);
     }
 
     public render() {
@@ -81,7 +89,8 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
 
         return (
             <div className="container">
-                <h1>{title}</h1>
+                <Link to="/events" onClick={this.clearCurrentEvent}>{`< Back to Events`}</Link>
+                <h1 className="margin-top-md">{title}</h1>
                 <p className="margin-vertical-md"><em>{description}</em></p>
                 <p className="event__detail"><i className="fa fa-fw fa-calendar-o" />&nbsp;{format(date, "MMMM D, YYYY")}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-clock-o" />&nbsp;{format(date, "h:mm aa")}</p>
