@@ -84,7 +84,7 @@ export const LocationStore = types
             const { locationApi }: { locationApi: LocationApi } = getEnv(self);
 
             const locations = yield locationApi.getAll();
-            updateLocations(locations);
+            yield updateLocations(locations);
             markLoading(false);
         });
 

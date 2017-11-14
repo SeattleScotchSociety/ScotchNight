@@ -88,10 +88,8 @@ export class App extends React.Component<IRouteProps> {
             return;
         }
 
-        await bottleStore.loadBottles();
-        await locationStore.loadLocations();
-        const member = await scotchNightStore.setCurrentUserByEmail(profile.email);
-        eventStore.loadEventsForMember(member);
+        await scotchNightStore.setCurrentUserByEmail(profile.email);
+        await store.refreshAppData();
     }
 
     private handleAuthentication(nextState, auth) {

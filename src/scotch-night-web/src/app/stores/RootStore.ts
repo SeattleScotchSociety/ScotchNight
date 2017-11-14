@@ -27,34 +27,31 @@ export const RootStore = types
 
             const auth = getEnv(self).auth;
 
-            auth.getProfile(initializeUserCallback);
+            refreshAppData();
         }
 
         function clear() {
             self.scotchNightStore.clear();
         }
 
-        const initializeUserCallback = async (err, profile) => {
+        const refreshAppData = async () => {
             const { bottleStore, eventStore, locationStore, scotchNightStore } = self;
+            const { currentUser } = scotchNightStore;
 
-            if (err) {
-                storage.removeItem("scotchnight-state");
-                return;
-            }
-
-            if (!profile.email) {
+            if (!currentUser) {
                 return;
             }
 
             await bottleStore.loadBottles();
             await locationStore.loadLocations();
-            const member = await scotchNightStore.setCurrentUserByEmail(profile.email);
-            eventStore.loadEventsForMember(member);
+
+            eventStore.loadEventsForMember(currentUser);
         };
 
         return {
             afterHydration,
-            clear
+            clear,
+            refreshAppData
         };
     });
 
