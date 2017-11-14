@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
-import { Link } from "react-router-dom";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import { IBottle, IBottleNote } from "../stores/BottleStore";
 import { IRootStore } from "../stores/RootStore";
