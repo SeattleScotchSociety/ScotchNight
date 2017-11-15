@@ -81,8 +81,10 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
         }
 
         const { date, description, location, title } = currentEvent;
-        const { position } = location;
+        const { address1, address2, city, state, zipCode, position } = location;
         const eventMap = this.buildEventMap(position);
+        const fullAddress = `${address1}, ${address2 ? address2 + ', ' : ''}${city}, ${state} ${zipCode}`;
+
 
         return (
             <div className="container">
@@ -91,10 +93,8 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
                 <p className="margin-vertical-md"><em>{description}</em></p>
                 <p className="event__detail"><i className="fa fa-fw fa-calendar-o" />&nbsp;{format(date, "MMMM D, YYYY")}</p>
                 <p className="event__detail"><i className="fa fa-fw fa-clock-o" />&nbsp;{format(date, "h:mm aa")}</p>
-                <p className="event__detail"><i className="fa fa-fw fa-map-marker" />&nbsp;{location.name}</p>
-                <div className="event__map">
-                    {eventMap}
-                </div>
+                <p className="event__detail"><i className="fa fa-fw fa-map-marker" />&nbsp;{location.name}&nbsp;<a className="text-sm" href={`http://maps.apple.com/?daddr=${encodeURIComponent(fullAddress)}`}>(get directions)</a></p>
+                {eventMap}
                 <TastingMenu store={this.props.store} />
                 <button className="btn btn--primary btn--block" onClick={this.handleOnAddBottle}>Add Bottle</button>
                 <AddBottle ref={(add) => { this.add = add; }} store={this.props.store} />

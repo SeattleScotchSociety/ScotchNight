@@ -56,8 +56,16 @@ a, a:active {
     }
 }
 
+main {
+    background-color: #BFE0DF;
+}
+
 .container {
     padding: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #fff;
+    min-height: calc(100vh - 70px);
 }
 
 i {
