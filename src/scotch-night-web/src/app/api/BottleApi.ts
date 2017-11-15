@@ -9,7 +9,13 @@ export default class BottleApi {
 
     public getAll() {
         const { getAccessToken } = this.auth;
-        const headers = { Authorization: `Bearer ${getAccessToken()}` };
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
+        const headers = { Authorization: `Bearer ${token}` };
 
         return fetch("https://scotchnightapi.azurewebsites.net/api/bottles", {
             headers
