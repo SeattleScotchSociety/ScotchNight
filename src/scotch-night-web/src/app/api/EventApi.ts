@@ -41,8 +41,14 @@ export default class EventApi {
 
     public getAllForMember(member: IMember): Promise<IEvent[]> {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };

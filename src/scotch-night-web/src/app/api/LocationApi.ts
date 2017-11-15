@@ -9,8 +9,14 @@ export default class LocationApi {
 
     public getAll() {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -39,8 +45,14 @@ export default class LocationApi {
 
     public addLocation(location) {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
