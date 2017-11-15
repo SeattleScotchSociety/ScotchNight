@@ -39,7 +39,7 @@ const CenterLabel = (props) => {
     return null;
 };
 
-interface INotesOverviewProps { view: number; notes: IBottleNote; thoughts: string; }
+interface INotesOverviewProps { view: string; notes: IBottleNote; thoughts: string; }
 
 @observer
 export class NotesOverview extends React.Component<INotesOverviewProps> {
@@ -66,7 +66,7 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
     public render() {
         const { view, notes, thoughts } = this.props;
 
-        if (view !== 0) {
+        if (view !== "overview") {
             return null;
         }
 
@@ -114,6 +114,18 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
                                     ];
                                 },
                                 onMouseOut: () => {
+                                    return [
+                                        { target: "labels", mutation: () => ({ active: false }) },
+                                        { target: "data", mutation: () => ({ active: false }) }
+                                    ];
+                                },
+                                onTouchStart: () => {
+                                    return [
+                                        { target: "labels", mutation: () => ({ active: true }) },
+                                        { target: "data", mutation: () => ({ active: true }) }
+                                    ];
+                                },
+                                onTouchEnd: () => {
                                     return [
                                         { target: "labels", mutation: () => ({ active: false }) },
                                         { target: "data", mutation: () => ({ active: false }) }

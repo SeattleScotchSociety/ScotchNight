@@ -10,7 +10,7 @@ import { StarRating } from "./StarRating";
 import * as format from "date-fns/format";
 
 interface IMyNotesProps {
-    view: number;
+    view: string;
     notes: IBottleRating;
     onChange: (noteTitle: string, value: any) => void;
 }
@@ -49,7 +49,7 @@ export class MyNotes extends React.Component<IMyNotesProps> {
     public render() {
         const { view, notes, onChange } = this.props;
 
-        if (view !== 1) {
+        if (view !== "notes") {
             return null;
         }
 

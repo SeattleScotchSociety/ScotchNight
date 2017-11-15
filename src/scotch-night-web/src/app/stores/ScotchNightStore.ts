@@ -36,6 +36,14 @@ export const ScotchNightStore = types
             }
         });
 
+        const updateSummaryNotes = flow(function* updateNotes() {
+            const { noteApi }: { noteApi: NoteApi } = getEnv(self);
+
+            if(self.currentBottle) {
+                self.summaryNotes = yield noteApi.getSummaryNotes(self.currentBottle.id);
+            }
+        });
+
         const setCurrentUser = (member: IMember) => {
             self.currentUser = member;
         };
@@ -74,7 +82,8 @@ export const ScotchNightStore = types
             setCurrentEvent,
             setCurrentUser,
             setCurrentUserByEmail,
-            setMemberNotes
+            setMemberNotes,
+            updateSummaryNotes
         };
     });
 
