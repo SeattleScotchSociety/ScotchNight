@@ -13,6 +13,35 @@ a, a:active {
     color: #00817d;
 }
 
+.hero {
+    width: 100%;
+    height: calc(100vh - 70px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/src/app/images/scotchoncouch.jpg');
+    background-color: #00817d;
+    background-size: cover;
+    background-position: 80% bottom;
+
+    header {
+        color: #fff;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 50px;
+
+        .headerline1, .headerline2, .headerline3 {
+            display: block;
+        }
+
+        .headerline3 {
+            font-size: 50px;
+        }
+    }
+}
+
 .VictoryContainer,
 .VictoryContainer svg {
     height: inherit !important;
