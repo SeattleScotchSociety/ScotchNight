@@ -19,27 +19,32 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
             _connectionString = connectionString;
         }
 
-        public async Task AddAsync(Note note)
-        {
-            await DeleteAsync(note);
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                string query = "INSERT INTO Note (BottleId, MemberId, Rating, Finish, Fruity, Vanilla, Smokey, Citrus, Oily, Peppery, Thoughts, Tags)"
-                                + " VALUES(@BottleId, @MemberId, @Rating, @Finish, @Fruity, @Vanilla, @Smokey, @Citrus, @Oily, @Peppery, @Thoughts, @Tags)";
-                connection.Open();
-
-                await connection.ExecuteAsync(query, note);
-            }
-        }
-
-        public async Task UpdateAsync(Note note)
+        public async Task SaveAsync(Note note)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = "UPDATE Note "
-                                + " SET Rating = @Rating, Finish = @Finish, Fruity = @Fruity, Vanilla = @Vanilla, Smokey = @Smokey, Citrus = @Citrus, Oily = @Oily, Peppery = @Peppery, Thoughts = @Thoughts, Tags = @Tags"
-                                + " WHERE BottleId = @BottleId AND MemberId = @MemberId";
+                string query = @"MERGE Note AS target 
+                                USING (VALUES (@Rating,
+                                            @Thoughts,
+                                            @Tags,
+                                            @BottleId,
+                                            @MemberId)) AS source(Rating, Thoughts, Tags, BottleId, MemberId)
+                                ON source.MemberID = target.MemberID AND source.BottleId = target.BottleId
+                                WHEN MATCHED THEN
+                                UPDATE SET target.Thoughts = source.Thoughts,
+                                           target.Tags  = source.Tags,
+                                           target.Rating = source.Rating
+                                WHEN NOT MATCHED THEN
+                                INSERT(BottleId,
+                                       MemberId,
+                                       Thoughts,
+                                       Tags,
+                                       Rating)
+                                VALUES(source.BottleId,
+                                       source.MemberId,
+                                       source.Thoughts,
+                                       source.Tags,
+                                       source.Rating); ";
                 connection.Open();
 
                 await connection.ExecuteAsync(query, note);

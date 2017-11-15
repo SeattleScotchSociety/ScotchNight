@@ -7,9 +7,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Data
 {
     public interface INoteStore
     {
-        Task AddAsync(Note note);
-
-        Task UpdateAsync(Note note);
+        Task SaveAsync(Note note);
 
         Task DeleteAsync(Note note);
 

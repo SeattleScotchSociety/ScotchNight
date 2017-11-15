@@ -9,8 +9,14 @@ export default class MemberApi {
 
     public getAll(): Promise<IMember[]> {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -34,8 +40,14 @@ export default class MemberApi {
 
     public getByEmail(email: string): Promise<IMember> {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };

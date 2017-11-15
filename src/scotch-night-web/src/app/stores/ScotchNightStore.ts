@@ -39,7 +39,7 @@ export const ScotchNightStore = types
         const updateSummaryNotes = flow(function* updateNotes() {
             const { noteApi }: { noteApi: NoteApi } = getEnv(self);
 
-            if(self.currentBottle) {
+            if (self.currentBottle) {
                 self.summaryNotes = yield noteApi.getSummaryNotes(self.currentBottle.id);
             }
         });
@@ -73,7 +73,7 @@ export const ScotchNightStore = types
             notes.bottleId = self.currentBottle.id;
             self.memberNotes = notes;
 
-            yield noteApi.addReview(notes);
+            yield noteApi.saveNote(notes);
         });
 
         return {

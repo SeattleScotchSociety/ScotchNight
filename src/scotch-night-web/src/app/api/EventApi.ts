@@ -10,8 +10,14 @@ export default class EventApi {
 
     public getAll(): Promise<IEvent[]> {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -78,8 +84,14 @@ export default class EventApi {
 
     public addEvent(event) {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -108,8 +120,14 @@ export default class EventApi {
 
     public updateEvent(event) {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };

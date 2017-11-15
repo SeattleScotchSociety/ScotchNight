@@ -41,8 +41,14 @@ export default class BottleApi {
 
     public addBottle(bottle) {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -71,8 +77,14 @@ export default class BottleApi {
 
     public updateBottle(bottle) {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };

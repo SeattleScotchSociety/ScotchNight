@@ -52,14 +52,18 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
 
             summaryNote.Rating = SummarizeRating(allNotes.Where(note => note.Rating != null).Select(note => note.Rating));
 
-             Dictionary<string, int> SummarizeTags(IEnumerable<string> allTags) {
+            Dictionary<string, int> SummarizeTags(IEnumerable<string> allTags)
+            {
                 var summary = new Dictionary<string, int>();
 
-                foreach(string tags in allTags) {
+                foreach (string tags in allTags)
+                {
                     string[] tagArr = tags.Split(',');
 
-                    foreach(string tag in tagArr) {
-                        if(!summary.ContainsKey(tag)) {
+                    foreach (string tag in tagArr)
+                    {
+                        if (!summary.ContainsKey(tag))
+                        {
                             summary.Add(tag, 0);
                         }
 
@@ -84,7 +88,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]Note note)
         {
-            await _noteStore.AddAsync(note);
+            await _noteStore.SaveAsync(note);
 
             return Ok();
         }
@@ -92,7 +96,7 @@ namespace SeattleScotchSociety.ScotchNight.Api.Controllers
         [HttpPut]
         public async void PutAsync([FromBody]Note note)
         {
-            await _noteStore.UpdateAsync(note);
+            await _noteStore.SaveAsync(note);
         }
 
         [HttpDelete]

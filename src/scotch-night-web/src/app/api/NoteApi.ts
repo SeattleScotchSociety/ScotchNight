@@ -9,8 +9,14 @@ export default class NoteApi {
 
     public getSummaryNotes = (bottleId: any) => {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -38,8 +44,14 @@ export default class NoteApi {
 
     public getMemberNotes = (memberId: any, bottleId: any) => {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -65,10 +77,16 @@ export default class NoteApi {
             });
     }
 
-    public addReview = (note) => {
+    public saveNote = (note) => {
         const { getAccessToken } = this.auth;
+        const token = getAccessToken();
+
+        if (!token) {
+            return;
+        }
+
         const headers = {
-            "Authorization": `Bearer ${getAccessToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json",
             "Content-Type": "application/json"
         };
@@ -80,15 +98,8 @@ export default class NoteApi {
         })
             .then((response) => {
                 if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then((newNote) => {
-                if (!newNote) {
                     return;
                 }
-
-                return newNote.id;
             })
             .catch((error) => {
                 console.log(error);
