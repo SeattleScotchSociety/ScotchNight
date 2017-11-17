@@ -109,7 +109,7 @@ export class NotesOverview extends React.Component<INotesOverviewProps> {
                             eventHandlers: {
                                 onMouseOver: () => {
                                     return [
-                                        { target: "labels", mutation: (a) => ({ active: true }) },
+                                        { target: "labels", mutation: () => ({ active: true }) },
                                         { target: "data", mutation: () => ({ active: true }) }
                                     ];
                                 },
