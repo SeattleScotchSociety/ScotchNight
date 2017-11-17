@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Auth from "../services/Auth";
 import { IScotchNightStore } from "../stores/ScotchNightStore";
 
-interface IHeaderProps { scotchNightStore: IScotchNightStore; auth: any; }
+interface IHeaderProps { scotchNightStore: IScotchNightStore; auth: any; location: any; }
 interface IHeaderState { menuIsOpen: boolean; }
 
 @observer
@@ -33,15 +33,15 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
     }
 
     public render() {
-        const { auth } = this.props;
+        const { auth, location } = this.props;
         const { menuIsOpen } = this.state;
         const { currentUser } = this.props.scotchNightStore;
 
         return (
             <nav>
-                <div className="header">
-                    <span>Scotch Night</span>
-                    {currentUser ?
+                <div className={`header ${location.pathname === '/login' ? 'header-login' : ''}`}>
+                    <img src={`/src/app/images/SeattleScotchSocietyLogo_${location.pathname === '/login' ? 'white' : 'teal'}.svg`}/>
+                    {auth.isAuthenticated() ?
                         <div className={`hamburger hamburger--squeeze ${menuIsOpen ? "is-active" : ""}`} onClick={this.onClickMenu}>
                             <div className="hamburger-box">
                                 <div className="hamburger-inner" />

@@ -15,7 +15,7 @@ a, a:active {
 
 .hero {
     width: 100%;
-    height: calc(100vh - 70px);
+    height: 100vh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -28,7 +28,6 @@ a, a:active {
 
     header {
         color: #fff;
-        font-weight: 700;
         text-align: center;
         margin-bottom: 50px;
 
@@ -36,8 +35,13 @@ a, a:active {
             display: block;
         }
 
+        .headerline1, .headerline2 {
+            font-weight: 300;
+        }
+
         .headerline3 {
             font-size: 50px;
+            font-weight: 700;
         }
     }
 }
