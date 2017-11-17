@@ -48,11 +48,11 @@ export class App extends React.Component<IRouteProps> {
     }
 
     public render() {
-        const { auth, store } = this.props;
+        const { auth, store, location } = this.props;
         const { scotchNightStore } = store;
 
         return (<div>
-            <Header scotchNightStore={scotchNightStore} auth={auth} />
+            <Header scotchNightStore={scotchNightStore} auth={auth} location={location} />
             <main>
                 <Switch>
                     <Route

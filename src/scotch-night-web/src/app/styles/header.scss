@@ -13,6 +13,15 @@ nav {
     align-items: center;
     justify-content: space-between;
     color: #00817d;
+
+    &.header-login {
+        position: absolute;
+        border-bottom: 0;
+    }
+
+    img {
+        height: 40px;
+    }
 }
 
 .header-menu {
