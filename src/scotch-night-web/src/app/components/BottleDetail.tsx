@@ -39,7 +39,7 @@ export class BottleDetail extends React.Component<IBottleDetailProps, IBottleDet
     private handleSelectView(index) {
         const { scotchNightStore } = this.props.store;
 
-        if(index === 'overview') {
+        if (index === "overview") {
             scotchNightStore.updateSummaryNotes();
         }
 

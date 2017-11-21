@@ -83,8 +83,7 @@ export class EventDetail extends React.Component<IEventDetailProps, IEventDetail
         const { date, description, location, title } = currentEvent;
         const { address1, address2, city, state, zipCode, position } = location;
         const eventMap = this.buildEventMap(position);
-        const fullAddress = `${address1}, ${address2 ? address2 + ', ' : ''}${city}, ${state} ${zipCode}`;
-
+        const fullAddress = `${address1}, ${address2 ? address2 + ", " : ""}${city}, ${state} ${zipCode}`;
 
         return (
             <div className="container">
