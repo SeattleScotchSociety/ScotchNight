@@ -39,8 +39,8 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
 
         return (
             <nav>
-                <div className={`header ${location.pathname === '/login' ? 'header-login' : ''}`}>
-                    <img src={`/src/app/images/SeattleScotchSocietyLogo_${location.pathname === '/login' ? 'white' : 'teal'}.svg`}/>
+                <div className={`header ${location.pathname === "/login" ? "header-login" : ""}`}>
+                    <img src={`/src/app/images/SeattleScotchSocietyLogo_${location.pathname === "/login" ? "white" : "teal"}.svg`} />
                     {auth.isAuthenticated() ?
                         <div className={`hamburger hamburger--squeeze ${menuIsOpen ? "is-active" : ""}`} onClick={this.onClickMenu}>
                             <div className="hamburger-box">
