@@ -16,6 +16,8 @@ describe("Component: Header", () => {
         const wrapper = shallow(
             <Header
                 scotchNightStore={rootStore.scotchNightStore}
+                location={{ pathname: "/" }}
+                auth={{ isAuthenticated: () => false }}
             />
         ).toJson;
 
