@@ -3,12 +3,12 @@ import { when } from "mobx";
 
 import { locations } from "../../../public/locations";
 import { ILocation, LocationStore } from "../../app/stores/LocationStore";
-import { locationApi } from "../mocks";
+import { googleApi, locationApi } from "../mocks";
 
 describe("LocationStore", () => {
     describe("loadLocations", () => {
         it("fetches data", (done: () => void) => {
-            const store = LocationStore.create({ locations: [] }, { locationApi });
+            const store = LocationStore.create({ locations: [] }, { googleApi, locationApi });
             const expected = locations[0];
 
             store.loadLocations();

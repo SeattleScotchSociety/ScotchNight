@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import { when } from "mobx";
 
 import { BottleStore, IBottle, IBottleStore } from "../app/stores/BottleStore";
@@ -41,6 +40,15 @@ export const locationApi = {
     },
 };
 
+export const googleApi = {
+    getLocationDataAsync: () => {
+        return Promise.resolve({
+            lat: 21,
+            lng: 34
+        });
+    }
+};
+
 export const rootStore: IRootStore = RootStore.create({
     bottleStore: { bottles },
     eventStore: { events },
@@ -50,6 +58,7 @@ export const rootStore: IRootStore = RootStore.create({
     {
         bottleApi,
         eventApi,
+        googleApi,
         history,
         locale: "en-US",
         locationApi,

@@ -1,5 +1,6 @@
 import BottleApi from "./api/BottleApi";
 import EventApi from "./api/EventApi";
+import GoogleApi from "./api/GoogleApi";
 import LocationApi from "./api/LocationApi";
 import MemberApi from "./api/MemberApi";
 import NoteApi from "./api/NoteApi";
@@ -19,6 +20,7 @@ export const createStore: (history: any, auth: Auth) => IRootStore = (history, a
             auth,
             bottleApi: new BottleApi(auth),
             eventApi: new EventApi(auth),
+            googleApi: new GoogleApi(),
             history,
             locale: "en-US",
             locationApi: new LocationApi(auth),
