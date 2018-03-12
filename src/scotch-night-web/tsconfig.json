@@ -13,6 +13,9 @@
             "dom",
             "dom.iterable",
             "scripthost"
+        ],
+        "types": [
+            "jasmine"
         ]
     },
     "include": [
