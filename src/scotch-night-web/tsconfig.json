@@ -8,17 +8,8 @@
         "jsx": "react",
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
-        "lib": [
-            "es6",
-            "dom",
-            "dom.iterable",
-            "scripthost"
-        ],
-        "types": [
-            "jasmine"
-        ]
+        "lib": ["es6", "dom", "dom.iterable", "scripthost"],
+        "types": ["node", "googlemaps", "markerclustererplus"]
     },
-    "include": [
-        "./src/app/**/*"
-    ]
+    "include": ["./src/app/**/*"]
 }

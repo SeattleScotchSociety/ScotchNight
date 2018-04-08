@@ -1,16 +1,13 @@
-import { observer } from "mobx-react";
-import * as React from "react";
+/*global google*/
+import { observer } from 'mobx-react';
+import * as React from 'react';
 
-import {
-    GoogleMap,
-    Marker,
-    withGoogleMap
-} from "react-google-maps";
+import { GoogleMap, Marker, withGoogleMap } from 'react-google-maps';
 
 export interface IMarker {
     position: {
-        lat: number,
-        lng: number,
+        lat: number;
+        lng: number;
     };
     key: string;
     animation: number;
@@ -18,8 +15,8 @@ export interface IMarker {
 
 interface IGenericMapProps {
     defaultCenter: {
-        lat: number,
-        lng: number,
+        lat: number;
+        lng: number;
     };
     defaultZoom: number;
     onMapLoad: any;
@@ -27,29 +24,20 @@ interface IGenericMapProps {
     markers: IMarker[];
 }
 
-export const GenericMap = withGoogleMap(observer((props: IGenericMapProps) => {
-    const { defaultCenter, defaultZoom, markers, onMapClick, onMapLoad } = props;
+export const GenericMap = withGoogleMap(
+    observer((props: IGenericMapProps) => {
+        const { defaultCenter, defaultZoom, markers, onMapClick, onMapLoad } = props;
 
-    const markersComponents = markers.map((marker) => {
+        const markersComponents = markers.map(marker => {
+            return <Marker position={marker.position} key={marker.key} animation={marker.animation} />;
+        });
+
         return (
-            <Marker
-                position={marker.position}
-                key={marker.key}
-                animation={marker.animation}
-            />
+            <GoogleMap ref={onMapLoad} defaultZoom={defaultZoom} defaultCenter={{ ...defaultCenter }} onClick={onMapClick}>
+                {markersComponents}
+            </GoogleMap>
         );
-    });
-
-    return (
-        <GoogleMap
-            ref={onMapLoad}
-            defaultZoom={defaultZoom}
-            defaultCenter={{ ...defaultCenter }}
-            onClick={onMapClick}
-        >
-            {markersComponents}
-        </GoogleMap>
-    );
-}));
+    })
+);
 
 export default GenericMap;
