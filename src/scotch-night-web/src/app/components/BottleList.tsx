@@ -1,4 +1,4 @@
-import sortBy from 'lodash/sortBy';
+import * as sortBy from 'lodash.sortby';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 
