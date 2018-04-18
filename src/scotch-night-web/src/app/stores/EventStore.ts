@@ -1,15 +1,14 @@
-import * as _ from "lodash";
-import { observable } from "mobx";
-import { flow, getEnv, getParent, types } from "mobx-state-tree";
+import { observable } from 'mobx';
+import { flow, getEnv, getParent, types } from 'mobx-state-tree';
 
-import EventApi from "../api/EventApi";
-import LocationApi from "../api/LocationApi";
+import EventApi from '../api/EventApi';
+import LocationApi from '../api/LocationApi';
 
-import { Bottle, IBottle } from "./BottleStore";
-import { Location } from "./LocationStore";
-import { IMember, Member } from "./MemberStore";
+import { Bottle, IBottle } from './BottleStore';
+import { Location } from './LocationStore';
+import { IMember, Member } from './MemberStore';
 
-export const Event = types.model("Event", {
+export const Event = types.model('Event', {
     id: types.identifier(),
     date: types.string,
     title: types.string,
@@ -21,24 +20,24 @@ export const Event = types.model("Event", {
 });
 
 export const EventStore = types
-    .model("EventStore", {
+    .model('EventStore', {
         events: types.optional(types.array(Event), []),
         isLoading: true
     })
-    .actions((self) => {
+    .actions(self => {
         function markLoading(loading: boolean) {
             self.isLoading = loading;
         }
 
         const updateEvents = async (events: IEvent[]) => {
             if (!events) {
-                console.log("no events");
+                console.log('no events');
                 return;
             }
 
             events.forEach(async (event: IEvent) => {
                 const { locationApi }: { locationApi: LocationApi } = getEnv(self);
-                const index = _.findIndex(self.events, ["id", event.id]);
+                const index = self.events.findIndex(e => e.id === event.id);
 
                 if (index >= 0) {
                     self.events.splice(index, 1, event);

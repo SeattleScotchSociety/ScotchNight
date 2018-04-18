@@ -1,13 +1,12 @@
-import * as _ from "lodash";
-import { when } from "mobx";
+import { when } from 'mobx';
 
-import { locations } from "../../../public/locations";
-import { ILocation, LocationStore } from "../../app/stores/LocationStore";
-import { googleApi, locationApi } from "../mocks";
+import { locations } from '../../../public/locations';
+import { ILocation, LocationStore } from '../../app/stores/LocationStore';
+import { googleApi, locationApi } from '../mocks';
 
-describe("LocationStore", () => {
-    describe("loadLocations", () => {
-        it("fetches data", (done: () => void) => {
+describe('LocationStore', () => {
+    describe('loadLocations', () => {
+        it('fetches data', (done: () => void) => {
             const store = LocationStore.create({ locations: [] }, { googleApi, locationApi });
             const expected = locations[0];
 
@@ -17,9 +16,12 @@ describe("LocationStore", () => {
                 () => store.isLoading === false,
                 () => {
                     expect(store.locations.length).toBe(locations.length);
-                    expect(_.find(store.locations, ["id", expected.id]).name).toBe(expected.name);
+
+                    const actual = store.locations.filter(e => e.id === expected.id)[0];
+                    expect(actual.name).toBe(expected.name);
+
                     done();
-                },
+                }
             );
         });
     });

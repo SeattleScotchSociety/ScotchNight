@@ -1,13 +1,15 @@
-import * as _ from "lodash";
-import { inject, observer } from "mobx-react";
-import * as React from "react";
+import sortBy from 'lodash/sortBy';
+import { inject, observer } from 'mobx-react';
+import * as React from 'react';
 
-import { IBottle } from "../stores/BottleStore";
-import { IRootStore } from "../stores/RootStore";
+import { IBottle } from '../stores/BottleStore';
+import { IRootStore } from '../stores/RootStore';
 
-interface IBottleListProps { store: IRootStore; }
+interface IBottleListProps {
+    store: IRootStore;
+}
 
-@inject("store")
+@inject('store')
 @observer
 export class BottleList extends React.Component<IBottleListProps> {
     constructor(props: IBottleListProps) {
@@ -25,7 +27,7 @@ export class BottleList extends React.Component<IBottleListProps> {
 
     public render() {
         const { bottles } = this.props.store.bottleStore;
-        const bottleElements = _.sortBy(bottles, ["distillery", "name"]).map((bottle) => {
+        const bottleElements = sortBy(bottles, ['distillery', 'name']).map(bottle => {
             const { name, distillery } = bottle;
 
             return (

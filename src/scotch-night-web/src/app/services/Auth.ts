@@ -1,19 +1,19 @@
-import { WebAuth } from "auth0-js";
-import createBrowserHistory from "history/createBrowserHistory";
-import * as storage from "localforage";
-import { IEventStore } from "../stores/EventStore";
-import { IScotchNightStore } from "../stores/ScotchNightStore";
+import { WebAuth } from 'auth0-js';
+import createBrowserHistory from 'history/createBrowserHistory';
+import * as storage from 'localforage';
+import { IEventStore } from '../stores/EventStore';
+import { IScotchNightStore } from '../stores/ScotchNightStore';
 
 export class Auth {
     private history = createBrowserHistory();
 
     private auth0 = new WebAuth({
-        domain: "seattle-scotch-society.auth0.com",
-        clientID: "ZjCMnx9zuX7umATd69Oyv5jpyk9d80zU",
-        redirectUri: "http://localhost:8080/callback",
-        audience: "https://scotchnightapi.azurewebsites.net/api/",
-        responseType: "token id_token",
-        scope: "openid email scotchnight:access"
+        domain: 'seattle-scotch-society.auth0.com',
+        clientID: 'ZjCMnx9zuX7umATd69Oyv5jpyk9d80zU',
+        redirectUri: 'http://localhost:8080/callback',
+        audience: 'https://scotchnightapi.azurewebsites.net/api/',
+        responseType: 'token id_token',
+        scope: 'openid email scotchnight:access'
     });
 
     public constructor() {
@@ -25,7 +25,7 @@ export class Auth {
     }
 
     public login() {
-        storage.removeItem("scotchnight-state");
+        storage.removeItem('scotchnight-state');
         this.auth0.authorize();
     }
 
@@ -34,18 +34,18 @@ export class Auth {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
                 this.getProfile(initializeUserCallback);
-                this.history.replace("/");
+                this.history.replace('/');
             } else if (err) {
-                this.history.replace("/");
+                this.history.replace('/');
                 console.log(err);
             }
         });
     }
 
     public getAccessToken() {
-        const accessToken = localStorage.getItem("access_token");
+        const accessToken = localStorage.getItem('access_token');
         if (!accessToken) {
-            return "";
+            return '';
         }
         return accessToken;
     }
@@ -64,27 +64,27 @@ export class Auth {
 
     public setSession(authResult) {
         // Set the time that the access token will expire at
-        const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-        localStorage.setItem("access_token", authResult.accessToken);
-        localStorage.setItem("id_token", authResult.idToken);
-        localStorage.setItem("expires_at", expiresAt);
+        const expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime());
+        localStorage.setItem('access_token', authResult.accessToken);
+        localStorage.setItem('id_token', authResult.idToken);
+        localStorage.setItem('expires_at', expiresAt);
     }
 
     public logout() {
         // Clear access token and ID token from local storage
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("id_token");
-        localStorage.removeItem("expires_at");
-        storage.removeItem("scotchnight-state").then(() => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('id_token');
+        localStorage.removeItem('expires_at');
+        storage.removeItem('scotchnight-state').then(() => {
             // navigate to the home route
-            this.history.push("/login");
+            this.history.push('/login');
         });
     }
 
     public isAuthenticated() {
         // Check whether the current time is past the
         // access token"s expiry time
-        const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
+        const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         const isLoggedIn = new Date().getTime() < expiresAt;
 
         return isLoggedIn;

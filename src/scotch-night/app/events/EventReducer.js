@@ -1,11 +1,4 @@
-import _ from 'lodash';
-
-import {
-    ADD_EVENT,
-    EVENTS_LOADED,
-    EVENT_UPDATED,
-    EVENT_SELECTED
-} from './EventActionTypes';
+import { ADD_EVENT, EVENTS_LOADED, EVENT_UPDATED, EVENT_SELECTED } from './EventActionTypes';
 
 const EventReducer = (state = [], action) => {
     switch (action.type) {
@@ -29,7 +22,7 @@ const EventReducer = (state = [], action) => {
         case EVENT_UPDATED: {
             let updatedEvent = action.payload;
 
-            let allEvents = _.filter(state.all, event => event.id !== updatedEvent.id);
+            let allEvents = state.all.filter(event => event.id !== updatedEvent.id);
 
             if (allEvents) {
                 allEvents.push(updatedEvent);
@@ -48,7 +41,7 @@ const EventReducer = (state = [], action) => {
 
         case EVENT_SELECTED: {
             let eventId = action.payload;
-            let selectedEvent = _.find(state.all, event => event.id === eventId);
+            let selectedEvent = state.all.filter(event => event.id === eventId)[0];
 
             return { ...state, selected: selectedEvent };
         }

@@ -5,6 +5,7 @@ const extractSass = new ExtractTextPlugin({
     filename: 'site.css',
     disable: process.env.NODE_ENV !== 'production'
 });
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = env => {
     const isDevBuild = !(env && env.prod);
@@ -13,7 +14,7 @@ module.exports = env => {
         devServer: {
             historyApiFallback: true
         },
-        devtool: env.prod ? 'source-map' : 'eval',
+        devtool: env.prod ? 'source-map' : 'eval-source-map',
         entry: './app/index.tsx',
         externals: {},
         module: {
@@ -44,7 +45,7 @@ module.exports = env => {
             publicPath: '/dist/',
             pathinfo: !env.prod
         },
-        plugins: [new CheckerPlugin(), extractSass],
+        plugins: [new CheckerPlugin(), extractSass, new BundleAnalyzerPlugin()],
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
             extensions: ['.ts', '.tsx', '.js', '.json']

@@ -1,22 +1,21 @@
-import * as _ from "lodash";
-import { observable } from "mobx";
-import { flow, getEnv, getParent, types } from "mobx-state-tree";
+import { observable } from 'mobx';
+import { flow, getEnv, getParent, types } from 'mobx-state-tree';
 
-import BottleApi from "../api/BottleApi";
-import EventApi from "../api/EventApi";
-import NoteApi from "../api/NoteApi";
+import BottleApi from '../api/BottleApi';
+import EventApi from '../api/EventApi';
+import NoteApi from '../api/NoteApi';
 
-import { IEvent } from "./EventStore";
-import { Member } from "./MemberStore";
+import { IEvent } from './EventStore';
+import { Member } from './MemberStore';
 
-export const BottleNote = types.model("BottleNote", {
+export const BottleNote = types.model('BottleNote', {
     bottleId: types.string,
     rating: types.maybe(types.number),
     thoughts: types.maybe(types.string),
     tags: types.maybe(types.map(types.number))
 });
 
-export const BottleRating = types.model("BottleRating", {
+export const BottleRating = types.model('BottleRating', {
     bottleId: types.maybe(types.string),
     memberId: types.maybe(types.string),
     rating: types.maybe(types.number),
@@ -31,12 +30,12 @@ export const BottleRating = types.model("BottleRating", {
     peppery: types.maybe(types.number)
 });
 
-export const Bottle = types.model("Bottle", {
+export const Bottle = types.model('Bottle', {
     id: types.identifier(),
     distillery: types.string,
     name: types.string,
     age: types.number,
-    description: types.maybe(types.string),
+    description: types.maybe(types.string)
     // bottleUrl: types.maybe(types.string),
     // distilleryUrl: types.maybe(types.string),
     // bottleImageUrl: types.maybe(types.string),
@@ -46,23 +45,23 @@ export const Bottle = types.model("Bottle", {
 });
 
 export const BottleStore = types
-    .model("BottleStore", {
+    .model('BottleStore', {
         bottles: types.optional(types.array(Bottle), []),
         isLoading: true
     })
-    .actions((self) => {
+    .actions(self => {
         function markLoading(loading: boolean) {
             self.isLoading = loading;
         }
 
         const addBottle = flow(function* addNewBottle(bottle: IBottle) {
-            const { bottleApi, eventApi }: { bottleApi: BottleApi, eventApi: EventApi } = getEnv(self);
+            const { bottleApi, eventApi }: { bottleApi: BottleApi; eventApi: EventApi } = getEnv(self);
 
             const bottleId = yield bottleApi.addBottle(bottle);
 
             yield loadBottles();
 
-            const index = _.findIndex(self.bottles, ["id", bottleId]);
+            const index = self.bottles.findIndex(b => b.id === bottle.id);
 
             const newBottle = self.bottles[index];
 
@@ -70,7 +69,7 @@ export const BottleStore = types
         });
 
         const editBottle = flow(function* editExistingBottle(bottle: IBottle) {
-            const { bottleApi, eventApi }: { bottleApi: BottleApi, eventApi: EventApi } = getEnv(self);
+            const { bottleApi, eventApi }: { bottleApi: BottleApi; eventApi: EventApi } = getEnv(self);
 
             const bottleId = bottle.id;
 
@@ -78,7 +77,7 @@ export const BottleStore = types
 
             yield loadBottles();
 
-            const index = _.findIndex(self.bottles, ["id", bottleId]);
+            const index = self.bottles.findIndex(b => b.id === bottle.id);
 
             const editedBottle = self.bottles[index];
 
@@ -86,7 +85,7 @@ export const BottleStore = types
         });
 
         function updateBottle(bottle: IBottle) {
-            const index = _.findIndex(self.bottles, ["id", bottle.id]);
+            const index = self.bottles.findIndex(b => b.id === bottle.id);
 
             if (index >= 0) {
                 self.bottles.splice(index, 1, bottle);
@@ -97,7 +96,7 @@ export const BottleStore = types
 
         function updateBottles(bottles: IBottle[]) {
             if (!bottles) {
-                console.log("no bottles to update");
+                console.log('no bottles to update');
                 return;
             }
 

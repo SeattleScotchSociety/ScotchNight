@@ -1,15 +1,14 @@
-import * as _ from "lodash";
-import { when } from "mobx";
+import { when } from 'mobx';
 
-import { bottles } from "../../../public/bottles";
-import { BottleStore, IBottle } from "../../app/stores/BottleStore";
-import { bottleApi } from "../mocks";
+import { bottles } from '../../../public/bottles';
+import { BottleStore, IBottle } from '../../app/stores/BottleStore';
+import { bottleApi } from '../mocks';
 
-describe("BottleStore", () => {
-    describe("loadBottles", () => {
-        it("fetches data", (done: () => void) => {
+describe('BottleStore', () => {
+    describe('loadBottles', () => {
+        it('fetches data', (done: () => void) => {
             const store = BottleStore.create({ bottles: [] }, { bottleApi });
-            const expectedBottle = bottles[0];
+            const expected = bottles[0];
 
             store.loadBottles();
 
@@ -17,9 +16,12 @@ describe("BottleStore", () => {
                 () => store.isLoading === false,
                 () => {
                     expect(store.bottles.length).toBe(bottles.length);
-                    expect(_.find(store.bottles, ["id", expectedBottle.id]).name).toBe(expectedBottle.name);
+
+                    const actual = store.bottles.filter(b => b.id === expected.id)[0];
+                    expect(actual.name).toBe(expected.name);
+
                     done();
-                },
+                }
             );
         });
     });

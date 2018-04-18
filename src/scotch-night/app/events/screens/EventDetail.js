@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import * as moment from 'moment';
-import _ from 'lodash';
 
 import { bottleSelected } from '../../bottles/BottleActions';
 import { loadReviews } from '../../reviews/ReviewActions';
@@ -15,18 +14,14 @@ function TastingMenu(props) {
     let { menu, onPress } = props;
 
     if (!menu || menu.length === 0) {
-        return (<Text style={styles.noBottles}>No Bottles</Text>);
+        return <Text style={styles.noBottles}>No Bottles</Text>;
     }
 
     let menuList = menu.map((item, index) => {
-        return (
-            <ListItem key={index} title={`${item.distillery} ${item.name}`} onPress={onPress.bind(null, item)} />
-        );
+        return <ListItem key={index} title={`${item.distillery} ${item.name}`} onPress={onPress.bind(null, item)} />;
     });
 
-    return (
-        <List>{menuList}</List>
-    );
+    return <List>{menuList}</List>;
 }
 
 class EventDetail extends Component {
@@ -61,15 +56,14 @@ class EventDetail extends Component {
                 <View style={styles.eventContainer}>
                     <Text style={styles.eventTitle}>{title}</Text>
                     <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 5 }}>
-                        {
-                            location ?
-                                <View style={{ flexDirection: 'row', marginRight: 10 }}>
-                                    <SimpleLineIcons name='location-pin' color='#80807f' size={16} />
-                                    <Text style={styles.eventDetail}>{location}</Text>
-                                </View> : null
-                        }
+                        {location ? (
+                            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+                                <SimpleLineIcons name="location-pin" color="#80807f" size={16} />
+                                <Text style={styles.eventDetail}>{location}</Text>
+                            </View>
+                        ) : null}
                         <View style={{ flexDirection: 'row' }}>
-                            <SimpleLineIcons name='calendar' color='#80807f' size={16} />
+                            <SimpleLineIcons name="calendar" color="#80807f" size={16} />
                             <Text style={styles.eventDetail}>{moment.default(date).format('dddd, MMMM, YYYY, h:mm')}</Text>
                         </View>
                     </View>
@@ -77,11 +71,11 @@ class EventDetail extends Component {
                 </View>
                 <Text style={styles.menuHeader}>Tasting Menu</Text>
                 <TastingMenu menu={menu} onPress={this._handleOnPress} />
-                <Button title='Add Bottle' backgroundColor='#00817d' style={{ marginTop: 20 }} onPress={this._handleOnAddBottle} />
+                <Button title="Add Bottle" backgroundColor="#00817d" style={{ marginTop: 20 }} onPress={this._handleOnAddBottle} />
             </ScrollView>
         );
     }
-};
+}
 
 const PROVIDER_IMAGE_SIZE = 40;
 
@@ -131,7 +125,7 @@ function mapStateToProps(state) {
     let menu = [];
 
     if (currentEvent.bottles) {
-        menu = _.filter(state.bottles.all, bottle => currentEvent.bottles.includes(bottle.id));
+        menu = filter(state.bottles.all, bottle => currentEvent.bottles.includes(bottle.id));
     }
 
     return { event: currentEvent, menu };

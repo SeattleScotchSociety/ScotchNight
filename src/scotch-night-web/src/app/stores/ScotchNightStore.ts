@@ -1,24 +1,23 @@
-import * as _ from "lodash";
-import { observable } from "mobx";
-import { flow, getEnv, getParent, types } from "mobx-state-tree";
+import { observable } from 'mobx';
+import { flow, getEnv, getParent, types } from 'mobx-state-tree';
 
-import MemberApi from "../api/MemberApi";
-import NoteApi from "../api/NoteApi";
-import { Bottle, BottleNote, BottleRating, IBottle, IBottleRating } from "./BottleStore";
-import { Event, IEvent } from "./EventStore";
-import { IMember, Member } from "./MemberStore";
+import MemberApi from '../api/MemberApi';
+import NoteApi from '../api/NoteApi';
+import { Bottle, BottleNote, BottleRating, IBottle, IBottleRating } from './BottleStore';
+import { Event, IEvent } from './EventStore';
+import { IMember, Member } from './MemberStore';
 
-import { Location } from "../types/mobxCommon";
+import { Location } from '../types/mobxCommon';
 
 export const ScotchNightStore = types
-    .model("ScotchNightStore", {
+    .model('ScotchNightStore', {
         currentUser: types.maybe(Member),
         currentEvent: types.maybe(types.reference(Event)),
         currentBottle: types.maybe(types.reference(Bottle)),
         summaryNotes: types.maybe(BottleNote),
-        memberNotes: types.maybe(BottleRating),
+        memberNotes: types.maybe(BottleRating)
     })
-    .actions((self) => {
+    .actions(self => {
         function clear() {
             self.currentUser = null;
             self.currentBottle = null;
@@ -55,7 +54,7 @@ export const ScotchNightStore = types
         const setCurrentUserByEmail = flow(function* setUser(email: string) {
             const { memberApi }: { memberApi: MemberApi } = getEnv(self);
 
-            if (!email || email === "") {
+            if (!email || email === '') {
                 return null;
             }
 

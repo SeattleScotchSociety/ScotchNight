@@ -1,18 +1,17 @@
-import * as _ from "lodash";
-import { observable } from "mobx";
-import { flow, getEnv, getParent, types } from "mobx-state-tree";
+import { observable } from 'mobx';
+import { flow, getEnv, getParent, types } from 'mobx-state-tree';
 
-import GoogleApi from "../api/GoogleApi";
-import LocationApi from "../api/LocationApi";
+import GoogleApi from '../api/GoogleApi';
+import LocationApi from '../api/LocationApi';
 
-import { Bottle } from "./BottleStore";
+import { Bottle } from './BottleStore';
 
-export const Position = types.model("Position", {
+export const Position = types.model('Position', {
     lat: types.number,
-    lng: types.number,
+    lng: types.number
 });
 
-export const Location = types.model("Location", {
+export const Location = types.model('Location', {
     id: types.identifier(),
     name: types.string,
     address1: types.string,
@@ -24,18 +23,18 @@ export const Location = types.model("Location", {
 });
 
 export const LocationStore = types
-    .model("LocationStore", {
+    .model('LocationStore', {
         locations: types.optional(types.array(Location), []),
         isLoading: true
     })
-    .actions((self) => {
+    .actions(self => {
         function markLoading(loading: boolean) {
             self.isLoading = loading;
         }
 
         const updateLocation = flow(function* updateAllLocations(location: ILocation) {
             const { googleApi }: { googleApi: GoogleApi } = getEnv(self);
-            const index = _.findIndex(self.locations, ["id", location.id]);
+            const index = self.locations.findIndex(l => l.id === location.id);
             const addressString = `${location.address1}, ${location.address2}, ${location.city}, ${location.state}, ${location.zipCode}`;
 
             const position = yield googleApi.getLocationDataAsync(addressString);

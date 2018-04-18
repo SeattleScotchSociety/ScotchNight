@@ -2,7 +2,9 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
-import { GoogleMap, Marker, withGoogleMap } from 'react-google-maps';
+import GoogleMap from 'react-google-maps/lib/components/GoogleMap';
+import Marker from 'react-google-maps/lib/components/Marker';
+import withGoogleMap from 'react-google-maps/lib/withGoogleMap';
 
 export interface IMarker {
     position: {

@@ -1,9 +1,4 @@
-import _ from 'lodash';
-
-import {
-    REVIEWS_LOADED,
-    REVIEW_ADDED
-} from './ReviewActionTypes';
+import { REVIEWS_LOADED, REVIEW_ADDED } from './ReviewActionTypes';
 
 const BottleReducer = (state = [], action) => {
     switch (action.type) {

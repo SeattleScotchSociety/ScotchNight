@@ -1,10 +1,4 @@
-import _ from 'lodash';
-
-import {
-    BOTTLES_LOADED,
-    BOTTLE_ADDED,
-    BOTTLE_SELECTED
-} from './BottleActionTypes';
+import { BOTTLES_LOADED, BOTTLE_ADDED, BOTTLE_SELECTED } from './BottleActionTypes';
 
 const BottleReducer = (state = [], action) => {
     switch (action.type) {
@@ -21,7 +15,7 @@ const BottleReducer = (state = [], action) => {
 
         case BOTTLE_SELECTED: {
             let bottleId = action.payload;
-            let selected = _.find(state.all, bottle => bottle.id === bottleId);
+            let selected = state.all.filter(bottle => bottle.id === bottleId)[0];
 
             return { ...state, selected };
         }

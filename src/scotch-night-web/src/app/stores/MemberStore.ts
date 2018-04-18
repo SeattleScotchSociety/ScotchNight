@@ -1,12 +1,11 @@
-import * as _ from "lodash";
-import { observable } from "mobx";
-import { flow, getEnv, getParent, types } from "mobx-state-tree";
+import { observable } from 'mobx';
+import { flow, getEnv, getParent, types } from 'mobx-state-tree';
 
-import MemberApi from "../api/MemberApi";
+import MemberApi from '../api/MemberApi';
 
-import { Location } from "../types/mobxCommon";
+import { Location } from '../types/mobxCommon';
 
-export const Member = types.model("Member", {
+export const Member = types.model('Member', {
     id: types.identifier(),
     firstName: types.string,
     lastName: types.string,
@@ -14,11 +13,11 @@ export const Member = types.model("Member", {
 });
 
 export const MemberStore = types
-    .model("MemberStore", {
+    .model('MemberStore', {
         members: types.optional(types.array(Member), []),
         isLoading: true
     })
-    .actions((self) => {
+    .actions(self => {
         function markLoading(loading: boolean) {
             self.isLoading = loading;
         }
