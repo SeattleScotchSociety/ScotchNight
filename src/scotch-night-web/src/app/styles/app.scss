@@ -1,15 +1,16 @@
-@import "variables";
-@import "default";
-@import "normalize";
-@import "header";
-@import "button";
-@import "modal";
-@import "input";
-@import "bottle";
-@import "rating";
-@import "helpers";
+@import 'variables';
+@import 'default';
+@import 'normalize';
+@import 'header';
+@import 'button';
+@import 'modal';
+@import 'input';
+@import 'bottle';
+@import 'rating';
+@import 'helpers';
 
-a, a:active {
+a,
+a:active {
     color: #00817d;
 }
 
@@ -21,7 +22,7 @@ a, a:active {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('/src/app/images/scotchoncouch.jpg');
+    background-image: url('/src/app/images/scotchoncouch-small.jpg');
     background-color: #00817d;
     background-size: cover;
     background-position: 80% bottom;
@@ -31,11 +32,14 @@ a, a:active {
         text-align: center;
         margin-bottom: 50px;
 
-        .headerline1, .headerline2, .headerline3 {
+        .headerline1,
+        .headerline2,
+        .headerline3 {
             display: block;
         }
 
-        .headerline1, .headerline2 {
+        .headerline1,
+        .headerline2 {
             font-weight: 300;
         }
 
@@ -61,7 +65,7 @@ a, a:active {
 }
 
 main {
-    background-color: #BFE0DF;
+    background-color: #bfe0df;
 }
 
 .container {
@@ -78,7 +82,7 @@ i {
 
 .card {
     border: 1px solid #333;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     padding: 1rem;
     margin-bottom: 1rem;
 
@@ -98,11 +102,11 @@ i {
     .card__title {
         font-size: 1rem;
         font-weight: 700;
-        margin-bottom: .3rem;
+        margin-bottom: 0.3rem;
     }
 
     .card__description {
-        font-size: .8rem;
+        font-size: 0.8rem;
         font-style: italic;
     }
 }
@@ -122,14 +126,14 @@ i {
 
 .event__sep {
     font-weight: 300;
-    font-size: .75rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
 }
 
 .notes {
     .input {
-        margin-top: .25rem;
+        margin-top: 0.25rem;
     }
 
     .input__field {
